@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LearnPath — Your Personal Tutor</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splashScreen" class="splash-screen">
+  <div class="splash-content">
+    <div class="splash-logo">
+      <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h1>LearnPath</h1>
+    </div>
+    <p class="splash-tagline">Your Personal AI-Powered Tutor</p>
+    <div class="splash-loader">
+      <div class="loader-bar"></div>
+    </div>
+    <p class="splash-sub">Loading your learning journey...</p>
+  </div>
+  <div class="splash-particles" id="splashParticles"></div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app" class="app hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="logo-icon-sm"><i class="fas fa-graduation-cap"></i></div>
+        <span>LearnPath</span>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="sidebar-profile">
+      <div class="avatar">
+        <i class="fas fa-user-astronaut"></i>
+      </div>
+      <div class="profile-info">
+        <span class="profile-name">Learner</span>
+        <span class="profile-level">Beginner Explorer</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="dashboard" onclick="showView('dashboard')">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-item" data-view="lesson" onclick="showView('lesson')">
+        <i class="fas fa-book-open"></i>
+        <span>Current Lesson</span>
+      </button>
+      <button class="nav-item" data-view="progress" onclick="showView('progress')">
+        <i class="fas fa-chart-line"></i>
+        <span>My Progress</span>
+      </button>
+      <button class="nav-item" data-view="topics" onclick="showView('topics')">
+        <i class="fas fa-layer-group"></i>
+        <span>All Topics</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-progress">
+      <div class="progress-label">
+        <span>Overall Progress</span>
+        <span id="sidebarProgressPct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="sidebarProgressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="topic-tree" id="topicTree"></div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="topbar-breadcrumb" id="topbarBreadcrumb">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn-icon" onclick="toggleDarkMode()" title="Toggle theme">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+        <div class="xp-badge">
+          <i class="fas fa-star"></i>
+          <span id="xpDisplay">0 XP</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- VIEW: DASHBOARD -->
+    <section class="view active" id="view-dashboard">
+      <div class="dashboard-hero">
+        <div class="hero-text">
+          <h1 id="heroGreeting">Welcome back, Learner! 👋</h1>
+          <p id="heroSubtitle">Ready to continue your learning journey?</p>
+        </div>
+        <div class="hero-mascot">
+          <div class="mascot-bubble" id="mascotBubble">
+            <p id="mascotText">Hi there! I'm your tutor. Let's start learning together! 🚀</p>
+          </div>
+          <div class="mascot">🦉</div>
+        </div>
+      </div>
+
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-icon completed"><i class="fas fa-check-circle"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statCompleted">0</span>
+            <span class="stat-label">Lessons Done</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon streak"><i class="fas fa-fire"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statStreak">0</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon xp"><i class="fas fa-star"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statXP">0</span>
+            <span class="stat-label">XP Earned</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon quiz"><i class="fas fa-trophy"></i></div>
+          <div class="stat-info">
+            <span class="stat-num" id="statQuizScore">-</span>
+            <span class="stat-label">Best Quiz</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="continue-section">
+        <h2>Continue Learning</h2>
+        <div class="continue-card" id="continueCard" onclick="showView('lesson')">
+          <div class="continue-icon" id="continueIcon">📚</div>
+          <div class="continue-info">
+            <div class="continue-topic" id="continueTopic">Topic 1: Payload CMS</div>
+            <div class="continue-lesson" id="continueLessonTitle">Lesson 1: What is a CMS?</div>
+            <div class="continue-progress">
+              <div class="mini-progress">
+                <div class="mini-fill" id="continueProgressFill" style="width:0%"></div>
+              </div>
+              <span id="continueProgressPct">0% complete</span>
+            </div>
+          </div>
+          <button class="btn-continue">
+            <i class="fas fa-play"></i> Continue
+          </button>
+        </div>
+      </div>
+
+      <div class="topics-overview">
+        <h2>All Topics</h2>
+        <div class="topics-grid" id="dashboardTopicsGrid"></div>
+      </div>
+    </section>
+
+    <!-- VIEW: LESSON -->
+    <section class="view" id="view-lesson">
+      <div class="lesson-layout">
+        <!-- Lesson Main Panel -->
+        <div class="lesson-panel">
+          <div class="lesson-header">
+            <div class="lesson-meta">
+              <span class="lesson-topic-tag" id="lessonTopicTag">Payload CMS</span>
+              <span class="lesson-num" id="lessonNum">Lesson 1</span>
+            </div>
+            <h1 class="lesson-title" id="lessonTitle">What is a CMS?</h1>
+            <div class="lesson-xp">+<span id="lessonXPReward">10</span> XP on completion</div>
+          </div>
+
+          <div class="lesson-body" id="lessonBody">
+            <!-- Lesson content injected here -->
+          </div>
+
+          <div class="lesson-nav-buttons">
+            <button class="btn-secondary" id="btnPrevLesson" onclick="prevLesson()">
+              <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn-primary" id="btnNextLesson" onclick="nextLesson()">
+              Next Lesson <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Lesson Sidebar -->
+        <div class="lesson-sidebar-panel">
+          <div class="tutor-panel">
+            <div class="tutor-header">
+              <span class="tutor-avatar">🦉</span>
+              <span class="tutor-name">Ollie the Owl</span>
+              <span class="tutor-dot"></span>
+            </div>
+            <div class="tutor-messages" id="tutorMessages">
+              <div class="tutor-msg">
+                <p>Hello! I'm Ollie, your personal tutor! I'll guide you through each lesson. Feel free to ask me anything! 😊</p>
+              </div>
+            </div>
+            <div class="tutor-input-area">
+              <input type="text" id="tutorInput" placeholder="Ask Ollie something..." onkeydown="if(event.key==='Enter') sendTutorMessage()"/>
+              <button onclick="sendTutorMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+
+          <div class="lesson-checklist" id="lessonChecklist">
+            <h4>Lesson Checklist</h4>
+            <div id="checklistItems"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: PROGRESS -->
+    <section class="view" id="view-progress">
+      <div class="progress-header">
+        <h1>My Progress</h1>
+        <p>Track every lesson and quiz result</p>
+      </div>
+      <div class="progress-content" id="progressContent"></div>
+    </section>
+
+    <!-- VIEW: TOPICS -->
+    <section class="view" id="view-topics">
+      <div class="topics-header">
+        <h1>All Topics</h1>
+        <p>Select any topic to jump to it</p>
+      </div>
+      <div class="all-topics-grid" id="allTopicsGrid"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- QUIZ MODAL -->
+<div class="modal-overlay" id="quizModal">
+  <div class="modal quiz-modal">
+    <div class="modal-header">
+      <div class="quiz-icon">🧠</div>
+      <h2 id="quizTitle">Quick Quiz!</h2>
+      <p id="quizSubtitle">Let's see what you've learned</p>
+    </div>
+    <div class="quiz-body" id="quizBody"></div>
+    <div class="quiz-footer">
+      <button class="btn-secondary" onclick="closeModal('quizModal')">Later</button>
+      <button class="btn-primary" id="btnSubmitQuiz" onclick="submitQuiz()">Submit Answer</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEEDBACK MODAL -->
+<div class="modal-overlay" id="feedbackModal">
+  <div class="modal feedback-modal">
+    <div class="feedback-icon" id="feedbackIcon">✅</div>
+    <h2 id="feedbackTitle">Great job!</h2>
+    <p id="feedbackMessage"></p>
+    <div class="feedback-xp" id="feedbackXP"></div>
+    <button class="btn-primary" onclick="closeModal('feedbackModal')">Continue</button>
+  </div>
+</div>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
