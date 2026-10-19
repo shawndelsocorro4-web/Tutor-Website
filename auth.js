@@ -1,0 +1,486 @@
+/* ===================================================================
+   auth.js — KFL Learning Hub Supabase Client & Authentication Layer
+   =================================================================== */
+
+const SUPABASE_CONFIG = {
+  url: 'https://mbqgxfhvtbkeutinpfbr.supabase.co',
+  publishableKey: 'sb_publishable_L1oofLmbuY_WBUXG-4Df2Q_-i_q7aLX'
+};
+
+// Initialize Supabase Client
+let sbClient = null;
+let currentUser = null;
+let currentProfile = null;
+let cloudSyncStatus = 'offline'; // 'online', 'syncing', 'offline', 'error'
+
+function initSupabase() {
+  try {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      sbClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.publishableKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      });
+      console.log('✅ Supabase Client initialized successfully');
+      updateCloudSyncStatus('online', 'Cloud Ready');
+      return true;
+    } else {
+      console.warn('⚠️ Supabase library not loaded yet or unavailable. Operating in local mode.');
+      updateCloudSyncStatus('offline', 'Local / Offline');
+      return false;
+    }
+  } catch (err) {
+    console.error('❌ Supabase init error:', err);
+    updateCloudSyncStatus('error', 'Sync Error');
+    return false;
+  }
+}
+
+// UI Status Badge updater
+function updateCloudSyncStatus(status, label) {
+  cloudSyncStatus = status;
+  const statusEl = document.getElementById('cloudSyncBadge');
+  if (!statusEl) return;
+  
+  statusEl.className = 'cloud-sync-badge ' + status;
+  statusEl.innerHTML = `
+    <span class="sync-dot"></span>
+    <span class="sync-label">${label || (status === 'online' ? 'Cloud Connected' : status === 'syncing' ? 'Syncing...' : 'Local Mode')}</span>
+  `;
+}
+
+// ===== AUTH METHODS =====
+
+// 1. Sign Up
+async function authSignUp(email, password, name, username, avatar = '👨‍💻') {
+  if (!sbClient) throw new Error('Supabase client is not ready.');
+  updateCloudSyncStatus('syncing', 'Creating account...');
+  
+  const { data, error } = await sbClient.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        name: name || 'Learner',
+        username: username || ('user_' + Math.floor(Math.random() * 10000)),
+        avatar: avatar || '👨‍💻'
+      }
+    }
+  });
+
+  if (error) {
+    updateCloudSyncStatus('online', 'Cloud Ready');
+    throw error;
+  }
+
+  // If user signed up and session exists immediately
+  if (data?.user) {
+    currentUser = data.user;
+    await syncProfileFromCloud(data.user.id, { name, username, avatar });
+  }
+
+  updateCloudSyncStatus('online', 'Cloud Connected');
+  return data;
+}
+
+// 2. Sign In
+async function authSignIn(email, password) {
+  if (!sbClient) throw new Error('Supabase client is not ready.');
+  updateCloudSyncStatus('syncing', 'Signing in...');
+
+  const { data, error } = await sbClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    updateCloudSyncStatus('online', 'Cloud Ready');
+    throw error;
+  }
+
+  if (data?.user) {
+    currentUser = data.user;
+    await loadFullUserData(data.user.id);
+  }
+
+  updateCloudSyncStatus('online', 'Cloud Connected');
+  return data;
+}
+
+// 3. Sign Out
+async function authSignOut() {
+  if (!sbClient) return;
+  updateCloudSyncStatus('syncing', 'Signing out...');
+  try {
+    await sbClient.auth.signOut();
+  } catch (e) {
+    console.error('Sign out error:', e);
+  }
+  currentUser = null;
+  currentProfile = null;
+  updateCloudSyncStatus('offline', 'Signed Out');
+  
+  // Reset app state to guest
+  if (typeof resetAppStateToGuest === 'function') {
+    resetAppStateToGuest();
+  }
+}
+
+// 4. Send Password Reset Email
+async function authResetPassword(email) {
+  if (!sbClient) throw new Error('Supabase client is not ready.');
+  const { data, error } = await sbClient.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname
+  });
+  if (error) throw error;
+  return data;
+}
+
+// 5. Update Password
+async function authUpdatePassword(newPassword) {
+  if (!sbClient) throw new Error('Supabase client is not ready.');
+  const { data, error } = await sbClient.auth.updateUser({ password: newPassword });
+  if (error) throw error;
+  return data;
+}
+
+// ===== CLOUD DATA SYNC =====
+
+// Ensure profile row exists and load it
+async function syncProfileFromCloud(userId, defaultMeta = {}) {
+  if (!sbClient || !userId) return null;
+
+  try {
+    const { data, error } = await sbClient
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.warn('Profile fetch note:', error.message);
+    }
+
+    if (data) {
+      currentProfile = data;
+      return data;
+    }
+
+    // If profile doesn't exist yet (e.g. Trigger didn't run), create one
+    const newProfile = {
+      id: userId,
+      name: defaultMeta.name || 'Learner',
+      username: defaultMeta.username || ('user_' + Math.floor(Math.random() * 10000)),
+      avatar: defaultMeta.avatar || '👨‍💻',
+      xp: 0,
+      streak: 1,
+      level: 1
+    };
+
+    const { data: inserted, error: insertError } = await sbClient
+      .from('profiles')
+      .upsert(newProfile)
+      .select()
+      .maybeSingle();
+
+    if (insertError) {
+      console.warn('Profile upsert note:', insertError.message);
+      return newProfile;
+    }
+
+    currentProfile = inserted || newProfile;
+    return currentProfile;
+  } catch (err) {
+    console.warn('syncProfileFromCloud fallback:', err);
+    return null;
+  }
+}
+
+// Save profile updates to Supabase
+async function cloudUpdateProfile(updates) {
+  if (!sbClient || !currentUser) return false;
+  try {
+    const { data, error } = await sbClient
+      .from('profiles')
+      .update({
+        ...updates,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', currentUser.id);
+
+    if (error) throw error;
+    if (currentProfile) {
+      Object.assign(currentProfile, updates);
+    }
+    return true;
+  } catch (e) {
+    console.warn('cloudUpdateProfile error:', e.message);
+    return false;
+  }
+}
+
+// Save Lesson Completion
+async function cloudSaveLessonProgress(topicId, lessonId, isCompleted = true, timeSpent = 0, confidence = null) {
+  if (!sbClient || !currentUser) return false;
+  try {
+    const payload = {
+      user_id: currentUser.id,
+      topic_id: topicId,
+      lesson_id: lessonId,
+      completed: isCompleted,
+      completed_at: isCompleted ? new Date().toISOString() : null,
+      time_spent: timeSpent || 60,
+      updated_at: new Date().toISOString()
+    };
+    if (confidence) payload.confidence = confidence;
+
+    const { error } = await sbClient
+      .from('lesson_progress')
+      .upsert(payload, { onConflict: 'user_id,topic_id,lesson_id' });
+
+    if (error) throw error;
+
+    // Record activity log
+    await cloudRecordActivity('completed_lesson', topicId, lessonId, `Completed lesson: ${lessonId}`);
+    return true;
+  } catch (e) {
+    console.warn('cloudSaveLessonProgress error:', e.message);
+    return false;
+  }
+}
+
+// Save Quiz Score
+async function cloudSaveQuizResult(topicId, lessonId, score, totalQuestions = 1, passed = false) {
+  if (!sbClient || !currentUser) return false;
+  try {
+    const payload = {
+      user_id: currentUser.id,
+      topic_id: topicId,
+      lesson_id: lessonId,
+      score: Math.round(score),
+      total_questions: totalQuestions,
+      passed: passed,
+      updated_at: new Date().toISOString()
+    };
+
+    const { error } = await sbClient
+      .from('quiz_results')
+      .upsert(payload, { onConflict: 'user_id,topic_id,lesson_id' });
+
+    if (error) {
+      // If table doesn't have unique constraint on (user_id, topic_id, lesson_id), insert regular
+      await sbClient.from('quiz_results').insert(payload);
+    }
+
+    await cloudRecordActivity(passed ? 'passed_quiz' : 'attempted_quiz', topicId, lessonId, `Quiz score: ${score}%`);
+    return true;
+  } catch (e) {
+    console.warn('cloudSaveQuizResult error:', e.message);
+    return false;
+  }
+}
+
+// Record Activity (History / Heatmap)
+async function cloudRecordActivity(action, topicId = null, lessonId = null, details = null) {
+  if (!sbClient || !currentUser) return;
+  try {
+    await sbClient.from('study_history').insert({
+      user_id: currentUser.id,
+      topic_id: topicId,
+      lesson_id: lessonId,
+      action: action,
+      details: details,
+      created_at: new Date().toISOString()
+    });
+  } catch (e) {
+    // Non-critical, ignore
+  }
+}
+
+// Save Achievement Unlock
+async function cloudAwardAchievement(badgeId, badgeName, badgeIcon) {
+  if (!sbClient || !currentUser) return false;
+  try {
+    const { error } = await sbClient.from('achievements').upsert({
+      user_id: currentUser.id,
+      badge_id: badgeId,
+      badge_name: badgeName,
+      badge_icon: badgeIcon,
+      unlocked_at: new Date().toISOString()
+    }, { onConflict: 'user_id,badge_id' });
+
+    if (!error) {
+      await cloudRecordActivity('earned_badge', null, null, `Earned badge: ${badgeName}`);
+      return true;
+    }
+  } catch (e) {
+    console.warn('cloudAwardAchievement error:', e.message);
+  }
+  return false;
+}
+
+// Fetch Leaderboard (Public Profile Info)
+async function cloudFetchLeaderboard(limit = 20) {
+  if (!sbClient) return [];
+  try {
+    const { data, error } = await sbClient
+      .from('profiles')
+      .select('id, name, username, avatar, xp, streak, level')
+      .order('xp', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return data || [];
+  } catch (e) {
+    console.warn('cloudFetchLeaderboard error:', e.message);
+    return [];
+  }
+}
+
+// Fetch Admin Stats (Aggregate counts)
+async function cloudFetchAdminStats() {
+  if (!sbClient) return null;
+  try {
+    const [profilesRes, progressRes, quizRes] = await Promise.all([
+      sbClient.from('profiles').select('id, xp, streak, created_at, role', { count: 'exact' }),
+      sbClient.from('lesson_progress').select('id, completed', { count: 'exact' }),
+      sbClient.from('quiz_results').select('id, passed, score', { count: 'exact' })
+    ]);
+
+    const totalStudents = profilesRes.count || (profilesRes.data?.length) || 0;
+    const totalLessonsDone = progressRes.count || (progressRes.data?.filter(p => p.completed).length) || 0;
+    const totalQuizzes = quizRes.count || (quizRes.data?.length) || 0;
+    const passedQuizzes = quizRes.data?.filter(q => q.passed).length || 0;
+    const passRate = totalQuizzes > 0 ? Math.round((passedQuizzes / totalQuizzes) * 100) : 0;
+
+    let totalXP = 0;
+    if (profilesRes.data) {
+      totalXP = profilesRes.data.reduce((acc, p) => acc + (p.xp || 0), 0);
+    }
+
+    return {
+      totalStudents,
+      totalLessonsDone,
+      totalQuizzes,
+      passRate,
+      totalXP,
+      avgXP: totalStudents > 0 ? Math.round(totalXP / totalStudents) : 0,
+      students: profilesRes.data || []
+    };
+  } catch (e) {
+    console.warn('cloudFetchAdminStats error:', e.message);
+    return null;
+  }
+}
+
+// Load all user data and sync with local state
+async function loadFullUserData(userId) {
+  if (!sbClient || !userId) return;
+  updateCloudSyncStatus('syncing', 'Loading your progress...');
+
+  try {
+    // 1. Fetch Profile
+    const profile = await syncProfileFromCloud(userId);
+
+    // 2. Fetch Progress
+    const { data: progressData } = await sbClient
+      .from('lesson_progress')
+      .select('*')
+      .eq('user_id', userId);
+
+    // 3. Fetch Quizzes
+    const { data: quizData } = await sbClient
+      .from('quiz_results')
+      .select('*')
+      .eq('user_id', userId);
+
+    // 4. Fetch Achievements
+    const { data: badgesData } = await sbClient
+      .from('achievements')
+      .select('*')
+      .eq('user_id', userId);
+
+    // Convert into App State format
+    const completedMap = {};
+    if (progressData) {
+      progressData.forEach(item => {
+        if (item.completed) completedMap[item.lesson_id] = true;
+      });
+    }
+
+    const quizMap = {};
+    if (quizData) {
+      quizData.forEach(item => {
+        quizMap[item.lesson_id] = item.score;
+      });
+    }
+
+    const badgesMap = {};
+    if (badgesData) {
+      badgesData.forEach(item => {
+        badgesMap[item.badge_id] = true;
+      });
+    }
+
+    // Merge into app state
+    if (typeof applyCloudDataToState === 'function') {
+      applyCloudDataToState({
+        userId,
+        name: profile?.name || 'Learner',
+        username: profile?.username || 'learner',
+        avatar: profile?.avatar || '👨‍💻',
+        role: profile?.role || 'student',
+        xp: profile?.xp || 0,
+        streak: profile?.streak || 1,
+        level: profile?.level || 1,
+        completedLessons: completedMap,
+        quizScores: quizMap,
+        achievements: badgesMap,
+        confidenceScores: profile?.confidence_scores || {}
+      });
+    }
+
+    updateCloudSyncStatus('online', 'Cloud Connected');
+  } catch (err) {
+    console.error('loadFullUserData error:', err);
+    updateCloudSyncStatus('online', 'Cloud Ready');
+  }
+}
+
+// Auto-check session on load
+window.addEventListener('DOMContentLoaded', async () => {
+  const ready = initSupabase();
+  if (!ready) return;
+
+  try {
+    const { data } = await sbClient.auth.getSession();
+    if (data?.session?.user) {
+      currentUser = data.session.user;
+      console.log('Session restored for:', currentUser.email);
+      await loadFullUserData(currentUser.id);
+    } else {
+      console.log('No active session, continuing as guest/local');
+      updateCloudSyncStatus('online', 'Guest (Not Logged In)');
+    }
+
+    // Listen for auth state changes
+    sbClient.auth.onAuthStateChange(async (event, session) => {
+      console.log('Supabase Auth Event:', event);
+      if (event === 'SIGNED_IN' && session?.user) {
+        currentUser = session.user;
+        await loadFullUserData(session.user.id);
+      } else if (event === 'SIGNED_OUT') {
+        currentUser = null;
+        currentProfile = null;
+        updateCloudSyncStatus('online', 'Guest (Logged Out)');
+        if (typeof resetAppStateToGuest === 'function') {
+          resetAppStateToGuest();
+        }
+      }
+    });
+  } catch (err) {
+    console.warn('Session check error:', err);
+  }
+});
