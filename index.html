@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LearnPath — Your Personal Tutor</title>
+  <title>KFL Learning Hub — Your Personal Learning Platform</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png"/>
+  <link rel="shortcut icon" href="favicon.ico"/>
+  <link rel="apple-touch-icon" href="favicon.png"/>
   <link rel="stylesheet" href="style.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
@@ -15,14 +18,16 @@
 <div id="splashScreen" class="splash-screen">
   <div class="splash-content">
     <div class="splash-logo">
-      <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
-      <h1>LearnPath</h1>
+      <div class="splash-brand-badge">
+        <img src="logo.png" alt="KFL Logo" class="splash-logo-img"/>
+      </div>
+      <h1 class="brand-name-splash">KFL</h1>
     </div>
-    <p class="splash-tagline">Your Personal AI-Powered Tutor</p>
+    <p class="splash-tagline">Personal Learning Platform</p>
     <div class="splash-loader">
       <div class="loader-bar"></div>
     </div>
-    <p class="splash-sub">Loading your learning journey...</p>
+    <p class="splash-sub">Loading your personal tutor and curriculum...</p>
   </div>
   <div class="splash-particles" id="splashParticles"></div>
 </div>
@@ -34,24 +39,37 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">
-        <div class="logo-icon-sm"><i class="fas fa-graduation-cap"></i></div>
-        <span>LearnPath</span>
+        <div class="sidebar-logo-badge">
+          <img src="logo.png" alt="KFL Logo" class="sidebar-logo-img"/>
+        </div>
+        <div class="brand-text-col">
+          <span class="brand-title">KFL</span>
+          <span class="brand-subtitle">Learning Hub</span>
+        </div>
       </div>
-      <button class="sidebar-toggle" id="sidebarToggle">
+      <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Toggle sidebar">
         <i class="fas fa-bars"></i>
       </button>
     </div>
 
-    <div class="sidebar-profile">
-      <div class="avatar">
-        <i class="fas fa-user-astronaut"></i>
-      </div>
+    <!-- Student Profile Card in Sidebar -->
+    <div class="sidebar-profile" id="sidebarProfile" onclick="handleProfileClick()" title="View profile or switch account">
+      <div class="avatar" id="sidebarAvatar">👨‍💻</div>
       <div class="profile-info">
-        <span class="profile-name">Learner</span>
-        <span class="profile-level">Beginner Explorer</span>
+        <div class="profile-name-row">
+          <span class="profile-name" id="sidebarProfileName">Learner</span>
+          <button class="btn-profile-edit" onclick="event.stopPropagation(); openEditNameModal();" title="Edit your name">
+            <i class="fas fa-pen"></i>
+          </button>
+        </div>
+        <span class="profile-level" id="sidebarProfileLevel">Beginner Explorer</span>
       </div>
+      <button class="btn-switch-account" onclick="event.stopPropagation(); openAuthModal();" title="Account & Cloud Sync">
+        <i class="fas fa-user-circle"></i>
+      </button>
     </div>
 
+    <!-- Navigation Menu -->
     <nav class="sidebar-nav">
       <button class="nav-item active" data-view="dashboard" onclick="showView('dashboard')">
         <i class="fas fa-home"></i>
@@ -69,11 +87,27 @@
         <i class="fas fa-layer-group"></i>
         <span>All Topics</span>
       </button>
+      <button class="nav-item" data-view="leaderboard" onclick="showView('leaderboard')">
+        <i class="fas fa-medal"></i>
+        <span>Leaderboard</span>
+      </button>
+      <button class="nav-item" data-view="achievements" onclick="showView('achievements')">
+        <i class="fas fa-award"></i>
+        <span>Badges</span>
+      </button>
+      <button class="nav-item" data-view="profile" onclick="showView('profile')">
+        <i class="fas fa-id-card"></i>
+        <span>Student Profile</span>
+      </button>
+      <button class="nav-item" data-view="admin" onclick="showView('admin')">
+        <i class="fas fa-shield-alt"></i>
+        <span>Admin Hub</span>
+      </button>
     </nav>
 
     <div class="sidebar-progress">
       <div class="progress-label">
-        <span>Overall Progress</span>
+        <span>Curriculum Mastery</span>
         <span id="sidebarProgressPct">0%</span>
       </div>
       <div class="progress-track">
@@ -92,11 +126,29 @@
       <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
       </button>
+      
       <div class="topbar-breadcrumb" id="topbarBreadcrumb">Dashboard</div>
+
       <div class="topbar-actions">
+        <!-- Cloud Sync Pill -->
+        <div id="cloudSyncBadge" class="cloud-sync-badge offline" onclick="openAuthModal()" title="Click to Sign In or sync with Supabase">
+          <span class="sync-dot"></span>
+          <span class="sync-label">Local Mode</span>
+        </div>
+
+        <!-- Dark Mode Toggle -->
         <button class="btn-icon" onclick="toggleDarkMode()" title="Toggle theme">
           <i class="fas fa-moon" id="themeIcon"></i>
         </button>
+
+        <!-- User Pill -->
+        <div class="user-pill" onclick="handleUserPillClick()" title="Student account options">
+          <span class="user-pill-avatar" id="topbarAvatar">👨‍💻</span>
+          <span class="user-pill-name" id="topbarUserName">Learner</span>
+          <i class="fas fa-caret-down"></i>
+        </div>
+
+        <!-- XP Badge -->
         <div class="xp-badge">
           <i class="fas fa-star"></i>
           <span id="xpDisplay">0 XP</span>
@@ -109,16 +161,35 @@
       <div class="dashboard-hero">
         <div class="hero-text">
           <h1 id="heroGreeting">Welcome back, Learner! 👋</h1>
-          <p id="heroSubtitle">Ready to continue your learning journey?</p>
+          <p id="heroSubtitle">Your personalized, step-by-step path to master tech skills</p>
         </div>
         <div class="hero-mascot">
           <div class="mascot-bubble" id="mascotBubble">
-            <p id="mascotText">Hi there! I'm your tutor. Let's start learning together! 🚀</p>
+            <p id="mascotText">Hi there! I'm Ollie, your personal tutor. Take one lesson at a time! 🦉</p>
           </div>
           <div class="mascot">🦉</div>
         </div>
       </div>
 
+      <!-- Personalized Learning Recommendation -->
+      <div class="recommended-card" id="recommendedCard">
+        <div class="recommended-header">
+          <span class="recommended-badge"><i class="fas fa-compass"></i> Recommended Next Step</span>
+          <span class="recommended-reason" id="recommendedReason">Personalized for your progress</span>
+        </div>
+        <div class="recommended-body">
+          <div class="recommended-icon" id="recommendedIcon">🎯</div>
+          <div class="recommended-info">
+            <h3 id="recommendedTitle">Lesson 1: What is a CMS?</h3>
+            <p id="recommendedDesc">Start with Topic 1 to build your web technology foundation step by step.</p>
+          </div>
+          <button class="btn-primary" id="btnRecommendedAction" onclick="takeRecommendedAction()">
+            Continue <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
       <div class="dashboard-stats">
         <div class="stat-card">
           <div class="stat-icon completed"><i class="fas fa-check-circle"></i></div>
@@ -145,15 +216,16 @@
           <div class="stat-icon quiz"><i class="fas fa-trophy"></i></div>
           <div class="stat-info">
             <span class="stat-num" id="statQuizScore">-</span>
-            <span class="stat-label">Best Quiz</span>
+            <span class="stat-label">Quiz Avg</span>
           </div>
         </div>
       </div>
 
+      <!-- Continue Section -->
       <div class="continue-section">
         <h2>Continue Learning</h2>
         <div class="continue-card" id="continueCard" onclick="showView('lesson')">
-          <div class="continue-icon" id="continueIcon">📚</div>
+          <div class="continue-icon" id="continueIcon">📦</div>
           <div class="continue-info">
             <div class="continue-topic" id="continueTopic">Topic 1: Payload CMS</div>
             <div class="continue-lesson" id="continueLessonTitle">Lesson 1: What is a CMS?</div>
@@ -170,8 +242,9 @@
         </div>
       </div>
 
+      <!-- Topics Overview -->
       <div class="topics-overview">
-        <h2>All Topics</h2>
+        <h2>Curriculum & Mastery Overview</h2>
         <div class="topics-grid" id="dashboardTopicsGrid"></div>
       </div>
     </section>
@@ -194,6 +267,40 @@
             <!-- Lesson content injected here -->
           </div>
 
+          <!-- Confidence Check Widget -->
+          <div class="confidence-widget" id="lessonConfidenceWidget">
+            <div class="confidence-header">
+              <span class="conf-icon">🧠</span>
+              <div>
+                <h4 class="conf-title">Confidence Check</h4>
+                <p class="conf-sub">How confident are you with this lesson? Ollie adapts your tutoring path based on this:</p>
+              </div>
+            </div>
+            <div class="confidence-options">
+              <button class="conf-btn" data-level="1" onclick="rateConfidence('dont_understand')" title="I need simpler explanations">
+                <span class="conf-emoji">😕</span>
+                <span class="conf-text">I don't understand</span>
+              </button>
+              <button class="conf-btn" data-level="2" onclick="rateConfidence('little')" title="I understand the basics">
+                <span class="conf-emoji">😐</span>
+                <span class="conf-text">I understand a little</span>
+              </button>
+              <button class="conf-btn" data-level="3" onclick="rateConfidence('understand')" title="I get it!">
+                <span class="conf-emoji">🙂</span>
+                <span class="conf-text">I understand</span>
+              </button>
+              <button class="conf-btn" data-level="4" onclick="rateConfidence('can_explain')" title="I could teach someone else">
+                <span class="conf-emoji">😎</span>
+                <span class="conf-text">I can explain it</span>
+              </button>
+              <button class="conf-btn" data-level="5" onclick="rateConfidence('can_build')" title="Ready to build standalone projects!">
+                <span class="conf-emoji">🔥</span>
+                <span class="conf-text">I can build it myself</span>
+              </button>
+            </div>
+            <div id="confidenceFeedback" class="confidence-feedback-msg"></div>
+          </div>
+
           <div class="lesson-nav-buttons">
             <button class="btn-secondary" id="btnPrevLesson" onclick="prevLesson()">
               <i class="fas fa-arrow-left"></i> Previous
@@ -209,17 +316,24 @@
           <div class="tutor-panel">
             <div class="tutor-header">
               <span class="tutor-avatar">🦉</span>
-              <span class="tutor-name">Ollie the Owl</span>
-              <span class="tutor-dot"></span>
+              <div class="tutor-title-col">
+                <span class="tutor-name">Ollie the Owl</span>
+                <span class="tutor-status"><span class="tutor-dot"></span> Personal Tutor</span>
+              </div>
             </div>
             <div class="tutor-messages" id="tutorMessages">
               <div class="tutor-msg">
-                <p>Hello! I'm Ollie, your personal tutor! I'll guide you through each lesson. Feel free to ask me anything! 😊</p>
+                <p>Hello! I'm Ollie, your personal tutor! Say <em>"I don't understand"</em> anytime if you need a simpler breakdown, analogy, or more examples! 😊</p>
               </div>
             </div>
+            <div class="tutor-quick-prompts">
+              <button class="quick-chip" onclick="askTutorQuick('I do not understand')">"I don't understand"</button>
+              <button class="quick-chip" onclick="askTutorQuick('Give me an analogy')">"Analogy please"</button>
+              <button class="quick-chip" onclick="askTutorQuick('Give me a hint')">"Give me a hint"</button>
+            </div>
             <div class="tutor-input-area">
-              <input type="text" id="tutorInput" placeholder="Ask Ollie something..." onkeydown="if(event.key==='Enter') sendTutorMessage()"/>
-              <button onclick="sendTutorMessage()"><i class="fas fa-paper-plane"></i></button>
+              <input type="text" id="tutorInput" placeholder="Ask Ollie anything..." onkeydown="if(event.key==='Enter') sendTutorMessage()"/>
+              <button onclick="sendTutorMessage()" title="Send"><i class="fas fa-paper-plane"></i></button>
             </div>
           </div>
 
@@ -234,54 +348,381 @@
     <!-- VIEW: PROGRESS -->
     <section class="view" id="view-progress">
       <div class="progress-header">
-        <h1>My Progress</h1>
-        <p>Track every lesson and quiz result</p>
+        <h1>My Learning Progress & Mastery</h1>
+        <p>Real-time mastery index computed across lessons, quizzes, practice, and confidence</p>
       </div>
+      <div class="mastery-summary-cards" id="masterySummaryCards"></div>
       <div class="progress-content" id="progressContent"></div>
     </section>
 
     <!-- VIEW: TOPICS -->
     <section class="view" id="view-topics">
       <div class="topics-header">
-        <h1>All Topics</h1>
-        <p>Select any topic to jump to it</p>
+        <h1>All Curriculum Topics</h1>
+        <p>10 Comprehensive Modules from Headless CMS to Full Stack Capstone</p>
       </div>
       <div class="all-topics-grid" id="allTopicsGrid"></div>
+    </section>
+
+    <!-- VIEW: LEADERBOARD (NEW) -->
+    <section class="view" id="view-leaderboard">
+      <div class="view-header-banner">
+        <div class="header-icon">🏆</div>
+        <div>
+          <h1>Community Leaderboard</h1>
+          <p>Learn together, build your daily streak, and celebrate milestones with other learners</p>
+        </div>
+      </div>
+      
+      <div class="leaderboard-container">
+        <div class="leaderboard-tabs">
+          <button class="active" onclick="filterLeaderboard('all')">All-Time XP</button>
+          <button onclick="filterLeaderboard('streak')">Longest Streaks</button>
+        </div>
+        <div class="leaderboard-card">
+          <div class="leaderboard-table-header">
+            <span class="col-rank">Rank</span>
+            <span class="col-student">Student</span>
+            <span class="col-level">Level</span>
+            <span class="col-streak">Streak</span>
+            <span class="col-xp">Total XP</span>
+          </div>
+          <div class="leaderboard-list" id="leaderboardList">
+            <div class="loading-spinner">Loading community leaderboard...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: ACHIEVEMENTS (NEW) -->
+    <section class="view" id="view-achievements">
+      <div class="view-header-banner">
+        <div class="header-icon">🎖️</div>
+        <div>
+          <h1>Badges & Milestones</h1>
+          <p>Unlock achievements as you master topics, score 100% on quizzes, and maintain daily learning streaks</p>
+        </div>
+      </div>
+      <div class="badges-stats-row" id="badgesStatsRow"></div>
+      <div class="badges-grid" id="badgesGrid"></div>
+    </section>
+
+    <!-- VIEW: STUDENT PROFILE (NEW) -->
+    <section class="view" id="view-profile">
+      <div class="profile-header-card">
+        <div class="profile-avatar-large" id="profileLargeAvatar">👨‍💻</div>
+        <div class="profile-main-meta">
+          <div class="profile-name-row">
+            <h1 id="profileFullName">Learner</h1>
+            <span class="role-badge" id="profileRoleBadge">Student</span>
+          </div>
+          <p class="profile-username" id="profileUsername">@learner</p>
+          <p class="profile-join-date" id="profileJoinDate"><i class="far fa-calendar-alt"></i> Member since October 2026</p>
+        </div>
+        <div class="profile-actions">
+          <button class="btn-secondary" onclick="openEditNameModal()"><i class="fas fa-edit"></i> Edit Profile</button>
+          <button class="btn-danger-outline" onclick="handleLogoutClick()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <div class="profile-stats-card">
+          <h3><i class="fas fa-chart-pie"></i> Learning Performance</h3>
+          <div class="profile-stat-rows">
+            <div class="p-stat-row"><span>Total XP</span><strong id="pStatXP">0 XP</strong></div>
+            <div class="p-stat-row"><span>Current Level</span><strong id="pStatLevel">Level 1</strong></div>
+            <div class="p-stat-row"><span>Active Streak</span><strong id="pStatStreak">1 Day</strong></div>
+            <div class="p-stat-row"><span>Lessons Completed</span><strong id="pStatLessons">0 / 88</strong></div>
+            <div class="p-stat-row"><span>Quizzes Passed</span><strong id="pStatQuizzes">0</strong></div>
+            <div class="p-stat-row"><span>Average Quiz Score</span><strong id="pStatAvgScore">0%</strong></div>
+            <div class="p-stat-row"><span>Badges Unlocked</span><strong id="pStatBadges">0 / 12</strong></div>
+          </div>
+        </div>
+
+        <div class="profile-activity-card">
+          <h3><i class="fas fa-history"></i> Recent Study History</h3>
+          <div class="activity-timeline" id="profileActivityTimeline">
+            <div class="empty-state">No recent activity recorded yet. Start a lesson to build your history!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: ADMIN DASHBOARD (NEW) -->
+    <section class="view" id="view-admin">
+      <div class="view-header-banner">
+        <div class="header-icon">🛡️</div>
+        <div>
+          <h1>Instructor & Admin Hub</h1>
+          <p>Real-time analytics across all registered learners, curriculum completion rates, and quiz metrics</p>
+        </div>
+      </div>
+
+      <div id="adminAuthLock" class="admin-lock-card">
+        <div class="lock-icon">🔒</div>
+        <h2>Admin Authentication Required</h2>
+        <p>Enter the KFL Admin Passcode or log in with an administrator account to view learner metrics.</p>
+        <div class="admin-passcode-form">
+          <input type="password" id="adminPasscodeInput" placeholder="Enter admin passcode (e.g. kfladmin2026)" />
+          <button class="btn-primary" onclick="verifyAdminPasscode()">Unlock Admin Hub</button>
+        </div>
+      </div>
+
+      <div id="adminContent" class="admin-dashboard-content hidden">
+        <div class="admin-metrics-grid">
+          <div class="admin-metric-card">
+            <div class="metric-icon"><i class="fas fa-users"></i></div>
+            <div class="metric-num" id="adminTotalStudents">0</div>
+            <div class="metric-label">Total Students</div>
+          </div>
+          <div class="admin-metric-card">
+            <div class="metric-icon"><i class="fas fa-book-reader"></i></div>
+            <div class="metric-num" id="adminTotalLessons">0</div>
+            <div class="metric-label">Lessons Completed</div>
+          </div>
+          <div class="admin-metric-card">
+            <div class="metric-icon"><i class="fas fa-check-double"></i></div>
+            <div class="metric-num" id="adminPassRate">0%</div>
+            <div class="metric-label">Quiz Pass Rate (≥80%)</div>
+          </div>
+          <div class="admin-metric-card">
+            <div class="metric-icon"><i class="fas fa-star"></i></div>
+            <div class="metric-num" id="adminTotalXP">0</div>
+            <div class="metric-label">Total Community XP</div>
+          </div>
+        </div>
+
+        <div class="admin-roster-section">
+          <div class="roster-header">
+            <h3>Registered Student Roster</h3>
+            <button class="btn-secondary" onclick="refreshAdminData()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+          </div>
+          <div class="roster-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Username</th>
+                  <th>XP</th>
+                  <th>Level</th>
+                  <th>Streak</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="adminStudentRoster">
+                <tr><td colspan="7" style="text-align:center;">Loading roster...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
 </div>
 
-<!-- QUIZ MODAL -->
+<!-- ==========================================
+     MODALS
+     ========================================== -->
+
+<!-- 1. AUTH MODAL (Sign In, Sign Up, Forgot Password) -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal auth-modal" style="max-width:460px;">
+    <div class="modal-header">
+      <div class="quiz-icon">🔐</div>
+      <h2 id="authModalTitle">Sign In to KFL</h2>
+      <p id="authModalSub">Save your progress to the cloud and resume from any device</p>
+    </div>
+    
+    <div class="auth-tabs">
+      <button class="auth-tab-btn active" id="tabBtnSignIn" onclick="switchAuthTab('signin')">Sign In</button>
+      <button class="auth-tab-btn" id="tabBtnSignUp" onclick="switchAuthTab('signup')">Sign Up</button>
+      <button class="auth-tab-btn" id="tabBtnForgot" onclick="switchAuthTab('forgot')">Forgot</button>
+    </div>
+
+    <div class="modal-body" style="padding: 16px 28px 20px;">
+      <!-- Sign In Form -->
+      <form id="signInForm" onsubmit="event.preventDefault(); handleSignInSubmit();">
+        <label class="modal-label">Email Address:</label>
+        <input type="email" id="signInEmail" class="modal-text-input" placeholder="student@example.com" required />
+        
+        <label class="modal-label" style="margin-top:14px;">Password:</label>
+        <input type="password" id="signInPassword" class="modal-text-input" placeholder="••••••••" required />
+
+        <div id="authSignInError" class="auth-error-msg"></div>
+
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:18px;" id="btnSignInSubmit">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form id="signUpForm" class="hidden" onsubmit="event.preventDefault(); handleSignUpSubmit();">
+        <label class="modal-label">Full Name:</label>
+        <input type="text" id="signUpName" class="modal-text-input" placeholder="e.g. Maria Santos" required />
+
+        <label class="modal-label" style="margin-top:12px;">Username:</label>
+        <input type="text" id="signUpUsername" class="modal-text-input" placeholder="mariasantos" required />
+
+        <label class="modal-label" style="margin-top:12px;">Email Address:</label>
+        <input type="email" id="signUpEmail" class="modal-text-input" placeholder="maria@example.com" required />
+
+        <label class="modal-label" style="margin-top:12px;">Password (min 6 characters):</label>
+        <input type="password" id="signUpPassword" class="modal-text-input" placeholder="••••••••" minlength="6" required />
+
+        <label class="modal-label" style="margin-top:14px;">Choose Your Avatar:</label>
+        <div class="avatar-picker" id="signUpAvatarPicker">
+          <span class="avatar-opt selected" onclick="selectAvatar(this, 'signup')">👨‍💻</span>
+          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">👩‍💻</span>
+          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🦉</span>
+          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🚀</span>
+          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🌟</span>
+          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🎓</span>
+          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">⚡</span>
+          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🎨</span>
+        </div>
+
+        <div id="authSignUpError" class="auth-error-msg"></div>
+
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:18px;" id="btnSignUpSubmit">
+          <i class="fas fa-user-plus"></i> Create Cloud Account
+        </button>
+      </form>
+
+      <!-- Forgot Password Form -->
+      <form id="forgotForm" class="hidden" onsubmit="event.preventDefault(); handleForgotSubmit();">
+        <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:14px;">
+          Enter your email and we'll send you a secure link to reset your password.
+        </p>
+        <label class="modal-label">Email Address:</label>
+        <input type="email" id="forgotEmail" class="modal-text-input" placeholder="student@example.com" required />
+
+        <div id="authForgotError" class="auth-error-msg"></div>
+
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:18px;" id="btnForgotSubmit">
+          <i class="fas fa-paper-plane"></i> Send Reset Link
+        </button>
+      </form>
+
+      <!-- Guest / Offline Option -->
+      <div class="auth-divider">
+        <span>OR</span>
+      </div>
+      <button class="btn-secondary" style="width:100%;" onclick="continueAsGuest()">
+        <i class="fas fa-laptop-code"></i> Continue in Local Guest Mode
+      </button>
+    </div>
+
+    <div class="modal-footer" style="padding:12px 28px 20px;display:flex;justify-content:flex-end;">
+      <button class="btn-secondary" onclick="closeModal('authModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- 2. QUIZ MODAL (Single & Milestone Exams) -->
 <div class="modal-overlay" id="quizModal">
   <div class="modal quiz-modal">
     <div class="modal-header">
       <div class="quiz-icon">🧠</div>
-      <h2 id="quizTitle">Quick Quiz!</h2>
-      <p id="quizSubtitle">Let's see what you've learned</p>
+      <h2 id="quizTitle">Knowledge Check</h2>
+      <p id="quizSubtitle">Score 80% or higher to demonstrate mastery</p>
     </div>
     <div class="quiz-body" id="quizBody"></div>
     <div class="quiz-footer">
-      <button class="btn-secondary" onclick="closeModal('quizModal')">Later</button>
+      <button class="btn-secondary" onclick="closeModal('quizModal')">Review Lesson</button>
       <button class="btn-primary" id="btnSubmitQuiz" onclick="submitQuiz()">Submit Answer</button>
     </div>
   </div>
 </div>
 
-<!-- FEEDBACK MODAL -->
+<!-- 3. FEEDBACK MODAL (Celebration & XP) -->
 <div class="modal-overlay" id="feedbackModal">
   <div class="modal feedback-modal">
     <div class="feedback-icon" id="feedbackIcon">✅</div>
     <h2 id="feedbackTitle">Great job!</h2>
     <p id="feedbackMessage"></p>
     <div class="feedback-xp" id="feedbackXP"></div>
-    <button class="btn-primary" onclick="closeModal('feedbackModal')">Continue</button>
+    <button class="btn-primary" onclick="closeModal('feedbackModal')">Continue Learning</button>
   </div>
 </div>
+
+<!-- 4. BADGE UNLOCK MODAL (NEW) -->
+<div class="modal-overlay" id="badgeModal">
+  <div class="modal feedback-modal">
+    <div class="badge-unlock-anim">
+      <div class="feedback-icon" id="unlockedBadgeIcon">🏆</div>
+    </div>
+    <span class="badge-unlocked-tag">NEW ACHIEVEMENT UNLOCKED!</span>
+    <h2 id="unlockedBadgeTitle">Quiz Master</h2>
+    <p id="unlockedBadgeDesc">You scored 100% on a lesson quiz!</p>
+    <div class="feedback-xp">+25 Bonus XP</div>
+    <button class="btn-primary" onclick="closeModal('badgeModal')">Awesome!</button>
+  </div>
+</div>
+
+<!-- 5. EDIT PROFILE MODAL -->
+<div class="modal-overlay" id="editNameModal">
+  <div class="modal" style="max-width:440px;">
+    <div class="modal-header">
+      <div class="quiz-icon">✏️</div>
+      <h2>Edit Student Profile</h2>
+      <p>Update your display name and avatar</p>
+    </div>
+    <div class="modal-body" style="padding: 0 28px 20px;">
+      <label class="modal-label">Your Name:</label>
+      <input type="text" id="editAccountName" class="modal-text-input" placeholder="Enter name..." maxlength="30" />
+      
+      <label class="modal-label" style="margin-top:16px;">Change Avatar:</label>
+      <div class="avatar-picker" id="editAvatarPicker">
+        <span class="avatar-opt selected" onclick="selectAvatar(this, 'edit')">👨‍💻</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">👩‍💻</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">🦉</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">🚀</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">🌟</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">🎓</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">⚡</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">🎨</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">💡</span>
+        <span class="avatar-opt" onclick="selectAvatar(this, 'edit')">💻</span>
+      </div>
+    </div>
+    <div class="modal-footer" style="padding:16px 28px 24px;display:flex;gap:12px;justify-content:flex-end;">
+      <button class="btn-secondary" onclick="closeModal('editNameModal')">Cancel</button>
+      <button class="btn-primary" onclick="submitEditName()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- 6. LOCAL ACCOUNTS SWITCHER MODAL (Backward compatibility) -->
+<div class="modal-overlay" id="accountsModal">
+  <div class="modal accounts-modal" style="max-width:480px;">
+    <div class="modal-header">
+      <div class="quiz-icon">👥</div>
+      <h2>Student Profiles</h2>
+      <p>Switch local profiles or sign in to Supabase cloud</p>
+    </div>
+    <div class="modal-body" style="padding: 0 28px 10px;">
+      <div id="accountsList" class="accounts-list"></div>
+      <button class="btn-primary" style="width:100%;margin-top:16px;" onclick="closeModal('accountsModal'); openAuthModal();">
+        <i class="fas fa-cloud"></i> Connect Supabase Cloud Account
+      </button>
+    </div>
+    <div class="modal-footer" style="padding:16px 28px 24px;display:flex;justify-content:flex-end;">
+      <button class="btn-secondary" onclick="closeModal('accountsModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY FOR MOBILE -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
 
 <!-- CONFETTI CANVAS -->
 <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
 
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 </body>
