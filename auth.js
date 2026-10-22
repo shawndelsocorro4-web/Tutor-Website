@@ -4,6 +4,7 @@
 
 const SUPABASE_CONFIG = {
   url: 'https://mbqgxfhvtbkeutinpfbr.supabase.co',
+  // Publishable browser key: it is expected to be visible. Never put a service_role key here.
   publishableKey: 'sb_publishable_L1oofLmbuY_WBUXG-4Df2Q_-i_q7aLX'
 };
 
@@ -386,36 +387,13 @@ function getProfileDisplayName(profile, user = currentUser) {
   return emailName || profileName || 'Learner';
 }
 
-// Fetch Admin Stats (Aggregate counts)
+// Fetch Admin Stats through a database function that checks the caller's role.
 async function cloudFetchAdminStats() {
-  if (!sbClient) return null;
+  if (!sbClient || !currentUser) return null;
   try {
-    const [profilesRes, progressRes, quizRes] = await Promise.all([
-      sbClient.from('profiles').select('id, xp, streak, created_at, role', { count: 'exact' }),
-      sbClient.from('lesson_progress').select('id, completed', { count: 'exact' }),
-      sbClient.from('quiz_results').select('id, passed, score', { count: 'exact' })
-    ]);
-
-    const totalStudents = profilesRes.count || (profilesRes.data?.length) || 0;
-    const totalLessonsDone = progressRes.count || (progressRes.data?.filter(p => p.completed).length) || 0;
-    const totalQuizzes = quizRes.count || (quizRes.data?.length) || 0;
-    const passedQuizzes = quizRes.data?.filter(q => q.passed).length || 0;
-    const passRate = totalQuizzes > 0 ? Math.round((passedQuizzes / totalQuizzes) * 100) : 0;
-
-    let totalXP = 0;
-    if (profilesRes.data) {
-      totalXP = profilesRes.data.reduce((acc, p) => acc + (p.xp || 0), 0);
-    }
-
-    return {
-      totalStudents,
-      totalLessonsDone,
-      totalQuizzes,
-      passRate,
-      totalXP,
-      avgXP: totalStudents > 0 ? Math.round(totalXP / totalStudents) : 0,
-      students: profilesRes.data || []
-    };
+    const { data, error } = await sbClient.rpc('admin_fetch_stats');
+    if (error) throw error;
+    return data;
   } catch (e) {
     console.warn('cloudFetchAdminStats error:', e.message);
     return null;
