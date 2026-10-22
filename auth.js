@@ -474,7 +474,7 @@ async function loadFullUserData(userId) {
     const completedMap = {};
     if (progressData) {
       progressData.forEach(item => {
-        if (item.completed) completedMap[item.lesson_id] = true;
+        if (item.completed) completedMap[`${item.topic_id}-${item.lesson_id}`] = true;
       });
     }
 
