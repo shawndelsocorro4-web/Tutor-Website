@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spreadsheet Tasks — KFL IT Team</title>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="spreadsheet-tasks.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="st-topbar">
+  <a href="index.html" class="st-back-btn"><i class="fas fa-arrow-left"></i> Back to KFL Hub</a>
+  <div class="st-topbar-center">
+    <img src="logo.png" alt="KFL" class="st-logo"/>
+    <div>
+      <span class="st-title">IT Team Spreadsheet Tasks</span>
+      <span class="st-subtitle">Excel & Google Sheets Formula Mastery</span>
+    </div>
+  </div>
+  <div class="st-topbar-right">
+    <div class="st-score-pill"><i class="fas fa-star"></i> <span id="totalScore">0</span> / <span id="totalPossible">0</span> pts</div>
+    <button class="st-theme-btn" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="st-hero">
+  <div class="st-hero-content">
+    <div class="st-hero-badge"><i class="fas fa-table"></i> New Employee Onboarding</div>
+    <h1>Excel & Google Sheets<br/>Formula Mastery Tasks</h1>
+    <p>Complete all tasks below to demonstrate your knowledge of spreadsheet formulas, ribbon tools, and data analysis techniques used daily by the KFL IT team.</p>
+    <div class="st-hero-stats">
+      <div class="st-hero-stat"><span id="heroCompleted">0</span><small>Completed</small></div>
+      <div class="st-hero-stat"><span id="heroTotal">0</span><small>Total Tasks</small></div>
+      <div class="st-hero-stat"><span id="heroPct">0%</span><small>Progress</small></div>
+    </div>
+  </div>
+  <div class="st-hero-icons">📊<br/>📈</div>
+</section>
+
+<!-- PROGRESS BAR -->
+<div class="st-progress-wrap">
+  <div class="st-progress-bar"><div class="st-progress-fill" id="mainProgressFill" style="width:0%"></div></div>
+  <span class="st-progress-label" id="mainProgressLabel">0% Complete</span>
+</div>
+
+<!-- TABS -->
+<div class="st-tabs-wrap">
+  <div class="st-tabs">
+    <button class="st-tab active" data-tab="all" onclick="filterTasks('all', this)"><i class="fas fa-th"></i> All Tasks</button>
+    <button class="st-tab" data-tab="excel" onclick="filterTasks('excel', this)"><i class="fas fa-file-excel"></i> Excel</button>
+    <button class="st-tab" data-tab="sheets" onclick="filterTasks('sheets', this)"><i class="fas fa-table"></i> Google Sheets</button>
+    <button class="st-tab" data-tab="formulas" onclick="filterTasks('formulas', this)"><i class="fas fa-function"></i> Formulas</button>
+    <button class="st-tab" data-tab="ribbon" onclick="filterTasks('ribbon', this)"><i class="fas fa-bars"></i> Ribbon Tools</button>
+  </div>
+</div>
+
+<!-- TASK GRID -->
+<main class="st-main">
+  <div class="st-task-grid" id="taskGrid"></div>
+</main>
+
+<!-- LOGS PANEL -->
+<section class="st-logs-section" id="logsSection">
+  <div class="st-logs-header">
+    <div>
+      <h2><i class="fas fa-clipboard-list"></i> My Activity Log</h2>
+      <p>Every answer attempt is recorded here and saved to the cloud.</p>
+    </div>
+    <button class="st-logs-clear-btn" onclick="clearLocalLogs()"><i class="fas fa-trash-alt"></i> Clear Local Log</button>
+  </div>
+  <div class="st-logs-table-wrap">
+    <table class="st-logs-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Task</th>
+          <th>App</th>
+          <th>Difficulty</th>
+          <th>Result</th>
+          <th>Points</th>
+          <th>Hint Used</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody id="logsTableBody">
+        <tr><td colspan="8" class="st-logs-empty">No attempts yet. Start a task above!</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- COMPLETION BANNER -->
+<div class="st-completion-banner hidden" id="completionBanner">
+  <div class="st-completion-inner">
+    <div class="st-comp-icon">🎉</div>
+    <h2>All Tasks Completed!</h2>
+    <p>Excellent work! You've demonstrated mastery of Excel & Google Sheets formulas and ribbon tools. You're ready for the KFL IT team!</p>
+    <div class="st-comp-score">Final Score: <strong id="finalScore">0</strong> points</div>
+    <button class="btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Certificate</button>
+  </div>
+</div>
+
+<!-- TASK MODAL -->
+<div class="st-modal-overlay hidden" id="taskModal">
+  <div class="st-modal">
+    <div class="st-modal-header">
+      <div>
+        <div class="st-modal-tag" id="modalTag">Excel</div>
+        <h2 id="modalTitle">Task Title</h2>
+      </div>
+      <button class="st-modal-close" onclick="closeTaskModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="st-modal-body">
+      <div class="st-modal-scenario" id="modalScenario"></div>
+      <div class="st-modal-question" id="modalQuestion"></div>
+      <div class="st-modal-options" id="modalOptions"></div>
+      <div class="st-modal-hint hidden" id="modalHint"></div>
+      <div class="st-modal-result hidden" id="modalResult"></div>
+    </div>
+    <div class="st-modal-footer">
+      <button class="btn-secondary" onclick="showHint()"><i class="fas fa-lightbulb"></i> Hint</button>
+      <button class="btn-primary" id="modalSubmitBtn" onclick="submitAnswer()">Submit Answer</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+<!-- AUTH GATE OVERLAY -->
+<div class="st-auth-gate" id="authGate">
+  <div class="st-auth-card">
+    <div class="st-auth-logo">
+      <img src="logo.png" alt="KFL"/>
+    </div>
+    <div class="st-auth-icon">🔐</div>
+    <h2>Sign In Required</h2>
+    <p>You must be signed in to your KFL account before taking the IT Team Spreadsheet Tasks exam.</p>
+
+    <div class="st-auth-tabs">
+      <button class="st-auth-tab active" id="gateTabSignIn" onclick="switchGateTab('signin')">Sign In</button>
+      <button class="st-auth-tab" id="gateTabSignUp" onclick="switchGateTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Sign In Form -->
+    <form id="gateSignInForm" onsubmit="event.preventDefault(); gateSignIn();">
+      <label class="st-auth-label">Email</label>
+      <input type="email" id="gateEmail" class="st-auth-input" placeholder="you@example.com" required/>
+      <label class="st-auth-label">Password</label>
+      <input type="password" id="gatePassword" class="st-auth-input" placeholder="••••••••" required/>
+      <div class="st-auth-error" id="gateSignInError"></div>
+      <button type="submit" class="st-auth-submit" id="gateSignInBtn">
+        <i class="fas fa-sign-in-alt"></i> Sign In & Start Tasks
+      </button>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="gateSignUpForm" class="hidden" onsubmit="event.preventDefault(); gateSignUp();">
+      <label class="st-auth-label">Full Name</label>
+      <input type="text" id="gateSignUpName" class="st-auth-input" placeholder="e.g. Maria Santos" required/>
+      <label class="st-auth-label">Username</label>
+      <input type="text" id="gateSignUpUsername" class="st-auth-input" placeholder="mariasantos" required/>
+      <label class="st-auth-label">Email</label>
+      <input type="email" id="gateSignUpEmail" class="st-auth-input" placeholder="you@example.com" required/>
+      <label class="st-auth-label">Password (min 6 chars)</label>
+      <input type="password" id="gateSignUpPassword" class="st-auth-input" placeholder="••••••••" minlength="6" required/>
+      <div class="st-auth-error" id="gateSignUpError"></div>
+      <button type="submit" class="st-auth-submit" id="gateSignUpBtn">
+        <i class="fas fa-user-plus"></i> Create Account & Start
+      </button>
+    </form>
+
+    <a href="index.html" class="st-auth-back"><i class="fas fa-arrow-left"></i> Back to KFL Hub</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="spreadsheet-tasks.js"></script>
+</body>
+</html>

@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="favicon.ico"/>
   <link rel="apple-touch-icon" href="favicon.png"/>
   <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="profile-enhanced.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -52,17 +53,17 @@
       </button>
     </div>
 
-    <!-- Student Profile Card in Sidebar -->
+    <!-- Employee Profile Card in Sidebar -->
     <div class="sidebar-profile" id="sidebarProfile" onclick="handleProfileClick()" title="View profile or switch account">
       <div class="avatar" id="sidebarAvatar">👨‍💻</div>
       <div class="profile-info">
         <div class="profile-name-row">
-          <span class="profile-name" id="sidebarProfileName">Learner</span>
+          <span class="profile-name" id="sidebarProfileName">Employee</span>
           <button class="btn-profile-edit" onclick="event.stopPropagation(); openEditNameModal();" title="Edit your name">
             <i class="fas fa-pen"></i>
           </button>
         </div>
-        <span class="profile-level" id="sidebarProfileLevel">Beginner Explorer</span>
+        <span class="profile-level" id="sidebarProfileLevel">Level 1 · Junior Technician</span>
       </div>
       <button class="btn-switch-account" onclick="event.stopPropagation(); openAuthModal();" title="Account & Cloud Sync">
         <i class="fas fa-user-circle"></i>
@@ -79,7 +80,7 @@
         <i class="fas fa-book-open"></i>
         <span>Current Lesson</span>
       </button>
-      <button class="nav-item" data-view="progress" onclick="showView('progress')">
+      <button class="nav-item" data-view="progress" onclick="showView('progress')" id="navProgress">
         <i class="fas fa-chart-line"></i>
         <span>My Progress</span>
       </button>
@@ -97,11 +98,7 @@
       </button>
       <button class="nav-item" data-view="profile" onclick="showView('profile')">
         <i class="fas fa-id-card"></i>
-        <span>Student Profile</span>
-      </button>
-      <button class="nav-item" data-view="admin" onclick="showView('admin')">
-        <i class="fas fa-shield-alt"></i>
-        <span>Admin Hub</span>
+        <span>Employee Profile</span>
       </button>
     </nav>
 
@@ -142,9 +139,9 @@
         </button>
 
         <!-- User Pill -->
-        <div class="user-pill" onclick="handleUserPillClick()" title="Student account options">
+        <div class="user-pill" onclick="handleUserPillClick()" title="Employee account options">
           <span class="user-pill-avatar" id="topbarAvatar">👨‍💻</span>
-          <span class="user-pill-name" id="topbarUserName">Learner</span>
+          <span class="user-pill-name" id="topbarUserName">Employee</span>
           <i class="fas fa-caret-down"></i>
         </div>
 
@@ -160,8 +157,8 @@
     <section class="view active" id="view-dashboard">
       <div class="dashboard-hero">
         <div class="hero-text">
-          <h1 id="heroGreeting">Welcome back, Learner! 👋</h1>
-          <p id="heroSubtitle">Your personalized, step-by-step path to master tech skills</p>
+          <h1 id="heroGreeting">Welcome back, Employee! 👋</h1>
+          <p id="heroSubtitle">Your personalized, step-by-step path to master professional skills</p>
         </div>
         <div class="hero-mascot">
           <div class="mascot-bubble" id="mascotBubble">
@@ -382,7 +379,7 @@
         <div class="leaderboard-card">
           <div class="leaderboard-table-header">
             <span class="col-rank">Rank</span>
-            <span class="col-student">Student</span>
+            <span class="col-student">Employee</span>
             <span class="col-level">Level</span>
             <span class="col-streak">Streak</span>
             <span class="col-xp">Total XP</span>
@@ -407,21 +404,48 @@
       <div class="badges-grid" id="badgesGrid"></div>
     </section>
 
-    <!-- VIEW: STUDENT PROFILE (NEW) -->
+    <!-- VIEW: EMPLOYEE PROFILE -->
     <section class="view" id="view-profile">
       <div class="profile-header-card">
         <div class="profile-avatar-large" id="profileLargeAvatar">👨‍💻</div>
         <div class="profile-main-meta">
           <div class="profile-name-row">
-            <h1 id="profileFullName">Learner</h1>
-            <span class="role-badge" id="profileRoleBadge">Student</span>
+            <h1 id="profileFullName">Employee</h1>
+            <span class="role-badge" id="profileRoleBadge">Novice</span>
           </div>
-          <p class="profile-username" id="profileUsername">@learner</p>
+          <div class="profile-meta-row">
+            <p class="profile-username" id="profileUsername">@employee</p>
+            <span class="profile-level-badge" id="profileLevelBadge">Level 1</span>
+          </div>
           <p class="profile-join-date" id="profileJoinDate"><i class="far fa-calendar-alt"></i> Member since October 2026</p>
         </div>
         <div class="profile-actions">
           <button class="btn-secondary" onclick="openEditNameModal()"><i class="fas fa-edit"></i> Edit Profile</button>
           <button class="btn-danger-outline" onclick="handleLogoutClick()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+      </div>
+
+      <!-- XP Progress Banner -->
+      <div id="profileXPBanner" style="background:linear-gradient(135deg,#4c1d95,#7c3aed,#be185d);border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;color:white;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:2rem;">&#11088;</span>
+            <div>
+              <div style="font-size:1.6rem;font-weight:900;line-height:1;" id="profileXPAmount">0 XP</div>
+              <div style="font-size:0.82rem;opacity:0.8;margin-top:2px;" id="profileXPLevel">Level 1 Explorer</div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.78rem;opacity:0.7;">Next level in</div>
+            <div style="font-size:1.1rem;font-weight:800;" id="profileXPToNext">100 XP</div>
+          </div>
+        </div>
+        <div style="height:10px;background:rgba(255,255,255,0.2);border-radius:100px;overflow:hidden;">
+          <div id="profileXPBar" style="height:100%;background:linear-gradient(90deg,#f59e0b,#f97316);border-radius:100px;transition:width 0.9s ease;width:0%;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.74rem;opacity:0.65;margin-top:6px;">
+          <span id="profileXPBarLabel">0 XP this level</span>
+          <span id="profileXPBarMax">100 XP to next</span>
         </div>
       </div>
 
@@ -446,9 +470,20 @@
           </div>
         </div>
       </div>
+
+      <section class="profile-badges-section" aria-labelledby="profileBadgesTitle">
+        <div class="profile-badges-heading">
+          <div>
+            <h2 id="profileBadgesTitle">My Badges</h2>
+            <p>Achievements you have earned on your learning journey.</p>
+          </div>
+          <button class="btn-secondary" onclick="showView('achievements')">View all badges</button>
+        </div>
+        <div class="profile-badges-grid" id="profileBadgesGrid"></div>
+      </section>
     </section>
 
-    <!-- VIEW: ADMIN DASHBOARD (NEW) -->
+    <!-- VIEW: ADMIN DASHBOARD -->
     <section class="view" id="view-admin">
       <div class="view-header-banner">
         <div class="header-icon">🛡️</div>
@@ -460,11 +495,10 @@
 
       <div id="adminAuthLock" class="admin-lock-card">
         <div class="lock-icon">🔒</div>
-        <h2>Admin Authentication Required</h2>
-        <p>Enter the KFL Admin Passcode or log in with an administrator account to view learner metrics.</p>
-        <div class="admin-passcode-form">
-          <input type="password" id="adminPasscodeInput" placeholder="Enter admin passcode (e.g. kfladmin2026)" />
-          <button class="btn-primary" onclick="verifyAdminPasscode()">Unlock Admin Hub</button>
+        <h2>Admin Access Only</h2>
+        <p>This section is restricted to administrator accounts. Please sign in with an admin account to continue.</p>
+        <div style="margin-top:20px;">
+          <button class="btn-primary" onclick="openAuthModal()"><i class="fas fa-sign-in-alt"></i> Sign In as Admin</button>
         </div>
       </div>
 
@@ -526,100 +560,139 @@
      MODALS
      ========================================== -->
 
-<!-- 1. AUTH MODAL (Sign In, Sign Up, Forgot Password) -->
+<!-- 1. AUTH MODAL -->
 <div class="modal-overlay" id="authModal">
-  <div class="modal auth-modal" style="max-width:460px;">
-    <div class="modal-header">
-      <div class="quiz-icon">🔐</div>
-      <h2 id="authModalTitle">Sign In to KFL</h2>
-      <p id="authModalSub">Save your progress to the cloud and resume from any device</p>
-    </div>
-    
-    <div class="auth-tabs">
-      <button class="auth-tab-btn active" id="tabBtnSignIn" onclick="switchAuthTab('signin')">Sign In</button>
-      <button class="auth-tab-btn" id="tabBtnSignUp" onclick="switchAuthTab('signup')">Sign Up</button>
-      <button class="auth-tab-btn" id="tabBtnForgot" onclick="switchAuthTab('forgot')">Forgot</button>
-    </div>
+  <div class="modal" style="max-width:480px;width:100%;border-radius:24px;overflow:hidden;padding:0;">
 
-    <div class="modal-body" style="padding: 16px 28px 20px;">
-      <!-- Sign In Form -->
-      <form id="signInForm" onsubmit="event.preventDefault(); handleSignInSubmit();">
-        <label class="modal-label">Email Address:</label>
-        <input type="email" id="signInEmail" class="modal-text-input" placeholder="student@example.com" required />
-        
-        <label class="modal-label" style="margin-top:14px;">Password:</label>
-        <input type="password" id="signInPassword" class="modal-text-input" placeholder="••••••••" required />
-
-        <div id="authSignInError" class="auth-error-msg"></div>
-
-        <button type="submit" class="btn-primary" style="width:100%;margin-top:18px;" id="btnSignInSubmit">
-          <i class="fas fa-sign-in-alt"></i> Sign In
-        </button>
-      </form>
-
-      <!-- Sign Up Form -->
-      <form id="signUpForm" class="hidden" onsubmit="event.preventDefault(); handleSignUpSubmit();">
-        <label class="modal-label">Full Name:</label>
-        <input type="text" id="signUpName" class="modal-text-input" placeholder="e.g. Maria Santos" required />
-
-        <label class="modal-label" style="margin-top:12px;">Username:</label>
-        <input type="text" id="signUpUsername" class="modal-text-input" placeholder="mariasantos" required />
-
-        <label class="modal-label" style="margin-top:12px;">Email Address:</label>
-        <input type="email" id="signUpEmail" class="modal-text-input" placeholder="maria@example.com" required />
-
-        <label class="modal-label" style="margin-top:12px;">Password (min 6 characters):</label>
-        <input type="password" id="signUpPassword" class="modal-text-input" placeholder="••••••••" minlength="6" required />
-
-        <label class="modal-label" style="margin-top:14px;">Choose Your Avatar:</label>
-        <div class="avatar-picker" id="signUpAvatarPicker">
-          <span class="avatar-opt selected" onclick="selectAvatar(this, 'signup')">👨‍💻</span>
-          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">👩‍💻</span>
-          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🦉</span>
-          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🚀</span>
-          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🌟</span>
-          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🎓</span>
-          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">⚡</span>
-          <span class="avatar-opt" onclick="selectAvatar(this, 'signup')">🎨</span>
+    <!-- Header Banner -->
+    <div style="background:linear-gradient(135deg,#063B91,#2563eb);padding:28px 32px 20px;color:white;position:relative;">
+      <button onclick="closeModal('authModal')" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.15);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;"><i class="fas fa-times"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+        <img src="logo.png" alt="KFL" style="height:32px;background:white;padding:4px 6px;border-radius:8px;"/>
+        <div>
+          <div style="font-weight:800;font-size:1.1rem;">KFL Learning Hub</div>
+          <div style="font-size:0.75rem;opacity:0.75;">Employee Training Platform</div>
         </div>
-
-        <div id="authSignUpError" class="auth-error-msg"></div>
-
-        <button type="submit" class="btn-primary" style="width:100%;margin-top:18px;" id="btnSignUpSubmit">
-          <i class="fas fa-user-plus"></i> Create Cloud Account
-        </button>
-      </form>
-
-      <!-- Forgot Password Form -->
-      <form id="forgotForm" class="hidden" onsubmit="event.preventDefault(); handleForgotSubmit();">
-        <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:14px;">
-          Enter your email and we'll send you a secure link to reset your password.
-        </p>
-        <label class="modal-label">Email Address:</label>
-        <input type="email" id="forgotEmail" class="modal-text-input" placeholder="student@example.com" required />
-
-        <div id="authForgotError" class="auth-error-msg"></div>
-
-        <button type="submit" class="btn-primary" style="width:100%;margin-top:18px;" id="btnForgotSubmit">
-          <i class="fas fa-paper-plane"></i> Send Reset Link
-        </button>
-      </form>
-
-      <!-- Guest / Offline Option -->
-      <div class="auth-divider">
-        <span>OR</span>
       </div>
-      <button class="btn-secondary" style="width:100%;" onclick="continueAsGuest()">
-        <i class="fas fa-laptop-code"></i> Continue in Local Guest Mode
+    </div>
+
+    <!-- Tabs -->
+    <div id="authTabs" role="tablist" aria-label="Account access" style="display:flex;border-bottom:2px solid var(--border);background:var(--surface2);">
+      <button id="tabSignIn" type="button" role="tab" aria-controls="signInForm" aria-selected="true" onclick="switchAuthTab('signin')" style="flex:1;padding:14px;border:none;background:none;font-weight:700;font-size:0.9rem;cursor:pointer;color:var(--primary);border-bottom:3px solid var(--primary);margin-bottom:-2px;font-family:inherit;transition:all 0.2s;">
+        <i class="fas fa-sign-in-alt" style="margin-right:6px;"></i>Sign In
+      </button>
+      <button id="tabSignUp" type="button" role="tab" aria-controls="signUpForm" aria-selected="false" onclick="switchAuthTab('signup')" style="flex:1;padding:14px;border:none;background:none;font-weight:700;font-size:0.9rem;cursor:pointer;color:var(--text-muted);border-bottom:3px solid transparent;margin-bottom:-2px;font-family:inherit;transition:all 0.2s;">
+        <i class="fas fa-user-plus" style="margin-right:6px;"></i>Create Account
       </button>
     </div>
 
-    <div class="modal-footer" style="padding:12px 28px 20px;display:flex;justify-content:flex-end;">
-      <button class="btn-secondary" onclick="closeModal('authModal')">Close</button>
+    <div style="padding:24px 32px;max-height:70vh;overflow-y:auto;">
+
+      <div id="signedInAccount" class="hidden" hidden style="text-align:center;">
+        <div style="font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:6px;">You’re signed in</div>
+        <div id="signedInAccountName" style="font-weight:600;color:var(--text);"></div>
+        <div id="signedInAccountEmail" style="font-size:0.85rem;color:var(--text-muted);margin:4px 0 20px;"></div>
+        <button type="button" class="btn-danger-outline" onclick="handleLogoutClick()" style="width:100%;justify-content:center;padding:14px;">
+          <i class="fas fa-sign-out-alt"></i> Log Out
+        </button>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <form id="signInForm" role="tabpanel" aria-labelledby="tabSignIn" onsubmit="event.preventDefault();handleSignInSubmit();">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:4px;">Welcome back 👋</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Sign in to sync your progress and XP</div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label class="modal-label"><i class="fas fa-envelope" style="margin-right:6px;color:var(--primary);"></i>Email Address</label>
+          <input type="email" id="signInEmail" class="modal-text-input" placeholder="your@email.com" required />
+        </div>
+        <div style="margin-bottom:6px;">
+          <label class="modal-label"><i class="fas fa-lock" style="margin-right:6px;color:var(--primary);"></i>Password</label>
+          <input type="password" id="signInPassword" class="modal-text-input" placeholder="Enter your password" required />
+        </div>
+        <div style="text-align:right;margin-bottom:14px;">
+          <button type="button" onclick="switchAuthTab('forgot')" style="background:none;border:none;color:var(--primary);font-size:0.82rem;font-weight:600;cursor:pointer;">Forgot password?</button>
+        </div>
+        <div id="authSignInError" class="auth-error-msg"></div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:14px;">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+        <div class="auth-divider"><span>OR</span></div>
+        <button type="button" class="btn-secondary" style="width:100%;justify-content:center;" onclick="continueAsGuest()">
+          <i class="fas fa-user-secret"></i> Continue as Guest
+        </button>
+      </form>
+
+      <!-- SIGN UP FORM -->
+      <form id="signUpForm" class="hidden" hidden role="tabpanel" aria-labelledby="tabSignUp" onsubmit="event.preventDefault();handleSignUpSubmit();">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:4px;">Join KFL Hub 🚀</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Create your account to start earning XP</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div>
+            <label class="modal-label"><i class="fas fa-user" style="margin-right:6px;color:var(--primary);"></i>Full Name</label>
+            <input type="text" id="signUpName" class="modal-text-input" placeholder="Maria Santos" required />
+          </div>
+          <div>
+            <label class="modal-label"><i class="fas fa-at" style="margin-right:6px;color:var(--primary);"></i>Username</label>
+            <input type="text" id="signUpUsername" class="modal-text-input" placeholder="mariasantos" required />
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label class="modal-label"><i class="fas fa-envelope" style="margin-right:6px;color:var(--primary);"></i>Email Address</label>
+          <input type="email" id="signUpEmail" class="modal-text-input" placeholder="maria@example.com" required />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label class="modal-label"><i class="fas fa-lock" style="margin-right:6px;color:var(--primary);"></i>Password <span style="font-weight:400;color:var(--text-muted);">(min 6 chars)</span></label>
+          <input type="password" id="signUpPassword" class="modal-text-input" placeholder="Create a password" minlength="6" required />
+        </div>
+        <div style="margin-bottom:18px;">
+          <label class="modal-label"><i class="fas fa-smile" style="margin-right:6px;color:var(--primary);"></i>Choose Your Avatar</label>
+          <div class="avatar-picker" id="signUpAvatarPicker" style="grid-template-columns:repeat(8,1fr);">
+            <span class="avatar-opt selected" onclick="selectAvatar(this,'signup')">&#128104;&#8205;&#128187;</span>
+            <span class="avatar-opt" onclick="selectAvatar(this,'signup')">&#128105;&#8205;&#128187;</span>
+            <span class="avatar-opt" onclick="selectAvatar(this,'signup')">&#129417;</span>
+            <span class="avatar-opt" onclick="selectAvatar(this,'signup')">&#128640;</span>
+            <span class="avatar-opt" onclick="selectAvatar(this,'signup')">&#127775;</span>
+            <span class="avatar-opt" onclick="selectAvatar(this,'signup')">&#127891;</span>
+            <span class="avatar-opt" onclick="selectAvatar(this,'signup')">&#9889;</span>
+            <span class="avatar-opt" onclick="selectAvatar(this,'signup')">&#127912;</span>
+          </div>
+        </div>
+        <div id="authSignUpError" class="auth-error-msg"></div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:14px;" id="btnSignUpSubmit">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+        <div class="auth-divider"><span>OR</span></div>
+        <button type="button" class="btn-secondary" style="width:100%;justify-content:center;" onclick="continueAsGuest()">
+          <i class="fas fa-user-secret"></i> Continue as Guest
+        </button>
+      </form>
+
+      <!-- FORGOT PASSWORD FORM -->
+      <form id="forgotForm" class="hidden" hidden onsubmit="event.preventDefault();handleForgotSubmit();">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:4px;">Reset Password 🔑</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">We'll send a secure reset link to your email</div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label class="modal-label"><i class="fas fa-envelope" style="margin-right:6px;color:var(--primary);"></i>Email Address</label>
+          <input type="email" id="forgotEmail" class="modal-text-input" placeholder="your@email.com" required />
+        </div>
+        <div id="authForgotError" class="auth-error-msg"></div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:14px;">
+          <i class="fas fa-paper-plane"></i> Send Reset Link
+        </button>
+        <p style="text-align:center;margin-top:14px;font-size:0.82rem;color:var(--text-muted);">
+          <button type="button" onclick="switchAuthTab('signin')" style="background:none;border:none;color:var(--primary);font-weight:700;cursor:pointer;font-size:0.82rem;">&#8592; Back to Sign In</button>
+        </p>
+      </form>
+
     </div>
   </div>
 </div>
-
 <!-- 2. QUIZ MODAL (Single & Milestone Exams) -->
 <div class="modal-overlay" id="quizModal">
   <div class="modal quiz-modal">
@@ -666,7 +739,7 @@
   <div class="modal" style="max-width:440px;">
     <div class="modal-header">
       <div class="quiz-icon">✏️</div>
-      <h2>Edit Student Profile</h2>
+      <h2>Edit Employee Profile</h2>
       <p>Update your display name and avatar</p>
     </div>
     <div class="modal-body" style="padding: 0 28px 20px;">
@@ -699,7 +772,7 @@
   <div class="modal accounts-modal" style="max-width:480px;">
     <div class="modal-header">
       <div class="quiz-icon">👥</div>
-      <h2>Student Profiles</h2>
+      <h2>Employee Profiles</h2>
       <p>Switch local profiles or sign in to Supabase cloud</p>
     </div>
     <div class="modal-body" style="padding: 0 28px 10px;">
@@ -714,6 +787,59 @@
   </div>
 </div>
 
+<!-- LOG OUT CONFIRMATION -->
+<div class="modal-overlay logout-confirm-overlay" id="logoutConfirmModal" role="presentation" onclick="if(event.target === this) closeModal('logoutConfirmModal')">
+  <section class="modal logout-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="logoutConfirmTitle" aria-describedby="logoutConfirmDescription" onkeydown="if(event.key === 'Escape') closeModal('logoutConfirmModal')">
+    <button type="button" class="logout-confirm-close" aria-label="Cancel log out" onclick="closeModal('logoutConfirmModal')">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="logout-confirm-icon" aria-hidden="true"><i class="fas fa-sign-out-alt"></i></div>
+    <p class="logout-confirm-eyebrow">KFL Learning Hub</p>
+    <h2 id="logoutConfirmTitle">Log out of your account?</h2>
+    <p class="logout-confirm-description" id="logoutConfirmDescription">Your cloud progress is saved. You can sign back in anytime to continue learning.</p>
+    <div class="logout-confirm-account">
+      <span class="logout-confirm-avatar" id="logoutConfirmAvatar">👨‍💻</span>
+      <span class="logout-confirm-account-details">
+        <strong id="logoutConfirmName">Your account</strong>
+        <span id="logoutConfirmEmail"></span>
+      </span>
+    </div>
+    <p class="logout-confirm-error hidden" id="logoutConfirmError" role="alert"></p>
+    <div class="logout-confirm-actions">
+      <button type="button" class="btn-secondary" id="cancelLogoutButton" onclick="closeModal('logoutConfirmModal')">Stay signed in</button>
+      <button type="button" class="btn-danger-solid" id="confirmLogoutButton" onclick="confirmLogout()">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </button>
+    </div>
+  </section>
+</div>
+
+<!-- LEADERBOARD EMPLOYEE PROFILE -->
+<div class="modal-overlay leaderboard-profile-overlay" id="leaderboardProfileModal" role="presentation" onclick="if(event.target === this) closeLeaderboardProfile()">
+  <section class="modal leaderboard-profile-modal" role="dialog" aria-modal="true" aria-labelledby="leaderboardProfileName" onkeydown="if(event.key === 'Escape') closeLeaderboardProfile()">
+    <button type="button" class="leaderboard-profile-close" id="leaderboardProfileClose" aria-label="Close employee profile" onclick="closeLeaderboardProfile()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="leaderboard-profile-header">
+      <div class="leaderboard-profile-avatar" id="leaderboardProfileAvatar">👨‍💻</div>
+      <div class="leaderboard-profile-meta">
+        <h2 id="leaderboardProfileName">Employee</h2>
+        <p id="leaderboardProfileUsername">@employee</p>
+        <span class="leaderboard-profile-rank" id="leaderboardProfileRank">Junior Technician</span>
+      </div>
+    </div>
+    <div class="leaderboard-profile-stats">
+      <div><strong id="leaderboardProfileLevel">Level 1</strong><span>Level</span></div>
+      <div><strong id="leaderboardProfileXP">0 XP</strong><span>Experience</span></div>
+      <div><strong id="leaderboardProfileStreak">1 day streak</strong><span>Streak</span></div>
+    </div>
+    <div class="leaderboard-profile-badges-section">
+      <h3><i class="fas fa-award"></i> Badges</h3>
+      <div class="leaderboard-profile-badges" id="leaderboardProfileBadges" aria-live="polite">Loading badges…</div>
+    </div>
+  </section>
+</div>
+
 <!-- SIDEBAR OVERLAY FOR MOBILE -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
 
@@ -724,6 +850,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
 <script src="data.js"></script>
+<script src="js/lesson.js"></script>
+<script src="js/leaderboard.js"></script>
 <script src="app.js"></script>
+<script src="js/profile-loader.js"></script>
 </body>
 </html>
