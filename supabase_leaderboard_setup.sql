@@ -19,9 +19,12 @@ CREATE TABLE IF NOT EXISTS public.quiz_progress (
 ALTER TABLE public.quiz_progress ENABLE ROW LEVEL SECURITY;
 
 REVOKE ALL ON TABLE public.profiles FROM PUBLIC, anon;
-REVOKE SELECT (id, name, username, avatar, xp, streak, level)
-  ON TABLE public.profiles FROM anon;
-GRANT SELECT, INSERT, UPDATE ON TABLE public.profiles TO authenticated;
+REVOKE INSERT, UPDATE ON TABLE public.profiles FROM authenticated;
+GRANT SELECT ON TABLE public.profiles TO authenticated;
+GRANT INSERT (id, name, username, avatar, xp, streak, level)
+  ON TABLE public.profiles TO authenticated;
+GRANT UPDATE (id, name, username, avatar, xp, streak, level, last_visit, confidence_scores, updated_at)
+  ON TABLE public.profiles TO authenticated;
 
 DROP POLICY IF EXISTS "profiles_select_policy" ON public.profiles;
 CREATE POLICY "profiles_select_policy"
