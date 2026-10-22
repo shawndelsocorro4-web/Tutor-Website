@@ -44,8 +44,6 @@ An interactive, gamified EdTech tutoring web platform designed to teach modern w
 | **7** | **Microsoft Excel** 📊 | 9 Lessons | Interface, cells/ranges, formatting, basic math, SUM/AVERAGE/COUNT, IF logic, VLOOKUP/XLOOKUP, tables (Ctrl+T), charts. |
 | **8** | **Google Sheets** 📈 | 8 Lessons | Cloud collaboration, SUMIF/COUNTIF, UNIQUE, data validation dropdowns, filter views, permissions, IMPORTRANGE, Apps Script. |
 | **9** | **VS Code** 💻 | 10 Lessons | Interface, folder workspaces, integrated terminal, Prettier/Live Server, shortcuts, Emmet, visual Git, debugger, settings. |
-| **10** | **Grand Capstone** 🎓 | 3 Lessons | Full-Stack architecture overview, integrated showcase project, and the Grand Master 5-Question Certification Exam. |
-
 ---
 
 ## 🚀 How to Run the Website

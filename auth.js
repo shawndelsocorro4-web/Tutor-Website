@@ -12,6 +12,7 @@ let sbClient = null;
 let currentUser = null;
 let currentProfile = null;
 let cloudSyncStatus = 'offline'; // 'online', 'syncing', 'offline', 'error'
+let passwordSignInInProgress = false;
 
 function initSupabase() {
   try {
@@ -89,34 +90,41 @@ async function authSignUp(email, password, name, username, avatar = '👨‍💻
 async function authSignIn(email, password) {
   if (!sbClient) throw new Error('Supabase client is not ready.');
   updateCloudSyncStatus('syncing', 'Signing in...');
+  passwordSignInInProgress = true;
 
-  const { data, error } = await sbClient.auth.signInWithPassword({
-    email,
-    password
-  });
+  try {
+    const { data, error } = await sbClient.auth.signInWithPassword({
+      email,
+      password
+    });
 
-  if (error) {
-    updateCloudSyncStatus('online', 'Cloud Ready');
-    throw error;
+    if (error) {
+      updateCloudSyncStatus('online', 'Cloud Ready');
+      throw error;
+    }
+
+    if (data?.user) {
+      currentUser = data.user;
+      await loadFullUserData(data.user.id);
+    }
+
+    updateCloudSyncStatus('online', 'Cloud Connected');
+    return data;
+  } finally {
+    passwordSignInInProgress = false;
   }
-
-  if (data?.user) {
-    currentUser = data.user;
-    await loadFullUserData(data.user.id);
-  }
-
-  updateCloudSyncStatus('online', 'Cloud Connected');
-  return data;
 }
 
 // 3. Sign Out
 async function authSignOut() {
-  if (!sbClient) return;
+  if (!sbClient) throw new Error('Supabase client is not ready. Please refresh and try again.');
   updateCloudSyncStatus('syncing', 'Signing out...');
   try {
-    await sbClient.auth.signOut();
+    const { error } = await sbClient.auth.signOut();
+    if (error) throw error;
   } catch (e) {
-    console.error('Sign out error:', e);
+    updateCloudSyncStatus('error', 'Sign out failed');
+    throw e;
   }
   currentUser = null;
   currentProfile = null;
@@ -164,7 +172,7 @@ async function syncProfileFromCloud(userId, defaultMeta = {}) {
     }
 
     if (data) {
-      currentProfile = data;
+      if (currentUser?.id === userId) currentProfile = data;
       return data;
     }
 
@@ -190,8 +198,9 @@ async function syncProfileFromCloud(userId, defaultMeta = {}) {
       return newProfile;
     }
 
-    currentProfile = inserted || newProfile;
-    return currentProfile;
+    const profile = inserted || newProfile;
+    if (currentUser?.id === userId) currentProfile = profile;
+    return profile;
   } catch (err) {
     console.warn('syncProfileFromCloud fallback:', err);
     return null;
@@ -214,9 +223,13 @@ async function cloudUpdateProfile(updates) {
     if (currentProfile) {
       Object.assign(currentProfile, updates);
     }
+    if (cloudSyncStatus === 'error') {
+      updateCloudSyncStatus('online', 'Cloud Connected');
+    }
     return true;
   } catch (e) {
-    console.warn('cloudUpdateProfile error:', e.message);
+    console.error('cloudUpdateProfile error:', e.message);
+    updateCloudSyncStatus('error', 'Profile sync failed');
     return false;
   }
 }
@@ -252,29 +265,42 @@ async function cloudSaveLessonProgress(topicId, lessonId, isCompleted = true, ti
 }
 
 // Save Quiz Score
-async function cloudSaveQuizResult(topicId, lessonId, score, totalQuestions = 1, passed = false) {
+async function cloudSaveQuizResult(topicId, lessonId, score, totalQuestions = 1, passed = false, answers = {}) {
   if (!sbClient || !currentUser) return false;
   try {
-    const payload = {
+    const progressPayload = {
       user_id: currentUser.id,
       topic_id: topicId,
       lesson_id: lessonId,
       score: Math.round(score),
       total_questions: totalQuestions,
       passed: passed,
+      answers,
       updated_at: new Date().toISOString()
     };
 
-    const { error } = await sbClient
-      .from('quiz_results')
-      .upsert(payload, { onConflict: 'user_id,topic_id,lesson_id' });
+    const { error: progressError } = await sbClient
+      .from('quiz_progress')
+      .upsert(progressPayload, { onConflict: 'user_id,topic_id,lesson_id' });
+    if (progressError) throw progressError;
 
-    if (error) {
-      // If table doesn't have unique constraint on (user_id, topic_id, lesson_id), insert regular
-      await sbClient.from('quiz_results').insert(payload);
+    const completed = Object.keys(answers).length >= totalQuestions;
+    if (completed) {
+      const { error: resultError } = await sbClient
+        .from('quiz_results')
+        .insert({
+          user_id: currentUser.id,
+          topic_id: topicId,
+          lesson_id: lessonId,
+          score: Math.round(score),
+          total_questions: totalQuestions,
+          passed,
+          updated_at: progressPayload.updated_at
+        });
+      if (resultError) throw resultError;
+
+      await cloudRecordActivity(passed ? 'passed_quiz' : 'attempted_quiz', topicId, lessonId, `Quiz score: ${score}%`);
     }
-
-    await cloudRecordActivity(passed ? 'passed_quiz' : 'attempted_quiz', topicId, lessonId, `Quiz score: ${score}%`);
     return true;
   } catch (e) {
     console.warn('cloudSaveQuizResult error:', e.message);
@@ -323,20 +349,41 @@ async function cloudAwardAchievement(badgeId, badgeName, badgeIcon) {
 
 // Fetch Leaderboard (Public Profile Info)
 async function cloudFetchLeaderboard(limit = 20) {
-  if (!sbClient) return [];
-  try {
-    const { data, error } = await sbClient
-      .from('profiles')
-      .select('id, name, username, avatar, xp, streak, level')
-      .order('xp', { ascending: false })
-      .limit(limit);
+  if (!sbClient) throw new Error('Leaderboard connection is not ready. Please refresh and try again.');
 
-    if (error) throw error;
-    return data || [];
-  } catch (e) {
-    console.warn('cloudFetchLeaderboard error:', e.message);
-    return [];
-  }
+  const { data, error } = await sbClient
+    .from('leaderboard_profiles')
+    .select('id, name, username, avatar, xp, streak, level')
+    .order('xp', { ascending: false })
+    .limit(limit);
+
+  if (error) throw error;
+  return data || [];
+}
+
+async function cloudFetchLeaderboardBadges(userId) {
+  if (!sbClient) throw new Error('Leaderboard connection is not ready.');
+  if (!userId) throw new Error('A valid employee profile is required.');
+
+  const { data, error } = await sbClient
+    .from('leaderboard_badges')
+    .select('badge_id, badge_name, badge_icon')
+    .eq('user_id', userId)
+    .order('unlocked_at', { ascending: true });
+
+  if (error) throw error;
+  return data || [];
+}
+
+function getProfileDisplayName(profile, user = currentUser) {
+  const profileName = profile?.name?.trim();
+  if (profileName && profileName.toLowerCase() !== 'learner') return profileName;
+
+  const metadataName = user?.user_metadata?.name?.trim();
+  if (metadataName) return metadataName;
+
+  const emailName = user?.email?.split('@')[0]?.trim();
+  return emailName || profileName || 'Learner';
 }
 
 // Fetch Admin Stats (Aggregate counts)
@@ -383,24 +430,45 @@ async function loadFullUserData(userId) {
   try {
     // 1. Fetch Profile
     const profile = await syncProfileFromCloud(userId);
+    if (currentUser?.id !== userId) return;
+    const displayName = getProfileDisplayName(profile);
+    if (profile && profile.name !== displayName) {
+      profile.name = displayName;
+      const profileUpdated = await cloudUpdateProfile({ name: displayName });
+      if (!profileUpdated) {
+        console.warn('Could not sync the account name to the cloud profile.');
+      }
+    }
 
     // 2. Fetch Progress
-    const { data: progressData } = await sbClient
+    const { data: progressData, error: progressError } = await sbClient
       .from('lesson_progress')
       .select('*')
       .eq('user_id', userId);
+    if (progressError) throw progressError;
 
     // 3. Fetch Quizzes
-    const { data: quizData } = await sbClient
+    const { data: quizData, error: quizError } = await sbClient
       .from('quiz_results')
       .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true });
+    if (quizError) throw quizError;
+
+    const { data: quizProgressData, error: quizProgressError } = await sbClient
+      .from('quiz_progress')
+      .select('*')
       .eq('user_id', userId);
+    if (quizProgressError) throw quizProgressError;
 
     // 4. Fetch Achievements
-    const { data: badgesData } = await sbClient
+    const { data: badgesData, error: badgesError } = await sbClient
       .from('achievements')
       .select('*')
       .eq('user_id', userId);
+    if (badgesError) throw badgesError;
+
+    if (currentUser?.id !== userId) return;
 
     // Convert into App State format
     const completedMap = {};
@@ -411,9 +479,19 @@ async function loadFullUserData(userId) {
     }
 
     const quizMap = {};
+    const quizAnswersMap = {};
+    const quizPassedMap = {};
     if (quizData) {
       quizData.forEach(item => {
         quizMap[item.lesson_id] = item.score;
+        quizPassedMap[item.lesson_id] = item.passed;
+      });
+    }
+    if (quizProgressData) {
+      quizProgressData.forEach(item => {
+        quizMap[item.lesson_id] = item.score;
+        quizAnswersMap[item.lesson_id] = item.answers || {};
+        quizPassedMap[item.lesson_id] = item.passed;
       });
     }
 
@@ -428,7 +506,7 @@ async function loadFullUserData(userId) {
     if (typeof applyCloudDataToState === 'function') {
       applyCloudDataToState({
         userId,
-        name: profile?.name || 'Learner',
+        name: displayName,
         username: profile?.username || 'learner',
         avatar: profile?.avatar || '👨‍💻',
         role: profile?.role || 'student',
@@ -437,6 +515,8 @@ async function loadFullUserData(userId) {
         level: profile?.level || 1,
         completedLessons: completedMap,
         quizScores: quizMap,
+        quizAnswers: quizAnswersMap,
+        quizPassed: quizPassedMap,
         achievements: badgesMap,
         confidenceScores: profile?.confidence_scores || {}
       });
@@ -470,6 +550,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       console.log('Supabase Auth Event:', event);
       if (event === 'SIGNED_IN' && session?.user) {
         currentUser = session.user;
+        if (passwordSignInInProgress) return;
         await loadFullUserData(session.user.id);
       } else if (event === 'SIGNED_OUT') {
         currentUser = null;

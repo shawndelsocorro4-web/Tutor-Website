@@ -1,18 +1,24 @@
 ﻿/* LearnPath Full 10-Topic Curriculum */
 const TOPICS = [
-{
-    id: 'payload-cms',
-    name: 'Payload CMS',
-    emoji: '📦',
-    color: '#7c3aed',
-    gradient: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
-    description: 'Build powerful headless content management systems with TypeScript and Next.js',
+  {
+    id: "payload-cms",
+    name: "Payload CMS",
+    emoji: "📦",
+    color: "#7c3aed",
+    gradient: "linear-gradient(135deg, #7c3aed, #a78bfa)",
+    description:
+      "Build powerful headless content management systems with TypeScript and Next.js",
     lessons: [
       {
-        id: 'payload-1',
-        title: 'What is a CMS?',
+        id: "payload-1",
+        title: "What is a CMS?",
         xp: 10,
-        checklist: ['Read the explanation', 'Understand the newspaper analogy', 'Complete the practice task', 'Pass the quiz'],
+        checklist: [
+          "Read the explanation",
+          "Understand the newspaper analogy",
+          "Complete the practice task",
+          "Pass the quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Let's Start at the Beginning 🌟</h3>
@@ -56,13 +62,28 @@ const TOPICS = [
             <div class="answer-feedback" id="feedback-payload-1"></div>
           </div>
           <div id="quiz-payload-1"></div>`,
-        quiz: { question: 'What does CMS stand for?', options: ['Code Management System','Content Management System','Computer Monitoring Software','Creative Media Suite'], correct: 1, explanation: 'CMS stands for <strong>Content Management System</strong> — a platform that helps you create, edit, organize, and publish digital content without needing to write code every time.' }
+        quiz: {
+          question: "What does CMS stand for?",
+          options: [
+            "Code Management System",
+            "Content Management System",
+            "Computer Monitoring Software",
+            "Creative Media Suite",
+          ],
+          correct: 1,
+          explanation:
+            "CMS stands for <strong>Content Management System</strong> — a platform that helps you create, edit, organize, and publish digital content without needing to write code every time.",
+        },
       },
       {
-        id: 'payload-2',
-        title: 'What is Payload CMS?',
+        id: "payload-2",
+        title: "What is Payload CMS?",
         xp: 15,
-        checklist: ['Understand what makes Payload unique', 'Learn code-first architecture', 'Complete the practice task'],
+        checklist: [
+          "Understand what makes Payload unique",
+          "Learn code-first architecture",
+          "Complete the practice task",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Meet Payload CMS 🚀</h3>
@@ -90,13 +111,28 @@ const TOPICS = [
             <div class="answer-feedback" id="feedback-payload-2"></div>
           </div>
           <div id="quiz-payload-2"></div>`,
-        quiz: { question: 'What does "Headless" mean in the context of Payload CMS?', options: ['The CMS runs without a computer server','The CMS stores content and provides an API, but does not dictate the frontend display','The CMS cannot have any images or headers','The CMS has no admin user account'], correct: 1, explanation: '<strong>Headless</strong> means the content management (backend) is decoupled from the presentation layer (frontend). Content is served via an API (usually JSON), allowing any frontend to render it!' }
+        quiz: {
+          question: 'What does "Headless" mean in the context of Payload CMS?',
+          options: [
+            "The CMS runs without a computer server",
+            "The CMS stores content and provides an API, but does not dictate the frontend display",
+            "The CMS cannot have any images or headers",
+            "The CMS has no admin user account",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Headless</strong> means the content management (backend) is decoupled from the presentation layer (frontend). Content is served via an API (usually JSON), allowing any frontend to render it!",
+        },
       },
       {
-        id: 'payload-3',
-        title: 'Installing & Setting Up Payload',
+        id: "payload-3",
+        title: "Installing & Setting Up Payload",
         xp: 20,
-        checklist: ['Verify Node.js version', 'Run the setup wizard command', 'Explore the generated project structure'],
+        checklist: [
+          "Verify Node.js version",
+          "Run the setup wizard command",
+          "Explore the generated project structure",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Starting Your First Payload Project ⚙️</h3>
@@ -140,13 +176,29 @@ const TOPICS = [
             <div class="answer-feedback" id="feedback-payload-3"></div>
           </div>
           <div id="quiz-payload-3"></div>`,
-        quiz: { question: 'What tool command is used to launch the official Payload project creation wizard?', options: ['npm install payload','npx create-payload-app@latest','git clone payload-cms','payload new site'], correct: 1, explanation: '<strong>npx create-payload-app@latest</strong> runs the interactive wizard that scaffolds your project, dependencies, database adapter, and TypeScript config in seconds.' }
+        quiz: {
+          question:
+            "What tool command is used to launch the official Payload project creation wizard?",
+          options: [
+            "npm install payload",
+            "npx create-payload-app@latest",
+            "git clone payload-cms",
+            "payload new site",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>npx create-payload-app@latest</strong> runs the interactive wizard that scaffolds your project, dependencies, database adapter, and TypeScript config in seconds.",
+        },
       },
       {
-        id: 'payload-4',
-        title: 'Collections & Fields',
+        id: "payload-4",
+        title: "Collections & Fields",
         xp: 25,
-        checklist: ['Learn what a Collection is', 'Explore fundamental Field types', 'Write a Posts collection in TypeScript'],
+        checklist: [
+          "Learn what a Collection is",
+          "Explore fundamental Field types",
+          "Write a Posts collection in TypeScript",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Collections: The Building Blocks of Data 🧱</h3>
@@ -211,13 +263,24 @@ const TOPICS = [
             <div class="answer-feedback" id="feedback-payload-4"></div>
           </div>
           <div id="quiz-payload-4"></div>`,
-        quiz: { question: 'What property in a CollectionConfig defines the unique database and API identifier?', options: ['name','id','slug','key'], correct: 2, explanation: 'The <strong>slug</strong> property defines the unique name of the collection (e.g. "posts"). Payload uses this slug for the API routes (/api/posts) and admin panel navigation.' }
+        quiz: {
+          question:
+            "What property in a CollectionConfig defines the unique database and API identifier?",
+          options: ["name", "id", "slug", "key"],
+          correct: 2,
+          explanation:
+            'The <strong>slug</strong> property defines the unique name of the collection (e.g. "posts"). Payload uses this slug for the API routes (/api/posts) and admin panel navigation.',
+        },
       },
       {
-        id: 'payload-5',
-        title: 'Users, Roles & Authentication',
+        id: "payload-5",
+        title: "Users, Roles & Authentication",
         xp: 25,
-        checklist: ['Enable auth on a collection', 'Understand role-based access control', 'Define access control functions'],
+        checklist: [
+          "Enable auth on a collection",
+          "Understand role-based access control",
+          "Define access control functions",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Built-In Security & Logins 🔐</h3>
@@ -265,13 +328,29 @@ const TOPICS = [
             <div class="answer-feedback" id="feedback-payload-5"></div>
           </div>
           <div id="quiz-payload-5"></div>`,
-        quiz: { question: 'What property activates password hashing, email login, and JWT token management on a collection?', options: ['security: true','login: true','auth: true','users: true'], correct: 2, explanation: 'Setting <strong>auth: true</strong> in a collection configuration automatically equips it with secure password hashing, login/logout endpoints, and session token generation.' }
+        quiz: {
+          question:
+            "What property activates password hashing, email login, and JWT token management on a collection?",
+          options: [
+            "security: true",
+            "login: true",
+            "auth: true",
+            "users: true",
+          ],
+          correct: 2,
+          explanation:
+            "Setting <strong>auth: true</strong> in a collection configuration automatically equips it with secure password hashing, login/logout endpoints, and session token generation.",
+        },
       },
       {
-        id: 'payload-6',
-        title: 'The Automatic REST API',
+        id: "payload-6",
+        title: "The Automatic REST API",
         xp: 20,
-        checklist: ['Learn standard REST endpoints', 'Understand query filters & pagination', 'Send your first GET request'],
+        checklist: [
+          "Learn standard REST endpoints",
+          "Understand query filters & pagination",
+          "Send your first GET request",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Instant APIs for Your Frontend 📡</h3>
@@ -314,13 +393,24 @@ GET /api/posts?sort=-publishedDate&page=1&limit=10</pre>
             <div class="answer-feedback" id="feedback-payload-6"></div>
           </div>
           <div id="quiz-payload-6"></div>`,
-        quiz: { question: 'Which HTTP method is used to create a brand new document in a Payload collection?', options: ['GET','POST','PUT','PATCH'], correct: 1, explanation: 'In standard REST architecture, <strong>POST</strong> is used to create a new resource, while GET reads, PATCH updates, and DELETE removes.' }
+        quiz: {
+          question:
+            "Which HTTP method is used to create a brand new document in a Payload collection?",
+          options: ["GET", "POST", "PUT", "PATCH"],
+          correct: 1,
+          explanation:
+            "In standard REST architecture, <strong>POST</strong> is used to create a new resource, while GET reads, PATCH updates, and DELETE removes.",
+        },
       },
       {
-        id: 'payload-7',
-        title: 'Hooks in Payload CMS',
+        id: "payload-7",
+        title: "Hooks in Payload CMS",
         xp: 25,
-        checklist: ['Understand what a Hook is', 'Explore beforeChange and afterRead hooks', 'Write an automated slug generation hook'],
+        checklist: [
+          "Understand what a Hook is",
+          "Explore beforeChange and afterRead hooks",
+          "Write an automated slug generation hook",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Automating Logic with Hooks 🎣</h3>
@@ -366,13 +456,28 @@ GET /api/posts?sort=-publishedDate&page=1&limit=10</pre>
             <div class="answer-feedback" id="feedback-payload-7"></div>
           </div>
           <div id="quiz-payload-7"></div>`,
-        quiz: { question: 'When does a "beforeChange" hook run in Payload CMS?', options: ['After the document is written to the database','Right before data is validated and saved to the database','Only when a user logs in','When the server restarts'], correct: 1, explanation: '<strong>beforeChange</strong> executes right before saving to the database, giving you the opportunity to validate, sanitize, format, or transform data before it persists.' }
+        quiz: {
+          question: 'When does a "beforeChange" hook run in Payload CMS?',
+          options: [
+            "After the document is written to the database",
+            "Right before data is validated and saved to the database",
+            "Only when a user logs in",
+            "When the server restarts",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>beforeChange</strong> executes right before saving to the database, giving you the opportunity to validate, sanitize, format, or transform data before it persists.",
+        },
       },
       {
-        id: 'payload-8',
-        title: 'Media & File Uploads',
+        id: "payload-8",
+        title: "Media & File Uploads",
         xp: 20,
-        checklist: ['Enable upload on a collection', 'Configure image resize presets', 'Link media to other collections'],
+        checklist: [
+          "Enable upload on a collection",
+          "Configure image resize presets",
+          "Link media to other collections",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Handling Images, PDFs & Files 🖼️</h3>
@@ -407,13 +512,29 @@ GET /api/posts?sort=-publishedDate&page=1&limit=10</pre>
           </div>
           <div class="tip-card"><div class="tip-icon">📐</div><p><strong>Automatic Resizing:</strong> Payload automatically generates every image size defined in <code>imageSizes</code> upon upload! This means your mobile visitors load lightweight thumbnails instead of multi-megabyte originals.</p></div>
           <div id="quiz-payload-8"></div>`,
-        quiz: { question: 'What property in a CollectionConfig turns it into a file upload handler?', options: ['files: true','storage: true','upload: true','media: true'], correct: 2, explanation: 'Setting <strong>upload: true</strong> (or specifying upload configuration options) designates the collection as an upload collection capable of storing files and resizing images.' }
+        quiz: {
+          question:
+            "What property in a CollectionConfig turns it into a file upload handler?",
+          options: [
+            "files: true",
+            "storage: true",
+            "upload: true",
+            "media: true",
+          ],
+          correct: 2,
+          explanation:
+            "Setting <strong>upload: true</strong> (or specifying upload configuration options) designates the collection as an upload collection capable of storing files and resizing images.",
+        },
       },
       {
-        id: 'payload-9',
-        title: 'Relationships & Global Settings',
+        id: "payload-9",
+        title: "Relationships & Global Settings",
         xp: 25,
-        checklist: ['Link collections together with relationship fields', 'Understand singletons/Globals', 'Create a SiteSettings global'],
+        checklist: [
+          "Link collections together with relationship fields",
+          "Understand singletons/Globals",
+          "Create a SiteSettings global",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Connecting Data Together 🔗</h3>
@@ -448,13 +569,29 @@ GET /api/posts?sort=-publishedDate&page=1&limit=10</pre>
             <div class="answer-feedback" id="feedback-payload-9"></div>
           </div>
           <div id="quiz-payload-9"></div>`,
-        quiz: { question: 'What is the main difference between a Collection and a Global in Payload CMS?', options: ['Collections require SQL, Globals use MongoDB','A Collection contains multiple documents; a Global has only one single record','Globals cannot have fields','Collections cannot have APIs'], correct: 1, explanation: 'A <strong>Collection</strong> is a list of multiple items (like hundreds of blog posts), whereas a <strong>Global</strong> is a singleton containing a single instance of data (like site-wide navigation settings).' }
+        quiz: {
+          question:
+            "What is the main difference between a Collection and a Global in Payload CMS?",
+          options: [
+            "Collections require SQL, Globals use MongoDB",
+            "A Collection contains multiple documents; a Global has only one single record",
+            "Globals cannot have fields",
+            "Collections cannot have APIs",
+          ],
+          correct: 1,
+          explanation:
+            "A <strong>Collection</strong> is a list of multiple items (like hundreds of blog posts), whereas a <strong>Global</strong> is a singleton containing a single instance of data (like site-wide navigation settings).",
+        },
       },
       {
-        id: 'payload-10',
-        title: 'Milestone Project & Multi-Quiz: Blog CMS',
+        id: "payload-10",
+        title: "Milestone Project & Multi-Quiz: Blog CMS",
         xp: 40,
-        checklist: ['Review all Payload concepts', 'Understand full CMS architecture', 'Complete the 4-question Milestone Quiz'],
+        checklist: [
+          "Review all Payload concepts",
+          "Understand full CMS architecture",
+          "Complete the 4-question Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 1 Capstone: The Full Blog CMS 🏆</h3>
@@ -467,46 +604,79 @@ GET /api/posts?sort=-publishedDate&page=1&limit=10</pre>
           <div id="multi-quiz-payload-10"></div>`,
         quizzes: [
           {
-            question: 'Which of the following describes Payload CMS most accurately?',
-            options: ['A traditional WordPress plugin written in PHP','A code-first headless CMS built with TypeScript and Next.js','A frontend CSS styling framework','A browser-only database'],
+            question:
+              "Which of the following describes Payload CMS most accurately?",
+            options: [
+              "A traditional WordPress plugin written in PHP",
+              "A code-first headless CMS built with TypeScript and Next.js",
+              "A frontend CSS styling framework",
+              "A browser-only database",
+            ],
             correct: 1,
-            explanation: 'Payload CMS is a code-first, headless CMS built using TypeScript that gives developers full control over their backend and admin panel.'
+            explanation:
+              "Payload CMS is a code-first, headless CMS built using TypeScript that gives developers full control over their backend and admin panel.",
           },
           {
-            question: 'Where do you register your collections, database adapters, and admin panel plugins in a Payload project?',
-            options: ['package.json','src/payload.config.ts','src/index.html','.env'],
+            question:
+              "Where do you register your collections, database adapters, and admin panel plugins in a Payload project?",
+            options: [
+              "package.json",
+              "src/payload.config.ts",
+              "src/index.html",
+              ".env",
+            ],
             correct: 1,
-            explanation: '<strong>payload.config.ts</strong> is the central configuration file that registers all collections, globals, plugins, and database connections.'
+            explanation:
+              "<strong>payload.config.ts</strong> is the central configuration file that registers all collections, globals, plugins, and database connections.",
           },
           {
-            question: 'How does a frontend application (like Next.js or React) fetch content from Payload CMS?',
-            options: ['By running direct SQL queries in the user browser','Through automatically generated REST or GraphQL APIs (/api/posts)','By reading the server hard drive directly','By copying files manually'],
+            question:
+              "How does a frontend application (like Next.js or React) fetch content from Payload CMS?",
+            options: [
+              "By running direct SQL queries in the user browser",
+              "Through automatically generated REST or GraphQL APIs (/api/posts)",
+              "By reading the server hard drive directly",
+              "By copying files manually",
+            ],
             correct: 1,
-            explanation: 'Payload automatically generates clean REST (/api/posts) and GraphQL APIs that frontend applications call using standard fetch requests.'
+            explanation:
+              "Payload automatically generates clean REST (/api/posts) and GraphQL APIs that frontend applications call using standard fetch requests.",
           },
           {
-            question: 'Which field type links a blog post document to a specific user record from another collection?',
-            options: ['type: "pointer"','type: "relationship"','type: "foreignKey"','type: "link"'],
+            question:
+              "Which field type links a blog post document to a specific user record from another collection?",
+            options: [
+              'type: "pointer"',
+              'type: "relationship"',
+              'type: "foreignKey"',
+              'type: "link"',
+            ],
             correct: 1,
-            explanation: 'The <strong>relationship</strong> field type creates links between documents across collections, with automatic population support.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "The <strong>relationship</strong> field type creates links between documents across collections, with automatic population support.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'github',
-    name: 'GitHub',
-    emoji: '🐙',
-    color: '#1d4ed8',
-    gradient: 'linear-gradient(135deg, #1d4ed8, #3b82f6)',
-    description: 'Master version control, Git branching, collaboration, and repository hosting',
+  {
+    id: "github",
+    name: "GitHub",
+    emoji: "🐙",
+    color: "#1d4ed8",
+    gradient: "linear-gradient(135deg, #1d4ed8, #3b82f6)",
+    description:
+      "Master version control, Git branching, collaboration, and repository hosting",
     lessons: [
       {
-        id: 'github-1',
-        title: 'What is Git & GitHub?',
+        id: "github-1",
+        title: "What is Git & GitHub?",
         xp: 10,
-        checklist: ['Understand the difference between Git and GitHub', 'Learn why version control is essential', 'Complete the practice task'],
+        checklist: [
+          "Understand the difference between Git and GitHub",
+          "Learn why version control is essential",
+          "Complete the practice task",
+        ],
         content: `
           <div class="lesson-section">
             <h3>The Time Machine for Code ⏳</h3>
@@ -538,13 +708,28 @@ GET /api/posts?sort=-publishedDate&page=1&limit=10</pre>
             <div class="answer-feedback" id="feedback-github-1"></div>
           </div>
           <div id="quiz-github-1"></div>`,
-        quiz: { question: 'Which of the following statements is TRUE?', options: ['Git and GitHub are the exact same program','Git is the version control tool on your computer; GitHub is the website hosting your repos online','You cannot use Git without paying for a GitHub subscription','GitHub replaces the need for a code editor'], correct: 1, explanation: '<strong>Git</strong> is the local command-line version control software. <strong>GitHub</strong> is an online hosting platform where developers store backups and collaborate on Git repositories.' }
+        quiz: {
+          question: "Which of the following statements is TRUE?",
+          options: [
+            "Git and GitHub are the exact same program",
+            "Git is the version control tool on your computer; GitHub is the website hosting your repos online",
+            "You cannot use Git without paying for a GitHub subscription",
+            "GitHub replaces the need for a code editor",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Git</strong> is the local command-line version control software. <strong>GitHub</strong> is an online hosting platform where developers store backups and collaborate on Git repositories.",
+        },
       },
       {
-        id: 'github-2',
-        title: 'Your First Repository',
+        id: "github-2",
+        title: "Your First Repository",
         xp: 15,
-        checklist: ['Understand what a Repository is', 'Learn the git init command', 'Explore Public vs Private repos'],
+        checklist: [
+          "Understand what a Repository is",
+          "Learn the git init command",
+          "Explore Public vs Private repos",
+        ],
         content: `
           <div class="lesson-section">
             <h3>What is a Repository? 📁</h3>
@@ -574,13 +759,24 @@ GET /api/posts?sort=-publishedDate&page=1&limit=10</pre>
             <div class="answer-feedback" id="feedback-github-2"></div>
           </div>
           <div id="quiz-github-2"></div>`,
-        quiz: { question: 'What command initializes a new Git repository in your current folder?', options: ['git start','git init','git create','git new'], correct: 1, explanation: '<strong>git init</strong> initializes an empty Git repository in the current directory by creating a hidden .git folder where version history is saved.' }
+        quiz: {
+          question:
+            "What command initializes a new Git repository in your current folder?",
+          options: ["git start", "git init", "git create", "git new"],
+          correct: 1,
+          explanation:
+            "<strong>git init</strong> initializes an empty Git repository in the current directory by creating a hidden .git folder where version history is saved.",
+        },
       },
       {
-        id: 'github-3',
-        title: 'Making Your First Commit',
+        id: "github-3",
+        title: "Making Your First Commit",
         xp: 20,
-        checklist: ['Understand the 3 Git areas', 'Use git add to stage files', 'Use git commit with a clear message'],
+        checklist: [
+          "Understand the 3 Git areas",
+          "Use git add to stage files",
+          "Use git commit with a clear message",
+        ],
         content: `
           <div class="lesson-section">
             <h3>The Git Workflow: Stage then Commit 📸</h3>
@@ -608,13 +804,28 @@ git commit -m <span class="string">"Create navbar and landing page hero"</span><
           </div>
           <div class="info-box"><div class="info-icon">💡</div><p><strong>Writing Good Commit Messages:</strong> Be specific! "Fix typo in pricing button" is 100x better than "updates" or "fix stuff". Future you will thank present you!</p></div>
           <div id="quiz-github-3"></div>`,
-        quiz: { question: 'What is the purpose of the staging area (git add)?', options: ['It uploads your code to GitHub servers','It selects which file changes will be included in the next commit snapshot','It deletes unwanted files','It creates a new branch'], correct: 1, explanation: 'The <strong>staging area</strong> lets you carefully pick and choose which specific modifications to group into your next commit snapshot before sealing the commit.' }
+        quiz: {
+          question: "What is the purpose of the staging area (git add)?",
+          options: [
+            "It uploads your code to GitHub servers",
+            "It selects which file changes will be included in the next commit snapshot",
+            "It deletes unwanted files",
+            "It creates a new branch",
+          ],
+          correct: 1,
+          explanation:
+            "The <strong>staging area</strong> lets you carefully pick and choose which specific modifications to group into your next commit snapshot before sealing the commit.",
+        },
       },
       {
-        id: 'github-4',
-        title: 'Push & Pull: Cloud Synchronization',
+        id: "github-4",
+        title: "Push & Pull: Cloud Synchronization",
         xp: 20,
-        checklist: ['Understand remote repositories', 'Use git push to upload commits', 'Use git pull to download updates'],
+        checklist: [
+          "Understand remote repositories",
+          "Use git push to upload commits",
+          "Use git pull to download updates",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Syncing Your Commits with the Cloud ☁️</h3>
@@ -647,13 +858,24 @@ git push -u origin main
 git pull origin main</pre>
           </div>
           <div id="quiz-github-4"></div>`,
-        quiz: { question: 'Which command uploads your local commits to your remote GitHub repository?', options: ['git upload','git sync','git push','git send'], correct: 2, explanation: '<strong>git push</strong> sends (pushes) your local commit history up to the remote repository on GitHub.' }
+        quiz: {
+          question:
+            "Which command uploads your local commits to your remote GitHub repository?",
+          options: ["git upload", "git sync", "git push", "git send"],
+          correct: 2,
+          explanation:
+            "<strong>git push</strong> sends (pushes) your local commit history up to the remote repository on GitHub.",
+        },
       },
       {
-        id: 'github-5',
-        title: 'Branches: Parallel Universes',
+        id: "github-5",
+        title: "Branches: Parallel Universes",
         xp: 25,
-        checklist: ['Understand what a branch is', 'Create a new feature branch', 'Switch between branches and merge'],
+        checklist: [
+          "Understand what a branch is",
+          "Create a new feature branch",
+          "Switch between branches and merge",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Working in Safe Isolation 🌿</h3>
@@ -679,13 +901,29 @@ git checkout main
 git merge feature-dark-mode</pre>
           </div>
           <div id="quiz-github-5"></div>`,
-        quiz: { question: 'What command creates a new branch and immediately switches to it?', options: ['git branch new-feature','git checkout -b new-feature','git switch new-feature','git fork new-feature'], correct: 1, explanation: '<strong>git checkout -b [branch-name]</strong> creates the branch and switches your working directory to it in one single step.' }
+        quiz: {
+          question:
+            "What command creates a new branch and immediately switches to it?",
+          options: [
+            "git branch new-feature",
+            "git checkout -b new-feature",
+            "git switch new-feature",
+            "git fork new-feature",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>git checkout -b [branch-name]</strong> creates the branch and switches your working directory to it in one single step.",
+        },
       },
       {
-        id: 'github-6',
-        title: 'Pull Requests & Code Review',
+        id: "github-6",
+        title: "Pull Requests & Code Review",
         xp: 25,
-        checklist: ['Understand what a Pull Request is', 'Learn how code reviews work', 'Merge a PR on GitHub'],
+        checklist: [
+          "Understand what a Pull Request is",
+          "Learn how code reviews work",
+          "Merge a PR on GitHub",
+        ],
         content: `
           <div class="lesson-section">
             <h3>The Gold Standard of Teamwork 🤝</h3>
@@ -703,13 +941,28 @@ git merge feature-dark-mode</pre>
           </div>
           <div class="tip-card"><div class="tip-icon">👀</div><p><strong>Code Reviews Make You Better:</strong> Having teammates read your PR helps catch bugs before they ever reach real users and teaches you new coding tricks from peers.</p></div>
           <div id="quiz-github-6"></div>`,
-        quiz: { question: 'What is a Pull Request (PR) on GitHub?', options: ['A request to download files to your computer','A formal proposal to review and merge code changes from one branch into another','A command that pulls code from a database','An error message when code breaks'], correct: 1, explanation: 'A <strong>Pull Request</strong> lets you propose changes, discuss them with team members, perform code reviews, and run automated tests before merging into the main branch.' }
+        quiz: {
+          question: "What is a Pull Request (PR) on GitHub?",
+          options: [
+            "A request to download files to your computer",
+            "A formal proposal to review and merge code changes from one branch into another",
+            "A command that pulls code from a database",
+            "An error message when code breaks",
+          ],
+          correct: 1,
+          explanation:
+            "A <strong>Pull Request</strong> lets you propose changes, discuss them with team members, perform code reviews, and run automated tests before merging into the main branch.",
+        },
       },
       {
-        id: 'github-7',
-        title: 'Cloning & Remote Collaboration',
+        id: "github-7",
+        title: "Cloning & Remote Collaboration",
         xp: 20,
-        checklist: ['Understand git clone', 'Clone an open-source project', 'Inspect commit history with git log'],
+        checklist: [
+          "Understand git clone",
+          "Clone an open-source project",
+          "Inspect commit history with git log",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Downloading Existing Repositories 📥</h3>
@@ -728,13 +981,24 @@ git log --oneline -n 5</pre>
           </div>
           <div class="info-box"><div class="info-icon">💡</div><p><strong>git clone vs Download ZIP:</strong> Downloading a ZIP only gives you the latest files. <code>git clone</code> downloads the files <em>plus the entire Git time machine history</em>, branches, and remote links!</p></div>
           <div id="quiz-github-7"></div>`,
-        quiz: { question: 'What command downloads a complete copy of an existing GitHub repository including all history and branches?', options: ['git download','git clone','git pull','git copy'], correct: 1, explanation: '<strong>git clone</strong> copies the entire repository, including all commits, branches, and version history, directly to your computer.' }
+        quiz: {
+          question:
+            "What command downloads a complete copy of an existing GitHub repository including all history and branches?",
+          options: ["git download", "git clone", "git pull", "git copy"],
+          correct: 1,
+          explanation:
+            "<strong>git clone</strong> copies the entire repository, including all commits, branches, and version history, directly to your computer.",
+        },
       },
       {
-        id: 'github-8',
-        title: 'Resolving Merge Conflicts',
+        id: "github-8",
+        title: "Resolving Merge Conflicts",
         xp: 25,
-        checklist: ['Learn why conflicts occur', 'Read conflict markers (<<<<<<<)', 'Safely resolve and commit'],
+        checklist: [
+          "Learn why conflicts occur",
+          "Read conflict markers (<<<<<<<)",
+          "Safely resolve and commit",
+        ],
         content: `
           <div class="lesson-section">
             <h3>When Two People Edit the Same Line ⚔️</h3>
@@ -759,13 +1023,29 @@ git log --oneline -n 5</pre>
             <div class="code-line-explain"><span class="line-num">4</span><span class="line-desc">Run <code>git add .</code> and <code>git commit -m "Resolve merge conflict in title"</code>!</span></div>
           </div>
           <div id="quiz-github-8"></div>`,
-        quiz: { question: 'What does the "=======" symbol represent inside a Git conflict marker?', options: ['The end of the file','The dividing line between your branch changes and the incoming branch changes','A syntax error in your JavaScript','A successful merge'], correct: 1, explanation: '<strong>=======</strong> is the separator dividing your current branch\'s version (above) from the incoming branch\'s version (below).' }
+        quiz: {
+          question:
+            'What does the "=======" symbol represent inside a Git conflict marker?',
+          options: [
+            "The end of the file",
+            "The dividing line between your branch changes and the incoming branch changes",
+            "A syntax error in your JavaScript",
+            "A successful merge",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>=======</strong> is the separator dividing your current branch's version (above) from the incoming branch's version (below).",
+        },
       },
       {
-        id: 'github-9',
-        title: '.gitignore & Protecting Secrets',
+        id: "github-9",
+        title: ".gitignore & Protecting Secrets",
         xp: 20,
-        checklist: ['Create a .gitignore file', 'Ignore node_modules and .env', 'Never commit private API keys'],
+        checklist: [
+          "Create a .gitignore file",
+          "Ignore node_modules and .env",
+          "Never commit private API keys",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Keeping Sensitive Files Private 🛡️</h3>
@@ -794,13 +1074,28 @@ Thumbs.db</pre>
           </div>
           <div class="warning-card"><div class="warn-icon">⚠️</div><p><strong>Crucial Rule:</strong> If you accidentally commit an API key to a public GitHub repo, automated bots can find and abuse it within seconds. Always add <code>.env</code> to your <code>.gitignore</code> first!</p></div>
           <div id="quiz-github-9"></div>`,
-        quiz: { question: 'Why should the .env file be listed in your .gitignore?', options: ['Because it makes the website load slower','Because it contains private secrets, database passwords, and API keys that should never be public','Because Git cannot read text files','Because GitHub does not allow files with dots'], correct: 1, explanation: 'The <strong>.env file</strong> holds confidential API tokens and passwords. Adding it to <code>.gitignore</code> prevents it from ever being accidentally pushed to public GitHub servers.' }
+        quiz: {
+          question: "Why should the .env file be listed in your .gitignore?",
+          options: [
+            "Because it makes the website load slower",
+            "Because it contains private secrets, database passwords, and API keys that should never be public",
+            "Because Git cannot read text files",
+            "Because GitHub does not allow files with dots",
+          ],
+          correct: 1,
+          explanation:
+            "The <strong>.env file</strong> holds confidential API tokens and passwords. Adding it to <code>.gitignore</code> prevents it from ever being accidentally pushed to public GitHub servers.",
+        },
       },
       {
-        id: 'github-10',
-        title: 'Milestone Project & Multi-Quiz: Git Workflow',
+        id: "github-10",
+        title: "Milestone Project & Multi-Quiz: Git Workflow",
         xp: 40,
-        checklist: ['Review core Git commands', 'Understand the full development lifecycle', 'Pass the 4-question Git Milestone Quiz'],
+        checklist: [
+          "Review core Git commands",
+          "Understand the full development lifecycle",
+          "Pass the 4-question Git Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 2 Capstone: The Professional Git Workflow 🏆</h3>
@@ -813,46 +1108,73 @@ Thumbs.db</pre>
           <div id="multi-quiz-github-10"></div>`,
         quizzes: [
           {
-            question: 'What is the correct sequence of commands to record changes in Git and upload them to GitHub?',
-            options: ['git push → git add → git commit','git add → git commit → git push','git commit → git push → git add','git init → git pull → git add'],
+            question:
+              "What is the correct sequence of commands to record changes in Git and upload them to GitHub?",
+            options: [
+              "git push → git add → git commit",
+              "git add → git commit → git push",
+              "git commit → git push → git add",
+              "git init → git pull → git add",
+            ],
             correct: 1,
-            explanation: 'First stage files with <code>git add</code>, seal the snapshot with <code>git commit -m "..."</code>, then upload with <code>git push</code>.'
+            explanation:
+              'First stage files with <code>git add</code>, seal the snapshot with <code>git commit -m "..."</code>, then upload with <code>git push</code>.',
           },
           {
-            question: 'What is the primary benefit of creating a Git branch?',
-            options: ['It compresses files to save disk space','It lets you build features in isolation without affecting the stable main code','It automatically deploys your site to GitHub Pages','It converts JavaScript into TypeScript'],
+            question: "What is the primary benefit of creating a Git branch?",
+            options: [
+              "It compresses files to save disk space",
+              "It lets you build features in isolation without affecting the stable main code",
+              "It automatically deploys your site to GitHub Pages",
+              "It converts JavaScript into TypeScript",
+            ],
             correct: 1,
-            explanation: 'Branches let you develop new features, experiments, and bugfixes in complete isolation without risking the stable main codebase.'
+            explanation:
+              "Branches let you develop new features, experiments, and bugfixes in complete isolation without risking the stable main codebase.",
           },
           {
-            question: 'What should you do immediately if you discover a merge conflict while merging branches?',
-            options: ['Delete the entire project folder and start over','Open the affected files, choose the correct code, remove conflict markers, stage and commit','Run git push --force','Turn off your computer'],
+            question:
+              "What should you do immediately if you discover a merge conflict while merging branches?",
+            options: [
+              "Delete the entire project folder and start over",
+              "Open the affected files, choose the correct code, remove conflict markers, stage and commit",
+              "Run git push --force",
+              "Turn off your computer",
+            ],
             correct: 1,
-            explanation: 'Conflicts are a normal part of collaboration. Simply open the file, select the right code, delete markers, stage, and commit.'
+            explanation:
+              "Conflicts are a normal part of collaboration. Simply open the file, select the right code, delete markers, stage, and commit.",
           },
           {
-            question: 'Which file tells Git to skip uploading sensitive credentials and heavy dependencies?',
-            options: ['README.md','package.json','.gitignore','index.html'],
+            question:
+              "Which file tells Git to skip uploading sensitive credentials and heavy dependencies?",
+            options: ["README.md", "package.json", ".gitignore", "index.html"],
             correct: 2,
-            explanation: '<strong>.gitignore</strong> lists all files, folders, and patterns that Git should disregard and never track.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "<strong>.gitignore</strong> lists all files, folders, and patterns that Git should disregard and never track.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'html',
-    name: 'HTML',
-    emoji: '🌐',
-    color: '#b45309',
-    gradient: 'linear-gradient(135deg, #e44d26, #f16529)',
-    description: 'Learn the foundational markup language that structures every website on Earth',
+  {
+    id: "html",
+    name: "HTML",
+    emoji: "🌐",
+    color: "#b45309",
+    gradient: "linear-gradient(135deg, #e44d26, #f16529)",
+    description:
+      "Learn the foundational markup language that structures every website on Earth",
     lessons: [
       {
-        id: 'html-1',
-        title: 'What is HTML?',
+        id: "html-1",
+        title: "What is HTML?",
         xp: 10,
-        checklist: ['Understand HTML\'s role as the skeleton of the web', 'Learn opening and closing tags', 'Run code in the live editor'],
+        checklist: [
+          "Understand HTML's role as the skeleton of the web",
+          "Learn opening and closing tags",
+          "Run code in the live editor",
+        ],
         content: `
           <div class="lesson-section">
             <h3>The Skeleton of Every Webpage 🦴</h3>
@@ -887,13 +1209,28 @@ Thumbs.db</pre>
             <div class="code-line-explain"><span class="line-num">&lt;/h1&gt;</span><span class="line-desc"><strong>Closing tag</strong> — the forward slash <code>/</code> signals the end of the heading.</span></div>
           </div>
           <div id="quiz-html-1"></div>`,
-        quiz: { question: 'What character indicates a closing tag in HTML?', options: ['Backslash (\\)','Forward slash (/)','Exclamation mark (!)','Asterisk (*)'], correct: 1, explanation: 'In HTML, closing tags always include a <strong>forward slash (/)</strong> immediately after the opening angle bracket (e.g. <code>&lt;/p&gt;</code> or <code>&lt;/h1&gt;</code>).' }
+        quiz: {
+          question: "What character indicates a closing tag in HTML?",
+          options: [
+            "Backslash (\\)",
+            "Forward slash (/)",
+            "Exclamation mark (!)",
+            "Asterisk (*)",
+          ],
+          correct: 1,
+          explanation:
+            "In HTML, closing tags always include a <strong>forward slash (/)</strong> immediately after the opening angle bracket (e.g. <code>&lt;/p&gt;</code> or <code>&lt;/h1&gt;</code>).",
+        },
       },
       {
-        id: 'html-2',
-        title: 'Headings, Paragraphs & Text Formatting',
+        id: "html-2",
+        title: "Headings, Paragraphs & Text Formatting",
         xp: 15,
-        checklist: ['Use h1 through h6 headings', 'Write paragraphs and line breaks', 'Bold and italicize words'],
+        checklist: [
+          "Use h1 through h6 headings",
+          "Write paragraphs and line breaks",
+          "Bold and italicize words",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Organizing Content Hierarchy 📑</h3>
@@ -914,13 +1251,24 @@ Thumbs.db</pre>
           </div>
           <div class="tip-card"><div class="tip-icon">SEO</div><p><strong>Golden Rule of SEO:</strong> Always use only <strong>one</strong> <code>&lt;h1&gt;</code> tag per page for the main title. Use <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> for sub-sections. This helps search engines understand your page structure.</p></div>
           <div id="quiz-html-2"></div>`,
-        quiz: { question: 'Which tag represents the highest and most important heading level in HTML?', options: ['<h6>','<header>','<h1>','<head>'], correct: 2, explanation: '<strong>&lt;h1&gt;</strong> represents the top-level heading. Headings decrease in size and structural hierarchy from h1 down to h6.' }
+        quiz: {
+          question:
+            "Which tag represents the highest and most important heading level in HTML?",
+          options: ["<h6>", "<header>", "<h1>", "<head>"],
+          correct: 2,
+          explanation:
+            "<strong>&lt;h1&gt;</strong> represents the top-level heading. Headings decrease in size and structural hierarchy from h1 down to h6.",
+        },
       },
       {
-        id: 'html-3',
-        title: 'Links & Images: Connecting the Web',
+        id: "html-3",
+        title: "Links & Images: Connecting the Web",
         xp: 20,
-        checklist: ['Create hyperlinks with a href', 'Open links in new tabs with target="_blank"', 'Embed images with src and alt attributes'],
+        checklist: [
+          "Create hyperlinks with a href",
+          'Open links in new tabs with target="_blank"',
+          "Embed images with src and alt attributes",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Hyperlinks: The "Hyper" in HTML 🔗</h3>
@@ -941,13 +1289,24 @@ Thumbs.db</pre>
           </div>
           <div class="warning-card"><div class="warn-icon">♿</div><p><strong>The alt attribute is mandatory:</strong> Always provide descriptive <code>alt</code> text on images! If an image fails to load, or if a visually impaired user uses a screen reader, the <code>alt</code> text is what they hear.</p></div>
           <div id="quiz-html-3"></div>`,
-        quiz: { question: 'Which attribute specifies the image file URL in an <img> tag?', options: ['href','url','link','src'], correct: 3, explanation: 'The <strong>src</strong> (source) attribute specifies the location/URL of the image file. (Note: <code>href</code> is used for links, not images!).' }
+        quiz: {
+          question:
+            "Which attribute specifies the image file URL in an <img> tag?",
+          options: ["href", "url", "link", "src"],
+          correct: 3,
+          explanation:
+            "The <strong>src</strong> (source) attribute specifies the location/URL of the image file. (Note: <code>href</code> is used for links, not images!).",
+        },
       },
       {
-        id: 'html-4',
-        title: 'Lists: Ordered & Unordered',
+        id: "html-4",
+        title: "Lists: Ordered & Unordered",
         xp: 15,
-        checklist: ['Create bulleted lists with ul', 'Create numbered lists with ol', 'Nest lists inside one another'],
+        checklist: [
+          "Create bulleted lists with ul",
+          "Create numbered lists with ol",
+          "Nest lists inside one another",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Organizing Items with Lists 📋</h3>
@@ -975,13 +1334,23 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-html-4"></iframe>
           </div>
           <div id="quiz-html-4"></div>`,
-        quiz: { question: 'Which tag creates a numbered (ordered) list in HTML?', options: ['<ul>','<ol>','<nl>','<list>'], correct: 1, explanation: '<strong>&lt;ol&gt;</strong> stands for "Ordered List" and renders numbered items (1, 2, 3). <code>&lt;ul&gt;</code> stands for "Unordered List" and renders bullet points.' }
+        quiz: {
+          question: "Which tag creates a numbered (ordered) list in HTML?",
+          options: ["<ul>", "<ol>", "<nl>", "<list>"],
+          correct: 1,
+          explanation:
+            '<strong>&lt;ol&gt;</strong> stands for "Ordered List" and renders numbered items (1, 2, 3). <code>&lt;ul&gt;</code> stands for "Unordered List" and renders bullet points.',
+        },
       },
       {
-        id: 'html-5',
-        title: 'Forms, Inputs & Buttons',
+        id: "html-5",
+        title: "Forms, Inputs & Buttons",
         xp: 25,
-        checklist: ['Create interactive forms', 'Use text, email, password, and checkbox inputs', 'Link labels to inputs using for and id'],
+        checklist: [
+          "Create interactive forms",
+          "Use text, email, password, and checkbox inputs",
+          "Link labels to inputs using for and id",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Collecting User Information 📝</h3>
@@ -1015,13 +1384,29 @@ Thumbs.db</pre>
           </div>
           <div class="tip-card"><div class="tip-icon">💡</div><p><strong>The for / id connection:</strong> When you click on the text inside a <code>&lt;label for="uname"&gt;</code>, the browser automatically focuses the input whose <code>id="uname"</code> matches! This makes checkboxes and inputs vastly easier to click.</p></div>
           <div id="quiz-html-5"></div>`,
-        quiz: { question: 'Which input type should you use to hide password characters with dots or stars as the user types?', options: ['type="secret"','type="password"','type="hidden"','type="protected"'], correct: 1, explanation: '<strong>type="password"</strong> automatically masks the typed characters with dots or asterisks for privacy and security.' }
+        quiz: {
+          question:
+            "Which input type should you use to hide password characters with dots or stars as the user types?",
+          options: [
+            'type="secret"',
+            'type="password"',
+            'type="hidden"',
+            'type="protected"',
+          ],
+          correct: 1,
+          explanation:
+            '<strong>type="password"</strong> automatically masks the typed characters with dots or asterisks for privacy and security.',
+        },
       },
       {
-        id: 'html-6',
-        title: 'Tables & Structured Data',
+        id: "html-6",
+        title: "Tables & Structured Data",
         xp: 20,
-        checklist: ['Create tables with table, tr, th, td', 'Style borders and cell padding', 'Use tables for tabular data'],
+        checklist: [
+          "Create tables with table, tr, th, td",
+          "Style borders and cell padding",
+          "Use tables for tabular data",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Displaying Grids of Data 📊</h3>
@@ -1063,13 +1448,24 @@ Thumbs.db</pre>
             <div class="code-line-explain"><span class="line-num">&lt;td&gt;</span><span class="line-desc"><strong>Table Data:</strong> Standard content cell inside a row.</span></div>
           </div>
           <div id="quiz-html-6"></div>`,
-        quiz: { question: 'Which tag defines an individual data cell inside a table row?', options: ['<th>','<td>','<tc>','<cell>'], correct: 1, explanation: '<strong>&lt;td&gt;</strong> stands for "Table Data" and defines a standard cell within a table row (<code>&lt;tr&gt;</code>).' }
+        quiz: {
+          question:
+            "Which tag defines an individual data cell inside a table row?",
+          options: ["<th>", "<td>", "<tc>", "<cell>"],
+          correct: 1,
+          explanation:
+            '<strong>&lt;td&gt;</strong> stands for "Table Data" and defines a standard cell within a table row (<code>&lt;tr&gt;</code>).',
+        },
       },
       {
-        id: 'html-7',
-        title: 'Semantic HTML & Accessibility',
+        id: "html-7",
+        title: "Semantic HTML & Accessibility",
         xp: 25,
-        checklist: ['Replace generic divs with semantic tags', 'Use header, nav, main, article, footer', 'Understand screen reader benefits'],
+        checklist: [
+          "Replace generic divs with semantic tags",
+          "Use header, nav, main, article, footer",
+          "Understand screen reader benefits",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Code with Meaning 🧠</h3>
@@ -1088,13 +1484,24 @@ Thumbs.db</pre>
           </div>
           <div class="success-card"><div class="suc-icon">🌟</div><p><strong>Why Semantics Matter:</strong> Search engines like Google rank semantic websites higher because they can parse your articles and navigation with clarity. Blind users with screen readers can jump directly to <code>&lt;main&gt;</code> or skip navigation with ease.</p></div>
           <div id="quiz-html-7"></div>`,
-        quiz: { question: 'Which semantic element should contain the primary navigational links of a website?', options: ['<menu>','<nav>','<links>','<navigate>'], correct: 1, explanation: 'The <strong>&lt;nav&gt;</strong> element is specifically intended for blocks of primary navigation links.' }
+        quiz: {
+          question:
+            "Which semantic element should contain the primary navigational links of a website?",
+          options: ["<menu>", "<nav>", "<links>", "<navigate>"],
+          correct: 1,
+          explanation:
+            "The <strong>&lt;nav&gt;</strong> element is specifically intended for blocks of primary navigation links.",
+        },
       },
       {
-        id: 'html-8',
-        title: 'HTML5 Media & Modern Elements',
+        id: "html-8",
+        title: "HTML5 Media & Modern Elements",
         xp: 20,
-        checklist: ['Embed video and audio natively', 'Use details and summary for accordions', 'Use the progress element'],
+        checklist: [
+          "Embed video and audio natively",
+          "Use details and summary for accordions",
+          "Use the progress element",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Native Multimedia Without Plugins 🎬</h3>
@@ -1120,13 +1527,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-html-8"></iframe>
           </div>
           <div id="quiz-html-8"></div>`,
-        quiz: { question: 'Which pair of HTML5 elements creates a native expandable/collapsible toggle box with ZERO JavaScript?', options: ['<toggle> and <content>','<collapse> and <expand>','<details> and <summary>','<accordion> and <tab>'], correct: 2, explanation: 'The <strong>&lt;details&gt;</strong> and <strong>&lt;summary&gt;</strong> elements create a native dropdown widget that expands and collapses automatically on click.' }
+        quiz: {
+          question:
+            "Which pair of HTML5 elements creates a native expandable/collapsible toggle box with ZERO JavaScript?",
+          options: [
+            "<toggle> and <content>",
+            "<collapse> and <expand>",
+            "<details> and <summary>",
+            "<accordion> and <tab>",
+          ],
+          correct: 2,
+          explanation:
+            "The <strong>&lt;details&gt;</strong> and <strong>&lt;summary&gt;</strong> elements create a native dropdown widget that expands and collapses automatically on click.",
+        },
       },
       {
-        id: 'html-9',
-        title: 'Milestone Project & Multi-Quiz: Developer Profile Card',
+        id: "html-9",
+        title: "Milestone Project & Multi-Quiz: Developer Profile Card",
         xp: 40,
-        checklist: ['Combine headings, images, lists, and links', 'Write clean semantic markup', 'Pass the 4-question HTML Milestone Quiz'],
+        checklist: [
+          "Combine headings, images, lists, and links",
+          "Write clean semantic markup",
+          "Pass the 4-question HTML Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 3 Capstone: The Complete Profile Card 🏆</h3>
@@ -1156,46 +1579,72 @@ Thumbs.db</pre>
           <div id="multi-quiz-html-9"></div>`,
         quizzes: [
           {
-            question: 'What is the primary role of HTML in web development?',
-            options: ['Adding visual animations and responsive styling','Structuring and organizing the content of a webpage','Running backend database queries','Encrypting internet traffic'],
+            question: "What is the primary role of HTML in web development?",
+            options: [
+              "Adding visual animations and responsive styling",
+              "Structuring and organizing the content of a webpage",
+              "Running backend database queries",
+              "Encrypting internet traffic",
+            ],
             correct: 1,
-            explanation: 'HTML defines the structure, hierarchy, and meaning of all content elements on a webpage.'
+            explanation:
+              "HTML defines the structure, hierarchy, and meaning of all content elements on a webpage.",
           },
           {
-            question: 'Which HTML element should you use to enclose the main body content of a page, excluding headers and footers?',
-            options: ['<section>','<main>','<center>','<content>'],
+            question:
+              "Which HTML element should you use to enclose the main body content of a page, excluding headers and footers?",
+            options: ["<section>", "<main>", "<center>", "<content>"],
             correct: 1,
-            explanation: 'The <strong>&lt;main&gt;</strong> element represents the dominant content of the document body.'
+            explanation:
+              "The <strong>&lt;main&gt;</strong> element represents the dominant content of the document body.",
           },
           {
             question: 'Why is the "alt" attribute on an <img> tag essential?',
-            options: ['It changes the color of the image','It describes the image for screen readers and displays fallback text if the image fails to load','It makes images load twice as fast','It allows users to download the image'],
+            options: [
+              "It changes the color of the image",
+              "It describes the image for screen readers and displays fallback text if the image fails to load",
+              "It makes images load twice as fast",
+              "It allows users to download the image",
+            ],
             correct: 1,
-            explanation: '<code>alt</code> text provides accessibility for visually impaired users and displays descriptive text if image loading fails.'
+            explanation:
+              "<code>alt</code> text provides accessibility for visually impaired users and displays descriptive text if image loading fails.",
           },
           {
-            question: 'Which tag should you use to create a clickable button inside a form?',
-            options: ['<button type="submit">','<click>','<input type="press">','<link role="button">'],
+            question:
+              "Which tag should you use to create a clickable button inside a form?",
+            options: [
+              '<button type="submit">',
+              "<click>",
+              '<input type="press">',
+              '<link role="button">',
+            ],
             correct: 0,
-            explanation: '<strong>&lt;button type="submit"&gt;</strong> creates a clickable button that triggers form submission.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              '<strong>&lt;button type="submit"&gt;</strong> creates a clickable button that triggers form submission.',
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'css',
-    name: 'CSS',
-    emoji: '🎨',
-    color: '#0369a1',
-    gradient: 'linear-gradient(135deg, #264de4, #2965f1)',
-    description: 'Style, animate, and layout gorgeous, responsive web applications',
+  {
+    id: "css",
+    name: "CSS",
+    emoji: "🎨",
+    color: "#0369a1",
+    gradient: "linear-gradient(135deg, #264de4, #2965f1)",
+    description:
+      "Style, animate, and layout gorgeous, responsive web applications",
     lessons: [
       {
-        id: 'css-1',
-        title: 'What is CSS?',
+        id: "css-1",
+        title: "What is CSS?",
         xp: 10,
-        checklist: ['Understand CSS syntax and rules', 'Learn selectors, properties, and values', 'Experiment in the live editor'],
+        checklist: [
+          "Understand CSS syntax and rules",
+          "Learn selectors, properties, and values",
+          "Experiment in the live editor",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Styling the Web 🎨</h3>
@@ -1246,13 +1695,24 @@ Thumbs.db</pre>
             <div class="code-line-explain"><span class="line-num">#7c3aed;</span><span class="line-desc"><strong>Value:</strong> The setting you want to apply (always ends with a semicolon!).</span></div>
           </div>
           <div id="quiz-css-1"></div>`,
-        quiz: { question: 'In CSS syntax, what character must end every property declaration?', options: ['Colon (:)','Semicolon (;)','Comma (,)','Period (.)'], correct: 1, explanation: 'In CSS, every property-value declaration MUST end with a <strong>semicolon (;)</strong> so the browser knows where the next property begins.' }
+        quiz: {
+          question:
+            "In CSS syntax, what character must end every property declaration?",
+          options: ["Colon (:)", "Semicolon (;)", "Comma (,)", "Period (.)"],
+          correct: 1,
+          explanation:
+            "In CSS, every property-value declaration MUST end with a <strong>semicolon (;)</strong> so the browser knows where the next property begins.",
+        },
       },
       {
-        id: 'css-2',
-        title: 'Colors, Backgrounds & Typography',
+        id: "css-2",
+        title: "Colors, Backgrounds & Typography",
         xp: 15,
-        checklist: ['Use Hex, RGB, and HSL colors', 'Create linear gradient backgrounds', 'Style fonts, font-size, and line-height'],
+        checklist: [
+          "Use Hex, RGB, and HSL colors",
+          "Create linear gradient backgrounds",
+          "Style fonts, font-size, and line-height",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Visual Aesthetics: Color & Type 🌈</h3>
@@ -1293,13 +1753,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-css-2"></iframe>
           </div>
           <div id="quiz-css-2"></div>`,
-        quiz: { question: 'Which CSS function creates a smooth color transition between two or more angles?', options: ['color-shift()','linear-gradient()','color-transition()','gradient-mesh()'], correct: 1, explanation: '<strong>linear-gradient()</strong> generates a transition between two or more colors along a straight line angle.' }
+        quiz: {
+          question:
+            "Which CSS function creates a smooth color transition between two or more angles?",
+          options: [
+            "color-shift()",
+            "linear-gradient()",
+            "color-transition()",
+            "gradient-mesh()",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>linear-gradient()</strong> generates a transition between two or more colors along a straight line angle.",
+        },
       },
       {
-        id: 'css-3',
-        title: 'The Box Model: Spacing Everything',
+        id: "css-3",
+        title: "The Box Model: Spacing Everything",
         xp: 20,
-        checklist: ['Understand margin vs padding vs border', 'Learn how to use box-sizing: border-box', 'Inspect spacing in the live editor'],
+        checklist: [
+          "Understand margin vs padding vs border",
+          "Learn how to use box-sizing: border-box",
+          "Inspect spacing in the live editor",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Every Element is a Rectangular Box 📦</h3>
@@ -1339,13 +1815,24 @@ Thumbs.db</pre>
           </div>
           <div class="tip-card"><div class="tip-icon">⭐</div><p><strong>Pro Developer Tip:</strong> Always set <code>box-sizing: border-box;</code> in your global CSS. This ensures that adding padding or borders doesn't unexpectedly expand the element's total width!</p></div>
           <div id="quiz-css-3"></div>`,
-        quiz: { question: 'What property creates empty space INSIDE an element, between its content and its border?', options: ['margin','padding','border-spacing','outline'], correct: 1, explanation: '<strong>padding</strong> creates breathing room inside the element. <strong>margin</strong> pushes space outside.' }
+        quiz: {
+          question:
+            "What property creates empty space INSIDE an element, between its content and its border?",
+          options: ["margin", "padding", "border-spacing", "outline"],
+          correct: 1,
+          explanation:
+            "<strong>padding</strong> creates breathing room inside the element. <strong>margin</strong> pushes space outside.",
+        },
       },
       {
-        id: 'css-4',
-        title: 'Flexbox: 1D Layout Powerhouse',
+        id: "css-4",
+        title: "Flexbox: 1D Layout Powerhouse",
         xp: 25,
-        checklist: ['Activate flexbox with display: flex', 'Align horizontally with justify-content', 'Align vertically with align-items and gap'],
+        checklist: [
+          "Activate flexbox with display: flex",
+          "Align horizontally with justify-content",
+          "Align vertically with align-items and gap",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Align Anything in Seconds with Flexbox 💪</h3>
@@ -1395,13 +1882,24 @@ Thumbs.db</pre>
             <div class="code-line-explain"><span class="line-num">align-items</span><span class="line-desc">Controls cross-axis alignment (center, flex-start, stretch).</span></div>
           </div>
           <div id="quiz-css-4"></div>`,
-        quiz: { question: 'Which justify-content value distributes items evenly so that the first item touches the start and the last item touches the end?', options: ['space-around','space-between','center','space-evenly'], correct: 1, explanation: '<strong>space-between</strong> places the first item at the left edge, the last item at the right edge, and distributes the remaining space equally in between.' }
+        quiz: {
+          question:
+            "Which justify-content value distributes items evenly so that the first item touches the start and the last item touches the end?",
+          options: ["space-around", "space-between", "center", "space-evenly"],
+          correct: 1,
+          explanation:
+            "<strong>space-between</strong> places the first item at the left edge, the last item at the right edge, and distributes the remaining space equally in between.",
+        },
       },
       {
-        id: 'css-5',
-        title: 'CSS Grid: 2D Layout Mastery',
+        id: "css-5",
+        title: "CSS Grid: 2D Layout Mastery",
         xp: 25,
-        checklist: ['Activate CSS Grid with display: grid', 'Define columns with grid-template-columns', 'Span items across multiple columns'],
+        checklist: [
+          "Activate CSS Grid with display: grid",
+          "Define columns with grid-template-columns",
+          "Span items across multiple columns",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Two-Dimensional Layouts 📐</h3>
@@ -1446,13 +1944,24 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-css-5"></iframe>
           </div>
           <div id="quiz-css-5"></div>`,
-        quiz: { question: 'What unit in CSS Grid represents a fraction of the available free space?', options: ['px','fr','%','em'], correct: 1, explanation: 'The <strong>fr</strong> (fraction) unit represents a fraction of the available space inside the grid container (e.g. <code>1fr 2fr 1fr</code>).' }
+        quiz: {
+          question:
+            "What unit in CSS Grid represents a fraction of the available free space?",
+          options: ["px", "fr", "%", "em"],
+          correct: 1,
+          explanation:
+            "The <strong>fr</strong> (fraction) unit represents a fraction of the available space inside the grid container (e.g. <code>1fr 2fr 1fr</code>).",
+        },
       },
       {
-        id: 'css-6',
-        title: 'Positioning & Z-Index Layering',
+        id: "css-6",
+        title: "Positioning & Z-Index Layering",
         xp: 20,
-        checklist: ['Understand static, relative, and absolute', 'Use fixed and sticky positioning', 'Control stacking layers with z-index'],
+        checklist: [
+          "Understand static, relative, and absolute",
+          "Use fixed and sticky positioning",
+          "Control stacking layers with z-index",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Controlling Exact Placements 📍</h3>
@@ -1503,13 +2012,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-css-6"></iframe>
           </div>
           <div id="quiz-css-6"></div>`,
-        quiz: { question: 'For an element with position: absolute to position itself within its parent box, what position value must that parent have?', options: ['position: static','position: relative (or any non-static value)','position: initial','position: fixed only'], correct: 1, explanation: 'An absolutely positioned element positions itself relative to its nearest ancestor that has a position other than static (most commonly <code>position: relative</code>).' }
+        quiz: {
+          question:
+            "For an element with position: absolute to position itself within its parent box, what position value must that parent have?",
+          options: [
+            "position: static",
+            "position: relative (or any non-static value)",
+            "position: initial",
+            "position: fixed only",
+          ],
+          correct: 1,
+          explanation:
+            "An absolutely positioned element positions itself relative to its nearest ancestor that has a position other than static (most commonly <code>position: relative</code>).",
+        },
       },
       {
-        id: 'css-7',
-        title: 'Transitions & Keyframe Animations',
+        id: "css-7",
+        title: "Transitions & Keyframe Animations",
         xp: 25,
-        checklist: ['Animate hover states with transition', 'Use transform: scale and rotate', 'Create looping @keyframes animations'],
+        checklist: [
+          "Animate hover states with transition",
+          "Use transform: scale and rotate",
+          "Create looping @keyframes animations",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Breathing Life with Motion ✨</h3>
@@ -1559,13 +2084,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-css-7"></iframe>
           </div>
           <div id="quiz-css-7"></div>`,
-        quiz: { question: 'Which CSS rule defines reusable multi-step animation sequences?', options: ['@animation','@keyframes','@transition','@keyframes-rule'], correct: 1, explanation: 'The <strong>@keyframes</strong> at-rule lets developers define the intermediate steps (0%, 50%, 100%) of a CSS animation sequence.' }
+        quiz: {
+          question:
+            "Which CSS rule defines reusable multi-step animation sequences?",
+          options: [
+            "@animation",
+            "@keyframes",
+            "@transition",
+            "@keyframes-rule",
+          ],
+          correct: 1,
+          explanation:
+            "The <strong>@keyframes</strong> at-rule lets developers define the intermediate steps (0%, 50%, 100%) of a CSS animation sequence.",
+        },
       },
       {
-        id: 'css-8',
-        title: 'Responsive Design & Media Queries',
+        id: "css-8",
+        title: "Responsive Design & Media Queries",
         xp: 25,
-        checklist: ['Understand mobile-first philosophy', 'Write media queries for smartphones and tablets', 'Use the viewport meta tag'],
+        checklist: [
+          "Understand mobile-first philosophy",
+          "Write media queries for smartphones and tablets",
+          "Use the viewport meta tag",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Looking Great on Any Screen Size 📱💻</h3>
@@ -1604,13 +2145,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-css-8"></iframe>
           </div>
           <div id="quiz-css-8"></div>`,
-        quiz: { question: 'Which CSS block applies styles only when the user screen is 768px wide or smaller?', options: ['@media (max-width: 768px) { ... }','@screen (width < 768px) { ... }','@query (mobile: true) { ... }','@device (max: 768) { ... }'], correct: 0, explanation: '<strong>@media (max-width: 768px)</strong> targets all screens up to 768 pixels in width (tablets and smartphones).' }
+        quiz: {
+          question:
+            "Which CSS block applies styles only when the user screen is 768px wide or smaller?",
+          options: [
+            "@media (max-width: 768px) { ... }",
+            "@screen (width < 768px) { ... }",
+            "@query (mobile: true) { ... }",
+            "@device (max: 768) { ... }",
+          ],
+          correct: 0,
+          explanation:
+            "<strong>@media (max-width: 768px)</strong> targets all screens up to 768 pixels in width (tablets and smartphones).",
+        },
       },
       {
-        id: 'css-9',
-        title: 'CSS Variables & Modern Theming',
+        id: "css-9",
+        title: "CSS Variables & Modern Theming",
         xp: 20,
-        checklist: ['Declare custom properties with --', 'Retrieve variables using var()', 'Implement dark and light themes'],
+        checklist: [
+          "Declare custom properties with --",
+          "Retrieve variables using var()",
+          "Implement dark and light themes",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Variables in Pure CSS 🎨</h3>
@@ -1647,13 +2204,24 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-css-9"></iframe>
           </div>
           <div id="quiz-css-9"></div>`,
-        quiz: { question: 'What prefix must every CSS Custom Property (Variable) begin with?', options: ['$', '@', '--', 'var-'], correct: 2, explanation: 'CSS custom properties must always begin with <strong>two dashes (--)</strong>, like <code>--primary-color: #7c3aed;</code>, and are retrieved using <code>var(--primary-color)</code>.' }
+        quiz: {
+          question:
+            "What prefix must every CSS Custom Property (Variable) begin with?",
+          options: ["$", "@", "--", "var-"],
+          correct: 2,
+          explanation:
+            "CSS custom properties must always begin with <strong>two dashes (--)</strong>, like <code>--primary-color: #7c3aed;</code>, and are retrieved using <code>var(--primary-color)</code>.",
+        },
       },
       {
-        id: 'css-10',
-        title: 'Milestone Project & Multi-Quiz: Responsive Card',
+        id: "css-10",
+        title: "Milestone Project & Multi-Quiz: Responsive Card",
         xp: 40,
-        checklist: ['Combine Flexbox, Box Model, and Gradients', 'Add hover transitions and shadows', 'Pass the 4-question CSS Milestone Quiz'],
+        checklist: [
+          "Combine Flexbox, Box Model, and Gradients",
+          "Add hover transitions and shadows",
+          "Pass the 4-question CSS Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 4 Capstone: High-End UI Component 🏆</h3>
@@ -1714,46 +2282,69 @@ Thumbs.db</pre>
           <div id="multi-quiz-css-10"></div>`,
         quizzes: [
           {
-            question: 'What is the correct order of layers in the CSS Box Model from inside to outside?',
-            options: ['Margin → Border → Padding → Content','Content → Padding → Border → Margin','Content → Border → Padding → Margin','Padding → Content → Margin → Border'],
+            question:
+              "What is the correct order of layers in the CSS Box Model from inside to outside?",
+            options: [
+              "Margin → Border → Padding → Content",
+              "Content → Padding → Border → Margin",
+              "Content → Border → Padding → Margin",
+              "Padding → Content → Margin → Border",
+            ],
             correct: 1,
-            explanation: 'The Box Model begins with the inner <strong>Content</strong>, surrounded by <strong>Padding</strong>, framed by the <strong>Border</strong>, and spaced out by <strong>Margin</strong>.'
+            explanation:
+              "The Box Model begins with the inner <strong>Content</strong>, surrounded by <strong>Padding</strong>, framed by the <strong>Border</strong>, and spaced out by <strong>Margin</strong>.",
           },
           {
-            question: 'Which layout model is best suited for 1-dimensional item distribution (like a navbar or button group)?',
-            options: ['CSS Grid','Flexbox','Table Layout','Float Layout'],
+            question:
+              "Which layout model is best suited for 1-dimensional item distribution (like a navbar or button group)?",
+            options: ["CSS Grid", "Flexbox", "Table Layout", "Float Layout"],
             correct: 1,
-            explanation: '<strong>Flexbox</strong> is the gold standard for 1-dimensional row or column layouts.'
+            explanation:
+              "<strong>Flexbox</strong> is the gold standard for 1-dimensional row or column layouts.",
           },
           {
-            question: 'How do you target an element with class="btn-primary" in CSS?',
-            options: ['#btn-primary { ... }','.btn-primary { ... }','btn-primary { ... }','*btn-primary { ... }'],
+            question:
+              'How do you target an element with class="btn-primary" in CSS?',
+            options: [
+              "#btn-primary { ... }",
+              ".btn-primary { ... }",
+              "btn-primary { ... }",
+              "*btn-primary { ... }",
+            ],
             correct: 1,
-            explanation: 'Class selectors always begin with a <strong>period (.)</strong>, while ID selectors begin with a hash (#).'
+            explanation:
+              "Class selectors always begin with a <strong>period (.)</strong>, while ID selectors begin with a hash (#).",
           },
           {
-            question: 'What CSS rule allows you to apply different styles depending on whether the visitor is on mobile or desktop?',
-            options: ['@responsive','@media','@device','@viewport'],
+            question:
+              "What CSS rule allows you to apply different styles depending on whether the visitor is on mobile or desktop?",
+            options: ["@responsive", "@media", "@device", "@viewport"],
             correct: 1,
-            explanation: '<strong>@media queries</strong> inspect device properties such as screen width and orientation to apply conditional styles.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "<strong>@media queries</strong> inspect device properties such as screen width and orientation to apply conditional styles.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'javascript',
-    name: 'JavaScript',
-    emoji: '⚡',
-    color: '#ca8a04',
-    gradient: 'linear-gradient(135deg, #f7df1e, #f8a900)',
-    description: 'Add interactivity, dynamic behavior, logic, and APIs to your websites',
+  {
+    id: "javascript",
+    name: "JavaScript",
+    emoji: "⚡",
+    color: "#ca8a04",
+    gradient: "linear-gradient(135deg, #f7df1e, #f8a900)",
+    description:
+      "Add interactivity, dynamic behavior, logic, and APIs to your websites",
     lessons: [
       {
-        id: 'js-1',
-        title: 'What is JavaScript?',
+        id: "js-1",
+        title: "What is JavaScript?",
         xp: 10,
-        checklist: ['Understand JavaScript\'s role as the web\'s programming language', 'Run your first script in the live editor', 'Handle a button click event'],
+        checklist: [
+          "Understand JavaScript's role as the web's programming language",
+          "Run your first script in the live editor",
+          "Handle a button click event",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Making the Web Come Alive ⚡</h3>
@@ -1786,13 +2377,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-1"></iframe>
           </div>
           <div id="quiz-js-1"></div>`,
-        quiz: { question: 'What is the primary role of JavaScript in web development?', options: ['Storing files permanently on disk','Adding interactivity, logic, and dynamic responses to user actions','Structuring paragraphs and headings','Defining color palettes in CSS'], correct: 1, explanation: 'JavaScript provides interactivity and logic, enabling websites to respond to clicks, validate user input, fetch data from servers, and animate interfaces.' }
+        quiz: {
+          question:
+            "What is the primary role of JavaScript in web development?",
+          options: [
+            "Storing files permanently on disk",
+            "Adding interactivity, logic, and dynamic responses to user actions",
+            "Structuring paragraphs and headings",
+            "Defining color palettes in CSS",
+          ],
+          correct: 1,
+          explanation:
+            "JavaScript provides interactivity and logic, enabling websites to respond to clicks, validate user input, fetch data from servers, and animate interfaces.",
+        },
       },
       {
-        id: 'js-2',
-        title: 'Variables & Data Types',
+        id: "js-2",
+        title: "Variables & Data Types",
         xp: 15,
-        checklist: ['Understand const vs let', 'Learn strings, numbers, booleans', 'Inspect values in the live editor'],
+        checklist: [
+          "Understand const vs let",
+          "Learn strings, numbers, booleans",
+          "Inspect values in the live editor",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Storing Information in Variables 📦</h3>
@@ -1826,13 +2433,24 @@ Thumbs.db</pre>
           </div>
           <div class="tip-card"><div class="tip-icon">💡</div><p><strong>Rule of Thumb:</strong> Default to <code>const</code> for everything. Only change to <code>let</code> when you know you will reassign the variable. Avoid <code>var</code> — it is the legacy way with confusing scoping quirks.</p></div>
           <div id="quiz-js-2"></div>`,
-        quiz: { question: 'Which keyword should you use to declare a variable whose value will NEVER be reassigned?', options: ['var','let','const','fixed'], correct: 2, explanation: '<strong>const</strong> prevents reassignment of the variable identifier, preventing accidental bugs.' }
+        quiz: {
+          question:
+            "Which keyword should you use to declare a variable whose value will NEVER be reassigned?",
+          options: ["var", "let", "const", "fixed"],
+          correct: 2,
+          explanation:
+            "<strong>const</strong> prevents reassignment of the variable identifier, preventing accidental bugs.",
+        },
       },
       {
-        id: 'js-3',
-        title: 'Operators & Comparison',
+        id: "js-3",
+        title: "Operators & Comparison",
         xp: 15,
-        checklist: ['Use arithmetic operators (+, -, *, /)', 'Understand strict equality (=== vs ==)', 'Use logical operators (&&, ||, !)'],
+        checklist: [
+          "Use arithmetic operators (+, -, *, /)",
+          "Understand strict equality (=== vs ==)",
+          "Use logical operators (&&, ||, !)",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Calculations & Comparisons ⚖️</h3>
@@ -1865,13 +2483,28 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-3"></iframe>
           </div>
           <div id="quiz-js-3"></div>`,
-        quiz: { question: 'Why do JavaScript developers prefer === over ==?', options: ['=== runs 10x faster','=== checks both the value AND the data type without sneaky automatic conversions','=== is required by HTML5','== does not work with numbers'], correct: 1, explanation: '<strong>=== (strict equality)</strong> verifies that both the value AND the data type are identical, preventing subtle bugs caused by type coercion.' }
+        quiz: {
+          question: "Why do JavaScript developers prefer === over ==?",
+          options: [
+            "=== runs 10x faster",
+            "=== checks both the value AND the data type without sneaky automatic conversions",
+            "=== is required by HTML5",
+            "== does not work with numbers",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>=== (strict equality)</strong> verifies that both the value AND the data type are identical, preventing subtle bugs caused by type coercion.",
+        },
       },
       {
-        id: 'js-4',
-        title: 'Conditionals: If / Else & Decisions',
+        id: "js-4",
+        title: "Conditionals: If / Else & Decisions",
         xp: 20,
-        checklist: ['Write if, else if, and else blocks', 'Use the ternary operator', 'Build a simple decision gate'],
+        checklist: [
+          "Write if, else if, and else blocks",
+          "Use the ternary operator",
+          "Build a simple decision gate",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Making Smart Decisions in Code 🤔</h3>
@@ -1911,13 +2544,24 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-4"></iframe>
           </div>
           <div id="quiz-js-4"></div>`,
-        quiz: { question: 'What block of code executes when none of the preceding if or else if conditions are true?', options: ['default:','else','finally','fallback'], correct: 1, explanation: 'The <strong>else</strong> block serves as the default catch-all that runs when all previous conditions evaluate to false.' }
+        quiz: {
+          question:
+            "What block of code executes when none of the preceding if or else if conditions are true?",
+          options: ["default:", "else", "finally", "fallback"],
+          correct: 1,
+          explanation:
+            "The <strong>else</strong> block serves as the default catch-all that runs when all previous conditions evaluate to false.",
+        },
       },
       {
-        id: 'js-5',
-        title: 'Loops: Repeating Tasks Effortlessly',
+        id: "js-5",
+        title: "Loops: Repeating Tasks Effortlessly",
         xp: 20,
-        checklist: ['Use standard for loops', 'Use while loops', 'Iterate over lists without copying code'],
+        checklist: [
+          "Use standard for loops",
+          "Use while loops",
+          "Iterate over lists without copying code",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Automating Repetition with Loops 🔄</h3>
@@ -1945,13 +2589,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-5"></iframe>
           </div>
           <div id="quiz-js-5"></div>`,
-        quiz: { question: 'How many times will a loop with for (let i = 0; i < 4; i++) run?', options: ['3 times','4 times (i = 0, 1, 2, 3)','5 times','Infinite times'], correct: 1, explanation: 'The loop executes <strong>4 times</strong>: when i is 0, 1, 2, and 3. As soon as i becomes 4, the condition (i < 4) becomes false and the loop terminates.' }
+        quiz: {
+          question:
+            "How many times will a loop with for (let i = 0; i < 4; i++) run?",
+          options: [
+            "3 times",
+            "4 times (i = 0, 1, 2, 3)",
+            "5 times",
+            "Infinite times",
+          ],
+          correct: 1,
+          explanation:
+            "The loop executes <strong>4 times</strong>: when i is 0, 1, 2, and 3. As soon as i becomes 4, the condition (i < 4) becomes false and the loop terminates.",
+        },
       },
       {
-        id: 'js-6',
-        title: 'Functions & Modern Arrow Syntax',
+        id: "js-6",
+        title: "Functions & Modern Arrow Syntax",
         xp: 25,
-        checklist: ['Declare functions with parameters', 'Return values with return', 'Write concise arrow functions (=>)'],
+        checklist: [
+          "Declare functions with parameters",
+          "Return values with return",
+          "Write concise arrow functions (=>)",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Reusable Recipe Blocks 🔧</h3>
@@ -1982,13 +2642,24 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-6"></iframe>
           </div>
           <div id="quiz-js-6"></div>`,
-        quiz: { question: 'What keyword passes a calculated result back to the caller of a function?', options: ['send','output','return','give'], correct: 2, explanation: 'The <strong>return</strong> statement ends function execution and specifies the value to be handed back to wherever the function was invoked.' }
+        quiz: {
+          question:
+            "What keyword passes a calculated result back to the caller of a function?",
+          options: ["send", "output", "return", "give"],
+          correct: 2,
+          explanation:
+            "The <strong>return</strong> statement ends function execution and specifies the value to be handed back to wherever the function was invoked.",
+        },
       },
       {
-        id: 'js-7',
-        title: 'Arrays & Essential Methods',
+        id: "js-7",
+        title: "Arrays & Essential Methods",
         xp: 25,
-        checklist: ['Create arrays with square brackets []', 'Add items with push and remove with pop', 'Transform lists with map and filter'],
+        checklist: [
+          "Create arrays with square brackets []",
+          "Add items with push and remove with pop",
+          "Transform lists with map and filter",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Ordered Lists of Data 🛒</h3>
@@ -2019,13 +2690,24 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-7"></iframe>
           </div>
           <div id="quiz-js-7"></div>`,
-        quiz: { question: 'Which array method creates a NEW array by transforming every item according to a function?', options: ['filter()','map()','forEach()','push()'], correct: 1, explanation: '<strong>map()</strong> runs a function on every element of an array and returns a brand-new array containing the transformed results.' }
+        quiz: {
+          question:
+            "Which array method creates a NEW array by transforming every item according to a function?",
+          options: ["filter()", "map()", "forEach()", "push()"],
+          correct: 1,
+          explanation:
+            "<strong>map()</strong> runs a function on every element of an array and returns a brand-new array containing the transformed results.",
+        },
       },
       {
-        id: 'js-8',
-        title: 'Objects: Real-World Entities',
+        id: "js-8",
+        title: "Objects: Real-World Entities",
         xp: 25,
-        checklist: ['Create objects with curly braces {}', 'Access properties using dot notation', 'Add methods inside objects'],
+        checklist: [
+          "Create objects with curly braces {}",
+          "Access properties using dot notation",
+          "Add methods inside objects",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Grouping Related Data Together 🗂️</h3>
@@ -2058,13 +2740,24 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-8"></iframe>
           </div>
           <div id="quiz-js-8"></div>`,
-        quiz: { question: 'If user = { name: "Alex", age: 24 }, how do you access the age property using dot notation?', options: ['user(age)','user[0]','user.age','user->age'], correct: 2, explanation: 'In JavaScript, object properties are most commonly accessed using <strong>dot notation (user.age)</strong>.' }
+        quiz: {
+          question:
+            'If user = { name: "Alex", age: 24 }, how do you access the age property using dot notation?',
+          options: ["user(age)", "user[0]", "user.age", "user->age"],
+          correct: 2,
+          explanation:
+            "In JavaScript, object properties are most commonly accessed using <strong>dot notation (user.age)</strong>.",
+        },
       },
       {
-        id: 'js-9',
-        title: 'DOM Manipulation & Event Listeners',
+        id: "js-9",
+        title: "DOM Manipulation & Event Listeners",
         xp: 30,
-        checklist: ['Select elements with querySelector', 'Listen for clicks with addEventListener', 'Toggle CSS classes dynamically'],
+        checklist: [
+          "Select elements with querySelector",
+          "Listen for clicks with addEventListener",
+          "Toggle CSS classes dynamically",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Controlling the Webpage with Code 🕹️</h3>
@@ -2103,13 +2796,29 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-9"></iframe>
           </div>
           <div id="quiz-js-9"></div>`,
-        quiz: { question: 'What modern method attaches a click event handler to an HTML button element?', options: ['btn.onClick(() => {})','btn.addEventListener("click", () => {})','btn.attachEvent("click")','btn.listen("click")'], correct: 1, explanation: '<strong>addEventListener("click", callback)</strong> is the standard, modern way to attach event listeners to elements.' }
+        quiz: {
+          question:
+            "What modern method attaches a click event handler to an HTML button element?",
+          options: [
+            "btn.onClick(() => {})",
+            'btn.addEventListener("click", () => {})',
+            'btn.attachEvent("click")',
+            'btn.listen("click")',
+          ],
+          correct: 1,
+          explanation:
+            '<strong>addEventListener("click", callback)</strong> is the standard, modern way to attach event listeners to elements.',
+        },
       },
       {
-        id: 'js-10',
-        title: 'Fetch API, Async / Await & JSON',
+        id: "js-10",
+        title: "Fetch API, Async / Await & JSON",
         xp: 30,
-        checklist: ['Understand asynchronous code', 'Use fetch() to get live API data', 'Parse JSON with async and await'],
+        checklist: [
+          "Understand asynchronous code",
+          "Use fetch() to get live API data",
+          "Parse JSON with async and await",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Talking to Cloud Servers 🌐</h3>
@@ -2146,13 +2855,24 @@ Thumbs.db</pre>
             <iframe class="preview-iframe" id="preview-js-10"></iframe>
           </div>
           <div id="quiz-js-10"></div>`,
-        quiz: { question: 'What keyword pauses an asynchronous function until a Promise (such as a fetch request) resolves?', options: ['wait','pause','await','defer'], correct: 2, explanation: '<strong>await</strong> pauses execution within an <code>async</code> function until the Promise settles, making asynchronous code read like clean synchronous code.' }
+        quiz: {
+          question:
+            "What keyword pauses an asynchronous function until a Promise (such as a fetch request) resolves?",
+          options: ["wait", "pause", "await", "defer"],
+          correct: 2,
+          explanation:
+            "<strong>await</strong> pauses execution within an <code>async</code> function until the Promise settles, making asynchronous code read like clean synchronous code.",
+        },
       },
       {
-        id: 'js-11',
-        title: 'Milestone Project & Multi-Quiz: Task Tracker',
+        id: "js-11",
+        title: "Milestone Project & Multi-Quiz: Task Tracker",
         xp: 45,
-        checklist: ['Combine inputs, buttons, arrays, and DOM updates', 'Build an interactive to-do list', 'Pass the 4-question JavaScript Milestone Quiz'],
+        checklist: [
+          "Combine inputs, buttons, arrays, and DOM updates",
+          "Build an interactive to-do list",
+          "Pass the 4-question JavaScript Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 5 Capstone: Interactive Web App 🏆</h3>
@@ -2194,46 +2914,78 @@ Thumbs.db</pre>
           <div id="multi-quiz-js-11"></div>`,
         quizzes: [
           {
-            question: 'Which method adds a new item to the END of a JavaScript array?',
-            options: ['arr.unshift()','arr.push()','arr.append()','arr.insert()'],
+            question:
+              "Which method adds a new item to the END of a JavaScript array?",
+            options: [
+              "arr.unshift()",
+              "arr.push()",
+              "arr.append()",
+              "arr.insert()",
+            ],
             correct: 1,
-            explanation: '<code>arr.push()</code> adds one or more elements to the end of an array and returns the new array length.'
+            explanation:
+              "<code>arr.push()</code> adds one or more elements to the end of an array and returns the new array length.",
           },
           {
             question: 'What does the querySelector("#submit-btn") method do?',
-            options: ['Finds all elements on the page','Finds the first HTML element with id="submit-btn"','Creates a new button','Deletes the submit button'],
+            options: [
+              "Finds all elements on the page",
+              'Finds the first HTML element with id="submit-btn"',
+              "Creates a new button",
+              "Deletes the submit button",
+            ],
             correct: 1,
-            explanation: '<code>querySelector("#submit-btn")</code> selects the first DOM element matching the CSS ID selector "#submit-btn".'
+            explanation:
+              '<code>querySelector("#submit-btn")</code> selects the first DOM element matching the CSS ID selector "#submit-btn".',
           },
           {
-            question: 'What is the format of data exchanged most frequently in modern web APIs?',
-            options: ['XML','CSV','JSON (JavaScript Object Notation)','Plain binary'],
+            question:
+              "What is the format of data exchanged most frequently in modern web APIs?",
+            options: [
+              "XML",
+              "CSV",
+              "JSON (JavaScript Object Notation)",
+              "Plain binary",
+            ],
             correct: 2,
-            explanation: '<strong>JSON</strong> (JavaScript Object Notation) is the lightweight standard format for exchanging data between clients and servers.'
+            explanation:
+              "<strong>JSON</strong> (JavaScript Object Notation) is the lightweight standard format for exchanging data between clients and servers.",
           },
           {
-            question: 'What happens if you try to reassign a variable declared with const?',
-            options: ['The variable changes quietly without warning','A TypeError is thrown: Assignment to constant variable','The variable converts into let','The computer shuts down'],
+            question:
+              "What happens if you try to reassign a variable declared with const?",
+            options: [
+              "The variable changes quietly without warning",
+              "A TypeError is thrown: Assignment to constant variable",
+              "The variable converts into let",
+              "The computer shuts down",
+            ],
             correct: 1,
-            explanation: 'JavaScript throws a <strong>TypeError</strong> whenever you attempt to reassign a variable declared with <code>const</code>.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "JavaScript throws a <strong>TypeError</strong> whenever you attempt to reassign a variable declared with <code>const</code>.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'typescript',
-    name: 'TypeScript',
-    emoji: '🔷',
-    color: '#0f766e',
-    gradient: 'linear-gradient(135deg, #3178c6, #235a9b)',
-    description: 'Write safer, robust, enterprise-grade applications with static typing',
+  {
+    id: "typescript",
+    name: "TypeScript",
+    emoji: "🔷",
+    color: "#0f766e",
+    gradient: "linear-gradient(135deg, #3178c6, #235a9b)",
+    description:
+      "Write safer, robust, enterprise-grade applications with static typing",
     lessons: [
       {
-        id: 'ts-1',
-        title: 'What is TypeScript?',
+        id: "ts-1",
+        title: "What is TypeScript?",
         xp: 10,
-        checklist: ['Understand TypeScript as a typed superset of JavaScript', 'Learn compile-time error checking', 'Understand transpilation into vanilla JS'],
+        checklist: [
+          "Understand TypeScript as a typed superset of JavaScript",
+          "Learn compile-time error checking",
+          "Understand transpilation into vanilla JS",
+        ],
         content: `
           <div class="lesson-section">
             <h3>JavaScript with a Safety Net 🔷</h3>
@@ -2261,13 +3013,29 @@ sendInvoice(<span class="string">'Acme Corp'</span>, <span class="string">'fifty
           </div>
           <div class="info-box"><div class="info-icon">💡</div><p><strong>Browsers don't run TypeScript directly:</strong> The TypeScript compiler (<code>tsc</code>) checks your code for errors, removes all the type annotations, and outputs clean, standard JavaScript that every browser understands!</p></div>
           <div id="quiz-ts-1"></div>`,
-        quiz: { question: 'What is the primary benefit of using TypeScript over plain JavaScript?', options: ['It makes websites render with 3D graphics','It catches type mistakes and bugs at write-time before the code ever runs','It replaces the need for HTML and CSS','It runs directly in older web browsers without compilation'], correct: 1, explanation: 'TypeScript provides static type analysis that catches errors, typos, and mismatches right in your editor before runtime.' }
+        quiz: {
+          question:
+            "What is the primary benefit of using TypeScript over plain JavaScript?",
+          options: [
+            "It makes websites render with 3D graphics",
+            "It catches type mistakes and bugs at write-time before the code ever runs",
+            "It replaces the need for HTML and CSS",
+            "It runs directly in older web browsers without compilation",
+          ],
+          correct: 1,
+          explanation:
+            "TypeScript provides static type analysis that catches errors, typos, and mismatches right in your editor before runtime.",
+        },
       },
       {
-        id: 'ts-2',
-        title: 'Primitive Types & Type Annotations',
+        id: "ts-2",
+        title: "Primitive Types & Type Annotations",
         xp: 15,
-        checklist: ['Annotate string, number, and boolean', 'Understand type inference', 'Avoid using the "any" escape hatch'],
+        checklist: [
+          "Annotate string, number, and boolean",
+          "Understand type inference",
+          'Avoid using the "any" escape hatch',
+        ],
         content: `
           <div class="lesson-section">
             <h3>Explicitly Stating Intent 🏷️</h3>
@@ -2289,13 +3057,29 @@ mystery = 123; <span class="comment">// Allowed, but loses TypeScript superpower
           </div>
           <div class="warning-card"><div class="warn-icon">⚠️</div><p><strong>Avoid "any":</strong> Using <code>any</code> tells TypeScript to shut off its safety checks. If you use <code>any</code> everywhere, you are essentially writing plain JavaScript without any of TypeScript's protections!</p></div>
           <div id="quiz-ts-2"></div>`,
-        quiz: { question: 'What happens if you assign a number to a variable originally declared as: let title: string = "Hello"?', options: ['The variable automatically changes its type to number without error','TypeScript displays an error: Type "number" is not assignable to type "string"','The computer restarts','The string concatenates the number'], correct: 1, explanation: 'TypeScript strictly enforces that a variable annotated as <code>string</code> can never be reassigned a value of type <code>number</code>.' }
+        quiz: {
+          question:
+            'What happens if you assign a number to a variable originally declared as: let title: string = "Hello"?',
+          options: [
+            "The variable automatically changes its type to number without error",
+            'TypeScript displays an error: Type "number" is not assignable to type "string"',
+            "The computer restarts",
+            "The string concatenates the number",
+          ],
+          correct: 1,
+          explanation:
+            "TypeScript strictly enforces that a variable annotated as <code>string</code> can never be reassigned a value of type <code>number</code>.",
+        },
       },
       {
-        id: 'ts-3',
-        title: 'Arrays, Tuples & Enums',
+        id: "ts-3",
+        title: "Arrays, Tuples & Enums",
         xp: 20,
-        checklist: ['Type arrays using type[] syntax', 'Create fixed-length Tuples', 'Define readable Enum states'],
+        checklist: [
+          "Type arrays using type[] syntax",
+          "Create fixed-length Tuples",
+          "Define readable Enum states",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Typed Collections 📦</h3>
@@ -2321,13 +3105,29 @@ prices.push(<span class="string">'free'</span>); <span class="comment">// ❌ Er
 <span class="keyword">let</span> currentStatus = OrderStatus.Shipped;</pre>
           </div>
           <div id="quiz-ts-3"></div>`,
-        quiz: { question: 'What does the type [string, number] represent in TypeScript?', options: ['An array that can contain unlimited strings and numbers in any order','A Tuple with exactly two items: first a string, second a number','A function that takes two arguments','A special kind of object'], correct: 1, explanation: 'A <strong>Tuple</strong> is a fixed-length array where the type of each specific index position is strictly predefined.' }
+        quiz: {
+          question:
+            "What does the type [string, number] represent in TypeScript?",
+          options: [
+            "An array that can contain unlimited strings and numbers in any order",
+            "A Tuple with exactly two items: first a string, second a number",
+            "A function that takes two arguments",
+            "A special kind of object",
+          ],
+          correct: 1,
+          explanation:
+            "A <strong>Tuple</strong> is a fixed-length array where the type of each specific index position is strictly predefined.",
+        },
       },
       {
-        id: 'ts-4',
-        title: 'Interfaces & Type Aliases',
+        id: "ts-4",
+        title: "Interfaces & Type Aliases",
         xp: 25,
-        checklist: ['Define object blueprints with interface', 'Make properties optional with ?', 'Mark properties as readonly'],
+        checklist: [
+          "Define object blueprints with interface",
+          "Make properties optional with ?",
+          "Mark properties as readonly",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Blueprints for Objects 📐</h3>
@@ -2353,13 +3153,29 @@ laptop.id = 999; <span class="comment">// ❌ Error: Cannot assign to 'id' becau
           </div>
           <div class="tip-card"><div class="tip-icon">✨</div><p><strong>Autocomplete Superpower:</strong> When you type <code>laptop.</code> in VS Code, TypeScript displays a dropdown list of every single property available with its exact type. No more guessing property names!</p></div>
           <div id="quiz-ts-4"></div>`,
-        quiz: { question: 'How do you make a property optional inside a TypeScript interface?', options: ['Add the "optional" keyword before the property name','Add a question mark (?) after the property name (e.g. bio?: string)','Set its type to null','Enclose the property name in parentheses'], correct: 1, explanation: 'The <strong>question mark (?)</strong> after a property name signals that the property is optional and does not have to be provided when instantiating the object.' }
+        quiz: {
+          question:
+            "How do you make a property optional inside a TypeScript interface?",
+          options: [
+            'Add the "optional" keyword before the property name',
+            "Add a question mark (?) after the property name (e.g. bio?: string)",
+            "Set its type to null",
+            "Enclose the property name in parentheses",
+          ],
+          correct: 1,
+          explanation:
+            "The <strong>question mark (?)</strong> after a property name signals that the property is optional and does not have to be provided when instantiating the object.",
+        },
       },
       {
-        id: 'ts-5',
-        title: 'Union Types & Type Narrowing',
+        id: "ts-5",
+        title: "Union Types & Type Narrowing",
         xp: 25,
-        checklist: ['Combine types with the pipe | operator', 'Narrow types using typeof checks', 'Handle multiple possible inputs safely'],
+        checklist: [
+          "Combine types with the pipe | operator",
+          "Narrow types using typeof checks",
+          "Handle multiple possible inputs safely",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Accepting Multiple Possible Types 🔀</h3>
@@ -2381,13 +3197,23 @@ printId(<span class="string">'user_99a'</span>);   <span class="comment">// ✅ 
 printId(<span class="keyword">true</span>);         <span class="comment">// ❌ Error: boolean is not assignable to number | string</span></pre>
           </div>
           <div id="quiz-ts-5"></div>`,
-        quiz: { question: 'Which operator creates a Union Type in TypeScript?', options: ['& (Ampersand)','| (Pipe)','+ (Plus)','~ (Tilde)'], correct: 1, explanation: 'The <strong>pipe symbol (|)</strong> creates a Union Type, meaning the value can be of type A OR type B (e.g. <code>string | number</code>).' }
+        quiz: {
+          question: "Which operator creates a Union Type in TypeScript?",
+          options: ["& (Ampersand)", "| (Pipe)", "+ (Plus)", "~ (Tilde)"],
+          correct: 1,
+          explanation:
+            "The <strong>pipe symbol (|)</strong> creates a Union Type, meaning the value can be of type A OR type B (e.g. <code>string | number</code>).",
+        },
       },
       {
-        id: 'ts-6',
-        title: 'Generics: Reusable Type Safety',
+        id: "ts-6",
+        title: "Generics: Reusable Type Safety",
         xp: 30,
-        checklist: ['Understand what a generic type parameter <T> is', 'Write generic functions that adapt to any type', 'Preserve type information through functions'],
+        checklist: [
+          "Understand what a generic type parameter <T> is",
+          "Write generic functions that adapt to any type",
+          "Preserve type information through functions",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Variables for Types 🧬</h3>
@@ -2407,13 +3233,29 @@ firstString.toUpperCase(); <span class="comment">// ✅ Valid! Full autocomplete
           </div>
           <div class="info-box"><div class="info-icon">💡</div><p>Without generics, you would either have to use <code>any</code> (losing all type safety) or write duplicate functions for numbers, strings, and custom objects!</p></div>
           <div id="quiz-ts-6"></div>`,
-        quiz: { question: 'What does the <T> syntax denote in a generic function in TypeScript?', options: ['An HTML tag','A generic type parameter placeholder that will be replaced with the actual type passed in','A temporary variable that only exists in memory for 1 second','A TypeScript testing framework'], correct: 1, explanation: '<code>&lt;T&gt;</code> is a <strong>type parameter</strong> that captures the type argument provided by the caller, preserving full type fidelity.' }
+        quiz: {
+          question:
+            "What does the <T> syntax denote in a generic function in TypeScript?",
+          options: [
+            "An HTML tag",
+            "A generic type parameter placeholder that will be replaced with the actual type passed in",
+            "A temporary variable that only exists in memory for 1 second",
+            "A TypeScript testing framework",
+          ],
+          correct: 1,
+          explanation:
+            "<code>&lt;T&gt;</code> is a <strong>type parameter</strong> that captures the type argument provided by the caller, preserving full type fidelity.",
+        },
       },
       {
-        id: 'ts-7',
-        title: 'TypeScript with the DOM',
+        id: "ts-7",
+        title: "TypeScript with the DOM",
         xp: 25,
-        checklist: ['Cast DOM elements with as HTMLInputElement', 'Handle null checks safely with optional chaining (?.)', 'Type event handlers accurately'],
+        checklist: [
+          "Cast DOM elements with as HTMLInputElement",
+          "Handle null checks safely with optional chaining (?.)",
+          "Type event handlers accurately",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Typing Webpage Elements 🌐</h3>
@@ -2436,13 +3278,24 @@ btn?.addEventListener(<span class="string">'click'</span>, (event: MouseEvent) =
 });</pre>
           </div>
           <div id="quiz-ts-7"></div>`,
-        quiz: { question: 'Which keyword tells TypeScript to treat a generic HTMLElement as a specific HTMLInputElement to access .value?', options: ['cast','as','type','convert'], correct: 1, explanation: 'The <strong>as</strong> keyword performs a type assertion, instructing the compiler to treat the selected element as a specific type like <code>HTMLInputElement</code>.' }
+        quiz: {
+          question:
+            "Which keyword tells TypeScript to treat a generic HTMLElement as a specific HTMLInputElement to access .value?",
+          options: ["cast", "as", "type", "convert"],
+          correct: 1,
+          explanation:
+            "The <strong>as</strong> keyword performs a type assertion, instructing the compiler to treat the selected element as a specific type like <code>HTMLInputElement</code>.",
+        },
       },
       {
-        id: 'ts-8',
-        title: 'Milestone Project & Multi-Quiz: Type-Safe Cart',
+        id: "ts-8",
+        title: "Milestone Project & Multi-Quiz: Type-Safe Cart",
         xp: 45,
-        checklist: ['Review interfaces, tuples, and generics', 'Inspect a fully typed shopping cart architecture', 'Pass the 4-question TypeScript Milestone Quiz'],
+        checklist: [
+          "Review interfaces, tuples, and generics",
+          "Inspect a fully typed shopping cart architecture",
+          "Pass the 4-question TypeScript Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 6 Capstone: Enterprise TypeScript Mastery 🏆</h3>
@@ -2480,46 +3333,73 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           <div id="multi-quiz-ts-8"></div>`,
         quizzes: [
           {
-            question: 'What is the role of the TypeScript compiler (tsc)?',
-            options: ['To run your code on the server','To check for type errors and strip annotations to emit valid JavaScript','To style your website automatically','To host your database'],
+            question: "What is the role of the TypeScript compiler (tsc)?",
+            options: [
+              "To run your code on the server",
+              "To check for type errors and strip annotations to emit valid JavaScript",
+              "To style your website automatically",
+              "To host your database",
+            ],
             correct: 1,
-            explanation: 'The TypeScript compiler verifies types at compile time and emits clean JavaScript for runtime execution.'
+            explanation:
+              "The TypeScript compiler verifies types at compile time and emits clean JavaScript for runtime execution.",
           },
           {
-            question: 'Which of the following creates a contract defining the required shape of an object?',
-            options: ['interface','enum','loop','module'],
+            question:
+              "Which of the following creates a contract defining the required shape of an object?",
+            options: ["interface", "enum", "loop", "module"],
             correct: 0,
-            explanation: 'An <strong>interface</strong> defines a type contract describing property names and types that an object must implement.'
+            explanation:
+              "An <strong>interface</strong> defines a type contract describing property names and types that an object must implement.",
           },
           {
-            question: 'What does the question mark indicate in: interface User { avatarUrl?: string }?',
-            options: ['The property is private','The property is optional and may be omitted','The property must be a boolean','The property cannot be read'],
+            question:
+              "What does the question mark indicate in: interface User { avatarUrl?: string }?",
+            options: [
+              "The property is private",
+              "The property is optional and may be omitted",
+              "The property must be a boolean",
+              "The property cannot be read",
+            ],
             correct: 1,
-            explanation: 'The <code>?</code> modifier denotes an optional property.'
+            explanation:
+              "The <code>?</code> modifier denotes an optional property.",
           },
           {
-            question: 'Why are Generics (<T>) valuable in TypeScript applications?',
-            options: ['They make code compile into binary machine code','They enable reusable functions and classes while preserving precise type safety','They bypass security checks','They replace SQL queries'],
+            question:
+              "Why are Generics (<T>) valuable in TypeScript applications?",
+            options: [
+              "They make code compile into binary machine code",
+              "They enable reusable functions and classes while preserving precise type safety",
+              "They bypass security checks",
+              "They replace SQL queries",
+            ],
             correct: 1,
-            explanation: 'Generics let you create flexible, reusable components that work seamlessly across various types without forfeiting type checking.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "Generics let you create flexible, reusable components that work seamlessly across various types without forfeiting type checking.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'excel',
-    name: 'Microsoft Excel',
-    emoji: '📊',
-    color: '#15803d',
-    gradient: 'linear-gradient(135deg, #217346, #1e6b3f)',
-    description: 'Master spreadsheets, data analysis, core formulas, lookups, and PivotTables',
+  {
+    id: "excel",
+    name: "Microsoft Excel",
+    emoji: "📊",
+    color: "#15803d",
+    gradient: "linear-gradient(135deg, #217346, #1e6b3f)",
+    description:
+      "Master spreadsheets, data analysis, core formulas, lookups, and PivotTables",
     lessons: [
       {
-        id: 'excel-1',
-        title: 'The Excel Interface & Navigation',
+        id: "excel-1",
+        title: "The Excel Interface & Navigation",
         xp: 10,
-        checklist: ['Identify workbooks, sheets, and cell addresses', 'Understand columns (letters) vs rows (numbers)', 'Navigate efficiently with keyboard shortcuts'],
+        checklist: [
+          "Identify workbooks, sheets, and cell addresses",
+          "Understand columns (letters) vs rows (numbers)",
+          "Navigate efficiently with keyboard shortcuts",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Welcome to Spreadsheets! 📊</h3>
@@ -2541,13 +3421,24 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">⌨️</div><p><strong>Speed Shortcuts:</strong> Use <strong>Enter</strong> to move down one cell · <strong>Tab</strong> to move right · <strong>Shift+Enter</strong> to move up · <strong>Ctrl+Home</strong> to immediately jump back to A1.</p></div>
           <div id="quiz-excel-1"></div>`,
-        quiz: { question: 'What is the correct cell address for the intersection of column D and row 12?', options: ['12D','D-12','D12','Row12ColD'], correct: 2, explanation: 'In spreadsheets, cell coordinates are always written with the <strong>column letter first, followed by the row number (D12)</strong>.' }
+        quiz: {
+          question:
+            "What is the correct cell address for the intersection of column D and row 12?",
+          options: ["12D", "D-12", "D12", "Row12ColD"],
+          correct: 2,
+          explanation:
+            "In spreadsheets, cell coordinates are always written with the <strong>column letter first, followed by the row number (D12)</strong>.",
+        },
       },
       {
-        id: 'excel-2',
-        title: 'Data Entry, AutoFill & Formatting',
+        id: "excel-2",
+        title: "Data Entry, AutoFill & Formatting",
         xp: 15,
-        checklist: ['Learn how Excel auto-aligns text vs numbers', 'Use the AutoFill green handle for quick series', 'Format currency, percentages, and dates'],
+        checklist: [
+          "Learn how Excel auto-aligns text vs numbers",
+          "Use the AutoFill green handle for quick series",
+          "Format currency, percentages, and dates",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Entering & Polishing Data ✨</h3>
@@ -2566,13 +3457,24 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">💲</div><p><strong>Never type dollar signs manually:</strong> Type pure numbers like <code>1500.5</code> and click the <strong>$ (Accounting)</strong> button on the Ribbon. This ensures formulas can still calculate with the number!</p></div>
           <div id="quiz-excel-2"></div>`,
-        quiz: { question: 'By default, how does Excel horizontally align numbers in a cell?', options: ['Left-aligned','Centered','Right-aligned','Justified'], correct: 2, explanation: 'Excel automatically <strong>right-aligns numbers</strong> and left-aligns text by default, which keeps decimal places and digits aligned vertically.' }
+        quiz: {
+          question:
+            "By default, how does Excel horizontally align numbers in a cell?",
+          options: ["Left-aligned", "Centered", "Right-aligned", "Justified"],
+          correct: 2,
+          explanation:
+            "Excel automatically <strong>right-aligns numbers</strong> and left-aligns text by default, which keeps decimal places and digits aligned vertically.",
+        },
       },
       {
-        id: 'excel-3',
-        title: 'Basic Formulas: The Equals Sign Magic',
+        id: "excel-3",
+        title: "Basic Formulas: The Equals Sign Magic",
         xp: 20,
-        checklist: ['Start every formula with =', 'Use cell references (A1 + B1)', 'Understand relative vs absolute ($A$1) references'],
+        checklist: [
+          "Start every formula with =",
+          "Use cell references (A1 + B1)",
+          "Understand relative vs absolute ($A$1) references",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Formulas: Turning Cells into Calculators ➕</h3>
@@ -2592,13 +3494,23 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             <p><em>Shortcut: Press <strong>F4</strong> while typing a cell address to toggle the <code>$</code> locks automatically.</em></p>
           </div>
           <div id="quiz-excel-3"></div>`,
-        quiz: { question: 'What character must every Excel formula begin with?', options: ['#','=','+','@'], correct: 1, explanation: 'Every formula in Excel must begin with an <strong>equals sign (=)</strong> to signal that the cell contains a mathematical computation.' }
+        quiz: {
+          question: "What character must every Excel formula begin with?",
+          options: ["#", "=", "+", "@"],
+          correct: 1,
+          explanation:
+            "Every formula in Excel must begin with an <strong>equals sign (=)</strong> to signal that the cell contains a mathematical computation.",
+        },
       },
       {
-        id: 'excel-4',
-        title: 'Essential Functions: SUM, AVERAGE, COUNT',
+        id: "excel-4",
+        title: "Essential Functions: SUM, AVERAGE, COUNT",
         xp: 20,
-        checklist: ['Use =SUM(range)', 'Calculate averages and counts', 'Find largest and smallest values with MAX and MIN'],
+        checklist: [
+          "Use =SUM(range)",
+          "Calculate averages and counts",
+          "Find largest and smallest values with MAX and MIN",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Built-In Power Functions ⚡</h3>
@@ -2615,13 +3527,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">⚡</div><p><strong>The Colon (:) Operator:</strong> In <code>B2:B20</code>, the colon means "THROUGH". It represents the entire contiguous range from cell B2 down to cell B20.</p></div>
           <div id="quiz-excel-4"></div>`,
-        quiz: { question: 'Which formula calculates the average score for student grades in cells E2 through E25?', options: ['=MEAN(E2:E25)','=AVERAGE(E2:E25)','=AVG(E2..E25)','=DIVIDE(E2:E25)'], correct: 1, explanation: 'The official Excel function is <strong>=AVERAGE(E2:E25)</strong>.' }
+        quiz: {
+          question:
+            "Which formula calculates the average score for student grades in cells E2 through E25?",
+          options: [
+            "=MEAN(E2:E25)",
+            "=AVERAGE(E2:E25)",
+            "=AVG(E2..E25)",
+            "=DIVIDE(E2:E25)",
+          ],
+          correct: 1,
+          explanation:
+            "The official Excel function is <strong>=AVERAGE(E2:E25)</strong>.",
+        },
       },
       {
-        id: 'excel-5',
-        title: 'The Logical IF Function',
+        id: "excel-5",
+        title: "The Logical IF Function",
         xp: 25,
-        checklist: ['Understand IF(condition, value_if_true, value_if_false)', 'Create pass/fail indicators', 'Nest IF functions for letter grades'],
+        checklist: [
+          "Understand IF(condition, value_if_true, value_if_false)",
+          "Create pass/fail indicators",
+          "Nest IF functions for letter grades",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Automating Decisions with IF 🤔</h3>
@@ -2643,13 +3571,24 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             Excel checks 90 first; if not, checks 80; if not, checks 70; otherwise returns "F"!</p>
           </div>
           <div id="quiz-excel-5"></div>`,
-        quiz: { question: 'What does =IF(C2 >= 100, "Bonus", "None") return if cell C2 contains 150?', options: ['"None"','"Bonus"','150','TRUE'], correct: 1, explanation: 'Since 150 is greater than or equal to 100, the condition is TRUE, so Excel displays the true outcome: <strong>"Bonus"</strong>.' }
+        quiz: {
+          question:
+            'What does =IF(C2 >= 100, "Bonus", "None") return if cell C2 contains 150?',
+          options: ['"None"', '"Bonus"', "150", "TRUE"],
+          correct: 1,
+          explanation:
+            'Since 150 is greater than or equal to 100, the condition is TRUE, so Excel displays the true outcome: <strong>"Bonus"</strong>.',
+        },
       },
       {
-        id: 'excel-6',
-        title: 'Lookup Magic: VLOOKUP & XLOOKUP',
+        id: "excel-6",
+        title: "Lookup Magic: VLOOKUP & XLOOKUP",
         xp: 30,
-        checklist: ['Understand vertical lookups', 'Use VLOOKUP with exact match FALSE', 'Explore modern XLOOKUP syntax'],
+        checklist: [
+          "Understand vertical lookups",
+          "Use VLOOKUP with exact match FALSE",
+          "Explore modern XLOOKUP syntax",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Searching Across Tables Automatically 🔍</h3>
@@ -2670,13 +3609,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             <div class="code-line-explain"><span class="line-num">FALSE</span><span class="line-desc"><strong>Exact match:</strong> Always use FALSE (or 0) so Excel only returns exact matches!</span></div>
           </div>
           <div id="quiz-excel-6"></div>`,
-        quiz: { question: 'Why should you almost always set the 4th argument of VLOOKUP to FALSE?', options: ['It turns off calculation errors','It demands an EXACT match so Excel does not return the wrong row','It sorts the table automatically','It makes VLOOKUP run faster'], correct: 1, explanation: 'Setting the fourth argument to <strong>FALSE</strong> ensures an exact match. If set to TRUE, Excel might guess an approximate match and return completely incorrect data!' }
+        quiz: {
+          question:
+            "Why should you almost always set the 4th argument of VLOOKUP to FALSE?",
+          options: [
+            "It turns off calculation errors",
+            "It demands an EXACT match so Excel does not return the wrong row",
+            "It sorts the table automatically",
+            "It makes VLOOKUP run faster",
+          ],
+          correct: 1,
+          explanation:
+            "Setting the fourth argument to <strong>FALSE</strong> ensures an exact match. If set to TRUE, Excel might guess an approximate match and return completely incorrect data!",
+        },
       },
       {
-        id: 'excel-7',
-        title: 'Sorting, AutoFilter & Tables (Ctrl+T)',
+        id: "excel-7",
+        title: "Sorting, AutoFilter & Tables (Ctrl+T)",
         xp: 25,
-        checklist: ['Convert raw data into an official Excel Table with Ctrl+T', 'Sort alphabetically and by value', 'Filter specific records with dropdown arrows'],
+        checklist: [
+          "Convert raw data into an official Excel Table with Ctrl+T",
+          "Sort alphabetically and by value",
+          "Filter specific records with dropdown arrows",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Taming Massive Lists of Data 🧹</h3>
@@ -2693,13 +3648,24 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             </ul>
           </div>
           <div id="quiz-excel-7"></div>`,
-        quiz: { question: 'What is the keyboard shortcut to convert a highlighted range of data into an official Excel Table?', options: ['Ctrl+E','Ctrl+T','Ctrl+F','Alt+T'], correct: 1, explanation: 'Pressing <strong>Ctrl+T</strong> (or Ctrl+L) instantly converts raw cells into a formatted, filterable Excel Table.' }
+        quiz: {
+          question:
+            "What is the keyboard shortcut to convert a highlighted range of data into an official Excel Table?",
+          options: ["Ctrl+E", "Ctrl+T", "Ctrl+F", "Alt+T"],
+          correct: 1,
+          explanation:
+            "Pressing <strong>Ctrl+T</strong> (or Ctrl+L) instantly converts raw cells into a formatted, filterable Excel Table.",
+        },
       },
       {
-        id: 'excel-8',
-        title: 'Conditional Formatting & Visual Charts',
+        id: "excel-8",
+        title: "Conditional Formatting & Visual Charts",
         xp: 25,
-        checklist: ['Highlight top performers with color rules', 'Use data bars for miniature in-cell charts', 'Insert Column, Bar, and Pie charts'],
+        checklist: [
+          "Highlight top performers with color rules",
+          "Use data bars for miniature in-cell charts",
+          "Insert Column, Bar, and Pie charts",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Visual Storytelling with Data 📈</h3>
@@ -2723,13 +3689,24 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             </ul>
           </div>
           <div id="quiz-excel-8"></div>`,
-        quiz: { question: 'Which chart type is best for showing how sales numbers have trended over the past 12 months?', options: ['Pie chart','Line chart','Radar chart','Scatter plot'], correct: 1, explanation: 'A <strong>Line chart</strong> is the gold standard for tracking and visualizing data trends over continuous intervals of time (days, months, years).' }
+        quiz: {
+          question:
+            "Which chart type is best for showing how sales numbers have trended over the past 12 months?",
+          options: ["Pie chart", "Line chart", "Radar chart", "Scatter plot"],
+          correct: 1,
+          explanation:
+            "A <strong>Line chart</strong> is the gold standard for tracking and visualizing data trends over continuous intervals of time (days, months, years).",
+        },
       },
       {
-        id: 'excel-9',
-        title: 'Milestone Project & Multi-Quiz: Spreadsheet Pro',
+        id: "excel-9",
+        title: "Milestone Project & Multi-Quiz: Spreadsheet Pro",
         xp: 45,
-        checklist: ['Review workbook structure and formatting', 'Review formulas, IF conditions, lookups, and tables', 'Pass the 4-question Excel Milestone Quiz'],
+        checklist: [
+          "Review workbook structure and formatting",
+          "Review formulas, IF conditions, lookups, and tables",
+          "Pass the 4-question Excel Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 7 Capstone: The Complete Excel Mastery 🏆</h3>
@@ -2742,46 +3719,74 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           <div id="multi-quiz-excel-9"></div>`,
         quizzes: [
           {
-            question: 'What does the dollar sign ($) in a cell reference like $B$5 accomplish?',
-            options: ['Formats the cell as US Dollars','Locks the column and row so the reference remains fixed when copying or dragging formulas','Multiplies the cell by 100','Hides the cell from viewers'],
+            question:
+              "What does the dollar sign ($) in a cell reference like $B$5 accomplish?",
+            options: [
+              "Formats the cell as US Dollars",
+              "Locks the column and row so the reference remains fixed when copying or dragging formulas",
+              "Multiplies the cell by 100",
+              "Hides the cell from viewers",
+            ],
             correct: 1,
-            explanation: 'The <code>$</code> character locks the column and row coordinates, creating an <strong>absolute reference</strong> that never shifts when copied.'
+            explanation:
+              "The <code>$</code> character locks the column and row coordinates, creating an <strong>absolute reference</strong> that never shifts when copied.",
           },
           {
-            question: 'Which formula calculates the total sum of all values in the range B2 to B15?',
-            options: ['=ADD(B2:B15)','=SUM(B2:B15)','=TOTAL(B2..B15)','=B2+B15'],
+            question:
+              "Which formula calculates the total sum of all values in the range B2 to B15?",
+            options: [
+              "=ADD(B2:B15)",
+              "=SUM(B2:B15)",
+              "=TOTAL(B2..B15)",
+              "=B2+B15",
+            ],
             correct: 1,
-            explanation: '<strong>=SUM(B2:B15)</strong> adds all numeric values within the specified range.'
+            explanation:
+              "<strong>=SUM(B2:B15)</strong> adds all numeric values within the specified range.",
           },
           {
-            question: 'What function searches for a value in the first column of a table and returns a value in the same row from a specified column?',
-            options: ['SEARCH()','VLOOKUP()','FINDROW()','FETCH()'],
+            question:
+              "What function searches for a value in the first column of a table and returns a value in the same row from a specified column?",
+            options: ["SEARCH()", "VLOOKUP()", "FINDROW()", "FETCH()"],
             correct: 1,
-            explanation: '<strong>VLOOKUP</strong> (Vertical Lookup) searches down the leftmost column of a table to retrieve data from corresponding columns.'
+            explanation:
+              "<strong>VLOOKUP</strong> (Vertical Lookup) searches down the leftmost column of a table to retrieve data from corresponding columns.",
           },
           {
-            question: 'What feature visually colors cells automatically based on specific mathematical rules (like red for negative numbers)?',
-            options: ['AutoFormat','Conditional Formatting','Color Theme Wizard','Cell Styles Palette'],
+            question:
+              "What feature visually colors cells automatically based on specific mathematical rules (like red for negative numbers)?",
+            options: [
+              "AutoFormat",
+              "Conditional Formatting",
+              "Color Theme Wizard",
+              "Cell Styles Palette",
+            ],
             correct: 1,
-            explanation: '<strong>Conditional Formatting</strong> dynamically alters font, fill color, or borders based on the cell value or custom formulas.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "<strong>Conditional Formatting</strong> dynamically alters font, fill color, or borders based on the cell value or custom formulas.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'google-sheets',
-    name: 'Google Sheets',
-    emoji: '📈',
-    color: '#065f46',
-    gradient: 'linear-gradient(135deg, #0f9d58, #0b8043)',
-    description: 'Collaborate in real-time, build cloud dashboards, and automate workflows',
+  {
+    id: "google-sheets",
+    name: "Google Sheets",
+    emoji: "📈",
+    color: "#065f46",
+    gradient: "linear-gradient(135deg, #0f9d58, #0b8043)",
+    description:
+      "Collaborate in real-time, build cloud dashboards, and automate workflows",
     lessons: [
       {
-        id: 'sheets-1',
-        title: 'Introduction to Cloud Spreadsheets',
+        id: "sheets-1",
+        title: "Introduction to Cloud Spreadsheets",
         xp: 10,
-        checklist: ['Access Google Sheets in the browser', 'Understand real-time autosave to Google Drive', 'Compare Sheets vs Excel strengths'],
+        checklist: [
+          "Access Google Sheets in the browser",
+          "Understand real-time autosave to Google Drive",
+          "Compare Sheets vs Excel strengths",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Spreadsheets Everywhere ☁️</h3>
@@ -2801,13 +3806,28 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             </ul>
           </div>
           <div id="quiz-sheets-1"></div>`,
-        quiz: { question: 'How is your work saved in Google Sheets?', options: ['You must manually click File > Save every 5 minutes','Every single edit is automatically saved in real-time to Google Drive','It only saves when you close the tab','It saves to your computer hard drive in Downloads'], correct: 1, explanation: 'Google Sheets features <strong>continuous real-time cloud autosave</strong> to Google Drive, ensuring you never lose work.' }
+        quiz: {
+          question: "How is your work saved in Google Sheets?",
+          options: [
+            "You must manually click File > Save every 5 minutes",
+            "Every single edit is automatically saved in real-time to Google Drive",
+            "It only saves when you close the tab",
+            "It saves to your computer hard drive in Downloads",
+          ],
+          correct: 1,
+          explanation:
+            "Google Sheets features <strong>continuous real-time cloud autosave</strong> to Google Drive, ensuring you never lose work.",
+        },
       },
       {
-        id: 'sheets-2',
-        title: 'Essential Formulas: SUMIF, COUNTIF & UNIQUE',
+        id: "sheets-2",
+        title: "Essential Formulas: SUMIF, COUNTIF & UNIQUE",
         xp: 20,
-        checklist: ['Use conditional sums with SUMIF', 'Count occurrences with COUNTIF', 'Extract distinct values with UNIQUE'],
+        checklist: [
+          "Use conditional sums with SUMIF",
+          "Count occurrences with COUNTIF",
+          "Extract distinct values with UNIQUE",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Conditional Calculations 🎯</h3>
@@ -2826,13 +3846,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">✨</div><p><strong>The UNIQUE function superpower:</strong> In Excel (legacy), extracting unique items requires advanced filters or PivotTables. In Google Sheets, <code>=UNIQUE(range)</code> spills a clean, deduplicated list instantly!</p></div>
           <div id="quiz-sheets-2"></div>`,
-        quiz: { question: 'Which formula counts how many times the word "Approved" appears in cells D2 through D50?', options: ['=SUMIF(D2:D50, "Approved")','=COUNTIF(D2:D50, "Approved")','=COUNT(D2:D50, "Approved")','=MATCH(D2:D50, "Approved")'], correct: 1, explanation: '<strong>=COUNTIF(range, criteria)</strong> tallies the number of cells within a range that meet the given criteria.' }
+        quiz: {
+          question:
+            'Which formula counts how many times the word "Approved" appears in cells D2 through D50?',
+          options: [
+            '=SUMIF(D2:D50, "Approved")',
+            '=COUNTIF(D2:D50, "Approved")',
+            '=COUNT(D2:D50, "Approved")',
+            '=MATCH(D2:D50, "Approved")',
+          ],
+          correct: 1,
+          explanation:
+            "<strong>=COUNTIF(range, criteria)</strong> tallies the number of cells within a range that meet the given criteria.",
+        },
       },
       {
-        id: 'sheets-3',
-        title: 'Data Validation & Dropdown Menus',
+        id: "sheets-3",
+        title: "Data Validation & Dropdown Menus",
         xp: 20,
-        checklist: ['Create in-cell dropdown menus', 'Add colored chips for status tracking', 'Insert interactive checkboxes'],
+        checklist: [
+          "Create in-cell dropdown menus",
+          "Add colored chips for status tracking",
+          "Insert interactive checkboxes",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Guiding Clean Data Input 🔽</h3>
@@ -2849,13 +3885,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             </ol>
           </div>
           <div id="quiz-sheets-3"></div>`,
-        quiz: { question: 'Why is Data Validation (Dropdowns) valuable in shared spreadsheets?', options: ['It encrypts the cells with a password','It prevents typos and ensures consistent, standardized data entry across the team','It hides rows from unauthorized users','It converts the file to PDF'], correct: 1, explanation: '<strong>Data Validation</strong> restricts cell input to predefined options, ensuring clean, typo-free data for accurate reporting.' }
+        quiz: {
+          question:
+            "Why is Data Validation (Dropdowns) valuable in shared spreadsheets?",
+          options: [
+            "It encrypts the cells with a password",
+            "It prevents typos and ensures consistent, standardized data entry across the team",
+            "It hides rows from unauthorized users",
+            "It converts the file to PDF",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Data Validation</strong> restricts cell input to predefined options, ensuring clean, typo-free data for accurate reporting.",
+        },
       },
       {
-        id: 'sheets-4',
-        title: 'Filter Views: Filtering Without Disrupting Others',
+        id: "sheets-4",
+        title: "Filter Views: Filtering Without Disrupting Others",
         xp: 25,
-        checklist: ['Understand the disaster of standard filtering in team sheets', 'Create personal Filter Views', 'Save named views for teammates'],
+        checklist: [
+          "Understand the disaster of standard filtering in team sheets",
+          "Create personal Filter Views",
+          "Save named views for teammates",
+        ],
         content: `
           <div class="lesson-section">
             <h3>The Teamwork Golden Rule 🛡️</h3>
@@ -2870,13 +3922,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             <p>Click <strong>Data → Filter views → Create new filter view</strong>. A dark border appears around the sheet headers, indicating you are safely in your own personal view!</p>
           </div>
           <div id="quiz-sheets-4"></div>`,
-        quiz: { question: 'What is the main benefit of a "Filter View" compared to a normal Filter in a shared Google Sheet?', options: ['It calculates formulas 50% faster','It lets you filter and sort data without changing or disrupting what other collaborators see','It allows offline editing','It deletes duplicate rows automatically'], correct: 1, explanation: '<strong>Filter Views</strong> allow individuals to sort and filter data privately without affecting the view of other people viewing the sheet.' }
+        quiz: {
+          question:
+            'What is the main benefit of a "Filter View" compared to a normal Filter in a shared Google Sheet?',
+          options: [
+            "It calculates formulas 50% faster",
+            "It lets you filter and sort data without changing or disrupting what other collaborators see",
+            "It allows offline editing",
+            "It deletes duplicate rows automatically",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Filter Views</strong> allow individuals to sort and filter data privately without affecting the view of other people viewing the sheet.",
+        },
       },
       {
-        id: 'sheets-5',
-        title: 'Sharing, Permissions & Version History',
+        id: "sheets-5",
+        title: "Sharing, Permissions & Version History",
         xp: 20,
-        checklist: ['Share with specific emails or link', 'Understand Viewer, Commenter, and Editor roles', 'Restore past versions with Version History'],
+        checklist: [
+          "Share with specific emails or link",
+          "Understand Viewer, Commenter, and Editor roles",
+          "Restore past versions with Version History",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Collaborating Safely 👥</h3>
@@ -2892,13 +3960,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">⏳</div><p><strong>Version History (Ctrl+Alt+Shift+H):</strong> Ever had someone accidentally delete half your formulas? Go to <strong>File → Version history → See version history</strong>. You can see who made each edit, click any timestamp in the past, and hit <strong>"Restore this version"</strong>!</p></div>
           <div id="quiz-sheets-5"></div>`,
-        quiz: { question: 'How can you undo an accidental deletion that happened days ago in a shared Google Sheet?', options: ['It is impossible to recover','Press Ctrl+Z 10,000 times','Open File > Version history and restore the snapshot from before the mistake occurred','Email Google customer support'], correct: 2, explanation: 'Google Sheets records continuous <strong>Version History</strong>, allowing owners to view and restore any past state with a single click.' }
+        quiz: {
+          question:
+            "How can you undo an accidental deletion that happened days ago in a shared Google Sheet?",
+          options: [
+            "It is impossible to recover",
+            "Press Ctrl+Z 10,000 times",
+            "Open File > Version history and restore the snapshot from before the mistake occurred",
+            "Email Google customer support",
+          ],
+          correct: 2,
+          explanation:
+            "Google Sheets records continuous <strong>Version History</strong>, allowing owners to view and restore any past state with a single click.",
+        },
       },
       {
-        id: 'sheets-6',
-        title: 'IMPORTRANGE: Connecting Multiple Sheets',
+        id: "sheets-6",
+        title: "IMPORTRANGE: Connecting Multiple Sheets",
         xp: 25,
-        checklist: ['Link external spreadsheets together', 'Use the IMPORTRANGE formula', 'Grant cross-sheet data access permissions'],
+        checklist: [
+          "Link external spreadsheets together",
+          "Use the IMPORTRANGE formula",
+          "Grant cross-sheet data access permissions",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Live Data Feeds Between Workbooks 🔗</h3>
@@ -2913,13 +3997,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="info-box"><div class="info-icon">🔐</div><p><strong>One-Time Permission:</strong> The first time you write this formula, cell displays <code>#REF!</code> with a blue button: <strong>"Allow access"</strong>. Click it once, and the sheets remain linked forever with live real-time sync!</p></div>
           <div id="quiz-sheets-6"></div>`,
-        quiz: { question: 'Which Google Sheets function imports a live range of cells from an entirely separate spreadsheet file?', options: ['=IMPORTDATA()','=IMPORTRANGE()','=VLOOKUP_SHEET()','=LINKRANGE()'], correct: 1, explanation: '<strong>=IMPORTRANGE(url, range)</strong> pulls live cell data from an external Google Sheet into your current workbook.' }
+        quiz: {
+          question:
+            "Which Google Sheets function imports a live range of cells from an entirely separate spreadsheet file?",
+          options: [
+            "=IMPORTDATA()",
+            "=IMPORTRANGE()",
+            "=VLOOKUP_SHEET()",
+            "=LINKRANGE()",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>=IMPORTRANGE(url, range)</strong> pulls live cell data from an external Google Sheet into your current workbook.",
+        },
       },
       {
-        id: 'sheets-7',
-        title: 'Google Apps Script: Automating with Code',
+        id: "sheets-7",
+        title: "Google Apps Script: Automating with Code",
         xp: 30,
-        checklist: ['Open the Apps Script editor from Extensions', 'Write your first JavaScript function for Sheets', 'Automate custom workflows'],
+        checklist: [
+          "Open the Apps Script editor from Extensions",
+          "Write your first JavaScript function for Sheets",
+          "Automate custom workflows",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Supercharging Sheets with JavaScript 🤖</h3>
@@ -2937,13 +4037,24 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">🚀</div><p>Notice that Apps Script is written in <strong>JavaScript</strong> — the exact same language you learned in Topic 5! Your skills stack together powerfully.</p></div>
           <div id="quiz-sheets-7"></div>`,
-        quiz: { question: 'What programming language powers Google Apps Script automations?', options: ['Python','JavaScript','VBA','PHP'], correct: 1, explanation: 'Google Apps Script is built directly on standard modern <strong>JavaScript</strong>.' }
+        quiz: {
+          question:
+            "What programming language powers Google Apps Script automations?",
+          options: ["Python", "JavaScript", "VBA", "PHP"],
+          correct: 1,
+          explanation:
+            "Google Apps Script is built directly on standard modern <strong>JavaScript</strong>.",
+        },
       },
       {
-        id: 'sheets-8',
-        title: 'Milestone Project & Multi-Quiz: Monthly Budget',
+        id: "sheets-8",
+        title: "Milestone Project & Multi-Quiz: Monthly Budget",
         xp: 45,
-        checklist: ['Review cloud spreadsheet collaboration', 'Review SUMIF, data validation, and filter views', 'Pass the 4-question Google Sheets Milestone Quiz'],
+        checklist: [
+          "Review cloud spreadsheet collaboration",
+          "Review SUMIF, data validation, and filter views",
+          "Pass the 4-question Google Sheets Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 8 Capstone: Cloud Spreadsheet Specialist 🏆</h3>
@@ -2956,46 +4067,69 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           <div id="multi-quiz-sheets-8"></div>`,
         quizzes: [
           {
-            question: 'What happens when multiple people edit the same Google Sheet at the same time?',
-            options: ['The file locks and blocks everyone except one person','All collaborators see each other\'s colored cursors and live edits simultaneously','The file corrupts and reverts to blank','Edits are queued and saved only at midnight'],
+            question:
+              "What happens when multiple people edit the same Google Sheet at the same time?",
+            options: [
+              "The file locks and blocks everyone except one person",
+              "All collaborators see each other's colored cursors and live edits simultaneously",
+              "The file corrupts and reverts to blank",
+              "Edits are queued and saved only at midnight",
+            ],
             correct: 1,
-            explanation: 'Google Sheets supports real-time concurrent editing where everyone sees edits and cursor movements instantaneously.'
+            explanation:
+              "Google Sheets supports real-time concurrent editing where everyone sees edits and cursor movements instantaneously.",
           },
           {
-            question: 'Which permission level allows someone to highlight cells and post questions or suggestions without altering cell values?',
-            options: ['Viewer','Commenter','Editor','Owner'],
+            question:
+              "Which permission level allows someone to highlight cells and post questions or suggestions without altering cell values?",
+            options: ["Viewer", "Commenter", "Editor", "Owner"],
             correct: 1,
-            explanation: '<strong>Commenter</strong> permission enables users to view and add threaded comments and suggestions without modifying data.'
+            explanation:
+              "<strong>Commenter</strong> permission enables users to view and add threaded comments and suggestions without modifying data.",
           },
           {
-            question: 'How do you filter a busy shared sheet without changing what your coworkers see on their screens?',
-            options: ['Download the sheet as Excel','Use Data > Filter Views > Create new filter view','Hide all the rows manually','Ask everyone to log off'],
+            question:
+              "How do you filter a busy shared sheet without changing what your coworkers see on their screens?",
+            options: [
+              "Download the sheet as Excel",
+              "Use Data > Filter Views > Create new filter view",
+              "Hide all the rows manually",
+              "Ask everyone to log off",
+            ],
             correct: 1,
-            explanation: '<strong>Filter Views</strong> isolate sorting and filtering to your personal screen only.'
+            explanation:
+              "<strong>Filter Views</strong> isolate sorting and filtering to your personal screen only.",
           },
           {
-            question: 'What function eliminates duplicate rows and returns a unique list of items in Google Sheets?',
-            options: ['=DEDUPE()','=UNIQUE()','=DISTINCT()','=CLEAN()'],
+            question:
+              "What function eliminates duplicate rows and returns a unique list of items in Google Sheets?",
+            options: ["=DEDUPE()", "=UNIQUE()", "=DISTINCT()", "=CLEAN()"],
             correct: 1,
-            explanation: '<strong>=UNIQUE(range)</strong> extracts an array of distinct items from the given range.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "<strong>=UNIQUE(range)</strong> extracts an array of distinct items from the given range.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'vscode',
-    name: 'VS Code',
-    emoji: '💻',
-    color: '#1d4ed8',
-    gradient: 'linear-gradient(135deg, #007acc, #005a9e)',
-    description: 'Master Visual Studio Code — the undisputed #1 code editor in the software industry',
+  {
+    id: "vscode",
+    name: "VS Code",
+    emoji: "💻",
+    color: "#1d4ed8",
+    gradient: "linear-gradient(135deg, #007acc, #005a9e)",
+    description:
+      "Master Visual Studio Code — the undisputed #1 code editor in the software industry",
     lessons: [
       {
-        id: 'vscode-1',
-        title: 'What is VS Code?',
+        id: "vscode-1",
+        title: "What is VS Code?",
         xp: 10,
-        checklist: ['Learn why VS Code is the industry standard', 'Understand the 5 primary interface zones', 'Pick your editor theme'],
+        checklist: [
+          "Learn why VS Code is the industry standard",
+          "Understand the 5 primary interface zones",
+          "Pick your editor theme",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Your Coding Headquarters 💻</h3>
@@ -3016,13 +4150,28 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             </ul>
           </div>
           <div id="quiz-vscode-1"></div>`,
-        quiz: { question: 'What is Visual Studio Code (VS Code)?', options: ['A commercial web browser','A free, open-source, extensible code editor developed by Microsoft','A programming language like Python','An operating system'], correct: 1, explanation: 'VS Code is Microsoft\'s free, open-source, highly customizable code editor used by millions of software developers.' }
+        quiz: {
+          question: "What is Visual Studio Code (VS Code)?",
+          options: [
+            "A commercial web browser",
+            "A free, open-source, extensible code editor developed by Microsoft",
+            "A programming language like Python",
+            "An operating system",
+          ],
+          correct: 1,
+          explanation:
+            "VS Code is Microsoft's free, open-source, highly customizable code editor used by millions of software developers.",
+        },
       },
       {
-        id: 'vscode-2',
-        title: 'Projects, Folders & File Management',
+        id: "vscode-2",
+        title: "Projects, Folders & File Management",
         xp: 15,
-        checklist: ['Open projects using File > Open Folder', 'Learn clean project directory conventions', 'Create files and folders from the Explorer'],
+        checklist: [
+          "Open projects using File > Open Folder",
+          "Learn clean project directory conventions",
+          "Create files and folders from the Explorer",
+        ],
         content: `
           <div class="lesson-section">
             <h3>The Cardinal Rule: Always Open a FOLDER 📁</h3>
@@ -3044,13 +4193,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">✨</div><p><strong>Explorer Shortcuts:</strong> Hover over your project title in the Explorer sidebar to reveal the "New File" and "New Folder" icons for instant file creation without touching your computer's file explorer!</p></div>
           <div id="quiz-vscode-2"></div>`,
-        quiz: { question: 'Why should you open an entire project folder in VS Code rather than just opening an individual file?', options: ['It increases computer RAM','It gives VS Code full workspace context for autocomplete, multi-file search, terminal navigation, and Git tracking','It prevents files from being edited','It connects directly to the printer'], correct: 1, explanation: 'Opening the root folder gives VS Code complete workspace awareness, enabling cross-file refactoring, search, and integrated terminal alignment.' }
+        quiz: {
+          question:
+            "Why should you open an entire project folder in VS Code rather than just opening an individual file?",
+          options: [
+            "It increases computer RAM",
+            "It gives VS Code full workspace context for autocomplete, multi-file search, terminal navigation, and Git tracking",
+            "It prevents files from being edited",
+            "It connects directly to the printer",
+          ],
+          correct: 1,
+          explanation:
+            "Opening the root folder gives VS Code complete workspace awareness, enabling cross-file refactoring, search, and integrated terminal alignment.",
+        },
       },
       {
-        id: 'vscode-3',
-        title: 'The Integrated Terminal',
+        id: "vscode-3",
+        title: "The Integrated Terminal",
         xp: 20,
-        checklist: ['Open the terminal with Ctrl + `', 'Run commands without leaving the editor', 'Manage multiple terminal tabs'],
+        checklist: [
+          "Open the terminal with Ctrl + `",
+          "Run commands without leaving the editor",
+          "Manage multiple terminal tabs",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Never Leave Your Editor 🖥️</h3>
@@ -3070,13 +4235,29 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
             </ul>
           </div>
           <div id="quiz-vscode-3"></div>`,
-        quiz: { question: 'What keyboard shortcut toggles the integrated terminal in VS Code on Windows?', options: ['Ctrl + T','Ctrl + ` (backtick)','Ctrl + Shift + Enter','Alt + F4'], correct: 1, explanation: '<strong>Ctrl + `</strong> (Control plus backtick) instantly opens and hides the integrated terminal.' }
+        quiz: {
+          question:
+            "What keyboard shortcut toggles the integrated terminal in VS Code on Windows?",
+          options: [
+            "Ctrl + T",
+            "Ctrl + ` (backtick)",
+            "Ctrl + Shift + Enter",
+            "Alt + F4",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Ctrl + `</strong> (Control plus backtick) instantly opens and hides the integrated terminal.",
+        },
       },
       {
-        id: 'vscode-4',
-        title: 'Essential Extensions for Web Developers',
+        id: "vscode-4",
+        title: "Essential Extensions for Web Developers",
         xp: 20,
-        checklist: ['Install Prettier for auto-formatting', 'Install Live Server for auto-refresh', 'Install GitLens for version history'],
+        checklist: [
+          "Install Prettier for auto-formatting",
+          "Install Live Server for auto-refresh",
+          "Install GitLens for version history",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Supercharging Your Editor with Extensions 🔌</h3>
@@ -3094,13 +4275,28 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
           </div>
           <div class="tip-card"><div class="tip-icon">📦</div><p><strong>How to install:</strong> Press <strong>Ctrl+Shift+X</strong> (or click the 4-squares icon in the Activity Bar), type the extension name, and click <strong>Install</strong>!</p></div>
           <div id="quiz-vscode-4"></div>`,
-        quiz: { question: 'What does the "Prettier" extension do in VS Code?', options: ['Finds grammatical spelling errors in English essays','Automatically formats code to look clean, consistent, and standardized with proper indentation','Translates code into other human languages','Creates 3D button animations'], correct: 1, explanation: '<strong>Prettier</strong> is an opinionated code formatter that enforces consistent indentation, spacing, quotes, and line wrapping across projects.' }
+        quiz: {
+          question: 'What does the "Prettier" extension do in VS Code?',
+          options: [
+            "Finds grammatical spelling errors in English essays",
+            "Automatically formats code to look clean, consistent, and standardized with proper indentation",
+            "Translates code into other human languages",
+            "Creates 3D button animations",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Prettier</strong> is an opinionated code formatter that enforces consistent indentation, spacing, quotes, and line wrapping across projects.",
+        },
       },
       {
-        id: 'vscode-5',
-        title: 'Power Shortcuts & Multi-Cursor Magic',
+        id: "vscode-5",
+        title: "Power Shortcuts & Multi-Cursor Magic",
         xp: 25,
-        checklist: ['Use Ctrl+P for instant file jump', 'Use Ctrl+Shift+P for the Command Palette', 'Master multi-cursor editing with Alt+Click and Ctrl+D'],
+        checklist: [
+          "Use Ctrl+P for instant file jump",
+          "Use Ctrl+Shift+P for the Command Palette",
+          "Master multi-cursor editing with Alt+Click and Ctrl+D",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Coding at Lightning Speed ⚡</h3>
@@ -3124,13 +4320,28 @@ Alt + Click           <span class="comment"># Place multiple blinking cursors an
 Alt + ↑ or ↓          <span class="comment"># Swaps the current line up or down without cutting/pasting!</span></pre>
           </div>
           <div id="quiz-vscode-5"></div>`,
-        quiz: { question: 'What does pressing Ctrl+P do in VS Code?', options: ['Prints the current file on paper','Opens Quick Open to jump to any file in your project by typing its name','Prompts for a password','Pastes code formatted'], correct: 1, explanation: '<strong>Ctrl+P</strong> opens the Quick Open palette, allowing you to instantly search for and jump to any file in your project.' }
+        quiz: {
+          question: "What does pressing Ctrl+P do in VS Code?",
+          options: [
+            "Prints the current file on paper",
+            "Opens Quick Open to jump to any file in your project by typing its name",
+            "Prompts for a password",
+            "Pastes code formatted",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Ctrl+P</strong> opens the Quick Open palette, allowing you to instantly search for and jump to any file in your project.",
+        },
       },
       {
-        id: 'vscode-6',
-        title: 'IntelliSense & Emmet Abbreviations',
+        id: "vscode-6",
+        title: "IntelliSense & Emmet Abbreviations",
         xp: 25,
-        checklist: ['Generate complete HTML boilerplate with ! + Tab', 'Use Emmet shortcuts like ul>li*3', 'Accept IntelliSense autocomplete with Tab'],
+        checklist: [
+          "Generate complete HTML boilerplate with ! + Tab",
+          "Use Emmet shortcuts like ul>li*3",
+          "Accept IntelliSense autocomplete with Tab",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Type Less, Code More 🪄</h3>
@@ -3162,13 +4373,24 @@ Alt + ↑ or ↓          <span class="comment"># Swaps the current line up or d
             </ul>
           </div>
           <div id="quiz-vscode-6"></div>`,
-        quiz: { question: 'In a blank HTML file in VS Code, what abbreviation followed by Tab produces the entire HTML5 starter skeleton?', options: ['html5','! (Exclamation mark)','skeleton','doc'], correct: 1, explanation: 'Typing <strong>!</strong> and pressing <strong>Tab</strong> activates Emmet\'s HTML5 boilerplate expansion.' }
+        quiz: {
+          question:
+            "In a blank HTML file in VS Code, what abbreviation followed by Tab produces the entire HTML5 starter skeleton?",
+          options: ["html5", "! (Exclamation mark)", "skeleton", "doc"],
+          correct: 1,
+          explanation:
+            "Typing <strong>!</strong> and pressing <strong>Tab</strong> activates Emmet's HTML5 boilerplate expansion.",
+        },
       },
       {
-        id: 'vscode-7',
-        title: 'Built-In Git & Source Control',
+        id: "vscode-7",
+        title: "Built-In Git & Source Control",
         xp: 25,
-        checklist: ['Open the Source Control sidebar (Ctrl+Shift+G)', 'Stage and commit files with a visual interface', 'View line-by-line diffs'],
+        checklist: [
+          "Open the Source Control sidebar (Ctrl+Shift+G)",
+          "Stage and commit files with a visual interface",
+          "View line-by-line diffs",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Git Without the Command Line 🐙</h3>
@@ -3184,13 +4406,29 @@ Alt + ↑ or ↓          <span class="comment"># Swaps the current line up or d
             </ul>
           </div>
           <div id="quiz-vscode-7"></div>`,
-        quiz: { question: 'What keyboard shortcut opens the visual Source Control (Git) panel in VS Code?', options: ['Ctrl + G','Ctrl + Shift + G','Alt + G','Ctrl + Shift + K'], correct: 1, explanation: '<strong>Ctrl + Shift + G</strong> opens the Source Control panel where you can stage, commit, branch, and inspect diffs visually.' }
+        quiz: {
+          question:
+            "What keyboard shortcut opens the visual Source Control (Git) panel in VS Code?",
+          options: [
+            "Ctrl + G",
+            "Ctrl + Shift + G",
+            "Alt + G",
+            "Ctrl + Shift + K",
+          ],
+          correct: 1,
+          explanation:
+            "<strong>Ctrl + Shift + G</strong> opens the Source Control panel where you can stage, commit, branch, and inspect diffs visually.",
+        },
       },
       {
-        id: 'vscode-8',
-        title: 'Debugging with Breakpoints',
+        id: "vscode-8",
+        title: "Debugging with Breakpoints",
         xp: 30,
-        checklist: ['Set breakpoints by clicking the margin', 'Step through execution with F10 and F11', 'Inspect live variables without console.log'],
+        checklist: [
+          "Set breakpoints by clicking the margin",
+          "Step through execution with F10 and F11",
+          "Inspect live variables without console.log",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Hunting Bugs Like a Pro 🐞</h3>
@@ -3211,13 +4449,28 @@ Alt + ↑ or ↓          <span class="comment"># Swaps the current line up or d
             </ol>
           </div>
           <div id="quiz-vscode-8"></div>`,
-        quiz: { question: 'What does setting a breakpoint (red dot) in VS Code do?', options: ['Deletes the line of code','Pauses program execution at that line so you can inspect memory and variables','Speeds up code execution','Marks the code as a favorite'], correct: 1, explanation: 'A <strong>breakpoint</strong> pauses execution right before that line runs, allowing you to examine variables and step through logic line-by-line.' }
+        quiz: {
+          question: "What does setting a breakpoint (red dot) in VS Code do?",
+          options: [
+            "Deletes the line of code",
+            "Pauses program execution at that line so you can inspect memory and variables",
+            "Speeds up code execution",
+            "Marks the code as a favorite",
+          ],
+          correct: 1,
+          explanation:
+            "A <strong>breakpoint</strong> pauses execution right before that line runs, allowing you to examine variables and step through logic line-by-line.",
+        },
       },
       {
-        id: 'vscode-9',
-        title: 'Workspace Settings & .vscode Config',
+        id: "vscode-9",
+        title: "Workspace Settings & .vscode Config",
         xp: 25,
-        checklist: ['Open settings.json with the command palette', 'Configure "editor.formatOnSave": true', 'Commit project settings in .vscode/'],
+        checklist: [
+          "Open settings.json with the command palette",
+          'Configure "editor.formatOnSave": true',
+          "Commit project settings in .vscode/",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Customizing Your Environment ⚙️</h3>
@@ -3235,13 +4488,29 @@ Alt + ↑ or ↓          <span class="comment"># Swaps the current line up or d
           </div>
           <div class="tip-card"><div class="tip-icon">⭐</div><p><strong>Format on Save:</strong> Setting <code>"editor.formatOnSave": true</code> means you can type messy, unindented code, press Ctrl+S, and watch Prettier automatically snap everything into pristine alignment instantly!</p></div>
           <div id="quiz-vscode-9"></div>`,
-        quiz: { question: 'What setting ensures that code is automatically cleaned and formatted whenever you save a file?', options: ['"editor.autoClean": true','"editor.formatOnSave": true','"files.cleanOnSave": true','"prettier.runAlways": true'], correct: 1, explanation: '<strong>"editor.formatOnSave": true</strong> triggers your configured formatter (such as Prettier) every time you save a document.' }
+        quiz: {
+          question:
+            "What setting ensures that code is automatically cleaned and formatted whenever you save a file?",
+          options: [
+            '"editor.autoClean": true',
+            '"editor.formatOnSave": true',
+            '"files.cleanOnSave": true',
+            '"prettier.runAlways": true',
+          ],
+          correct: 1,
+          explanation:
+            '<strong>"editor.formatOnSave": true</strong> triggers your configured formatter (such as Prettier) every time you save a document.',
+        },
       },
       {
-        id: 'vscode-10',
-        title: 'Milestone Project & Multi-Quiz: Developer Setup',
+        id: "vscode-10",
+        title: "Milestone Project & Multi-Quiz: Developer Setup",
         xp: 45,
-        checklist: ['Review interface navigation and terminal shortcuts', 'Review extensions, Emmet, and debugging', 'Pass the 4-question VS Code Milestone Quiz'],
+        checklist: [
+          "Review interface navigation and terminal shortcuts",
+          "Review extensions, Emmet, and debugging",
+          "Pass the 4-question VS Code Milestone Quiz",
+        ],
         content: `
           <div class="lesson-section">
             <h3>Topic 9 Capstone: Master of the Editor 🏆</h3>
@@ -3254,198 +4523,59 @@ Alt + ↑ or ↓          <span class="comment"># Swaps the current line up or d
           <div id="multi-quiz-vscode-10"></div>`,
         quizzes: [
           {
-            question: 'What is the most powerful master shortcut in VS Code that opens a searchable list of EVERY command and feature in the editor?',
-            options: ['Ctrl + P','Ctrl + Shift + P (Command Palette)','Ctrl + Alt + Del','Ctrl + F'],
+            question:
+              "What is the most powerful master shortcut in VS Code that opens a searchable list of EVERY command and feature in the editor?",
+            options: [
+              "Ctrl + P",
+              "Ctrl + Shift + P (Command Palette)",
+              "Ctrl + Alt + Del",
+              "Ctrl + F",
+            ],
             correct: 1,
-            explanation: '<strong>Ctrl + Shift + P</strong> opens the Command Palette, giving instant searchable access to every tool and setting in VS Code.'
+            explanation:
+              "<strong>Ctrl + Shift + P</strong> opens the Command Palette, giving instant searchable access to every tool and setting in VS Code.",
           },
           {
-            question: 'What does the Emmet abbreviation ul>li*3 generate when followed by Tab in an HTML file?',
-            options: ['A link to 3 websites','An unordered list containing 3 list item tags (<ul><li></li><li></li><li></li></ul>)','A paragraph with 3 lines of text','An error'],
+            question:
+              "What does the Emmet abbreviation ul>li*3 generate when followed by Tab in an HTML file?",
+            options: [
+              "A link to 3 websites",
+              "An unordered list containing 3 list item tags (<ul><li></li><li></li><li></li></ul>)",
+              "A paragraph with 3 lines of text",
+              "An error",
+            ],
             correct: 1,
-            explanation: '<code>ul&gt;li*3</code> expands into a <code>&lt;ul&gt;</code> containing three <code>&lt;li&gt;</code> tags.'
+            explanation:
+              "<code>ul&gt;li*3</code> expands into a <code>&lt;ul&gt;</code> containing three <code>&lt;li&gt;</code> tags.",
           },
           {
-            question: 'Where can you run npm, git, and build commands directly inside VS Code without switching windows?',
-            options: ['The integrated terminal (Ctrl + `)','The search panel','The status bar','The settings menu'],
+            question:
+              "Where can you run npm, git, and build commands directly inside VS Code without switching windows?",
+            options: [
+              "The integrated terminal (Ctrl + `)",
+              "The search panel",
+              "The status bar",
+              "The settings menu",
+            ],
             correct: 0,
-            explanation: 'The <strong>Integrated Terminal</strong> allows developers to run command-line tools without leaving the editor window.'
+            explanation:
+              "The <strong>Integrated Terminal</strong> allows developers to run command-line tools without leaving the editor window.",
           },
           {
-            question: 'How do you place multiple cursors to edit multiple locations at once in VS Code?',
-            options: ['Hold Shift and drag','Hold Alt and click multiple locations on screen','Right click and select "Duplicate"','Press F2 repeatedly'],
+            question:
+              "How do you place multiple cursors to edit multiple locations at once in VS Code?",
+            options: [
+              "Hold Shift and drag",
+              "Hold Alt and click multiple locations on screen",
+              'Right click and select "Duplicate"',
+              "Press F2 repeatedly",
+            ],
             correct: 1,
-            explanation: 'Holding <strong>Alt</strong> and clicking anywhere on the screen creates simultaneous multi-cursors for concurrent editing.'
-          }
-        ]
-      }
-    ]
+            explanation:
+              "Holding <strong>Alt</strong> and clicking anywhere on the screen creates simultaneous multi-cursors for concurrent editing.",
+          },
+        ],
+      },
+    ],
   },
-{
-    id: 'capstone',
-    name: 'Grand Capstone Project',
-    emoji: '🎓',
-    color: '#8b5cf6',
-    gradient: 'linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4)',
-    description: 'The Ultimate Final Project uniting HTML + CSS + JavaScript + TypeScript + GitHub + VS Code + Payload CMS',
-    lessons: [
-      {
-        id: 'capstone-1',
-        title: 'Full-Stack Architecture Overview',
-        xp: 30,
-        checklist: ['Understand how all 9 topics fit together', 'Review the full production stack', 'Prepare your VS Code workspace'],
-        content: `
-          <div class="lesson-section">
-            <h3>Bringing It All Together 🌐⚡📦</h3>
-            <p>You have traveled an extraordinary journey! You started with zero knowledge of CMSs, Git, HTML, CSS, JavaScript, TypeScript, spreadsheets, and editors. Now, let's see how every single piece connects into a professional modern tech stack:</p>
-          </div>
-          <div class="lesson-section">
-            <h3>The Full-Stack Ecosystem Map:</h3>
-            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-top:10px;">
-              <thead><tr style="background:rgba(124,58,237,0.08);">
-                <th style="padding:10px 14px;text-align:left;border-bottom:2px solid var(--border);">Tool / Technology</th>
-                <th style="padding:10px 14px;text-align:left;border-bottom:2px solid var(--border);">Role in the Stack</th>
-                <th style="padding:10px 14px;text-align:left;border-bottom:2px solid var(--border);">How It Connects</th>
-              </tr></thead>
-              <tbody>
-                <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;"><strong>VS Code</strong></td><td style="padding:10px 14px;">Development Workspace</td><td style="padding:10px 14px;">Where you write, debug, and run code with extensions and terminal.</td></tr>
-                <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;"><strong>Git & GitHub</strong></td><td style="padding:10px 14px;">Version Control & Hosting</td><td style="padding:10px 14px;">Tracks snapshots, branches features, and hosts repositories for team PRs.</td></tr>
-                <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;"><strong>Payload CMS</strong></td><td style="padding:10px 14px;">Headless Backend & Database</td><td style="padding:10px 14px;">Stores products, blog posts, and user logins; provides REST API.</td></tr>
-                <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;"><strong>HTML</strong></td><td style="padding:10px 14px;">Frontend Structure</td><td style="padding:10px 14px;">Defines semantic elements, navigation, cards, and forms.</td></tr>
-                <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;"><strong>CSS</strong></td><td style="padding:10px 14px;">Design, Flexbox & Animation</td><td style="padding:10px 14px;">Transforms raw elements into responsive glassmorphism UI components.</td></tr>
-                <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;"><strong>JavaScript & TypeScript</strong></td><td style="padding:10px 14px;">Type-Safe Logic & APIs</td><td style="padding:10px 14px;">Fetches data from Payload API, manages state, and catches compile errors.</td></tr>
-                <tr><td style="padding:10px 14px;"><strong>Excel & Google Sheets</strong></td><td style="padding:10px 14px;">Data Analysis & Planning</td><td style="padding:10px 14px;">Used to model budgets, analyze traffic metrics, and plan sprints.</td></tr>
-              </tbody>
-            </table></div>
-          </div>
-          <div class="success-card"><div class="suc-icon">🚀</div><p>You are no longer a beginner — you have the complete mental map of a modern web software engineer!</p></div>
-          <div id="quiz-capstone-1"></div>`,
-        quiz: { question: 'In a modern full-stack web application, which component is responsible for storing content and serving it via REST API endpoints?', options: ['The CSS stylesheet','The Headless CMS (such as Payload CMS)','The Git commit history','The browser address bar'], correct: 1, explanation: 'The <strong>Headless CMS (Payload)</strong> manages data storage, validation, authentication, and delivers content through API endpoints to the frontend.' }
-      },
-      {
-        id: 'capstone-2',
-        title: 'Building the Full-Stack Showcase',
-        xp: 40,
-        checklist: ['Combine HTML structure, CSS Flexbox styling, and JS logic', 'Inspect the live full-stack mini application', 'Test interactivity and dynamic data rendering'],
-        content: `
-          <div class="lesson-section">
-            <h3>The Interactive Full-Stack Project 🛠️</h3>
-            <p>Below is a working showcase application demonstrating HTML structure, modern CSS gradients and responsive flexbox, and dynamic JavaScript/TypeScript state management:</p>
-          </div>
-          <div class="code-editor-wrapper">
-            <div class="editor-toolbar">
-              <div class="editor-toolbar-left"><div class="editor-dot red"></div><div class="editor-dot yellow"></div><div class="editor-dot green"></div></div>
-              <div class="editor-toolbar-right"><button class="editor-btn run-btn" onclick="runEditorCode('editor-capstone-2','preview-capstone-2')">▶ Run</button></div>
-            </div>
-            <textarea class="code-textarea" id="editor-capstone-2" rows="24">&lt;style&gt;
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-  .app-container {
-    max-width: 420px;
-    margin: 10px auto;
-    background: #0d0b1a;
-    color: #ede9fe;
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 16px 40px rgba(124,58,237,0.3);
-    border: 1px solid rgba(124,58,237,0.25);
-  }
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-  .badge { background: linear-gradient(135deg, #7c3aed, #ec4899); padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: bold; }
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
-  .stat-tile { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
-  .stat-tile h4 { font-size: 20px; color: #a78bfa; margin-bottom: 2px; }
-  .stat-tile span { font-size: 11px; opacity: 0.7; }
-  .btn-action {
-    display: block; width: 100%; padding: 12px;
-    background: linear-gradient(135deg, #7c3aed, #06b6d4);
-    color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  .btn-action:hover { transform: scale(1.02); }
-&lt;/style&gt;
-
-&lt;div class="app-container"&gt;
-  &lt;div class="header"&gt;
-    &lt;h3&gt;LearnPath Dashboard 🦉&lt;/h3&gt;
-    &lt;span class="badge"&gt;Full-Stack v1.0&lt;/span&gt;
-  &lt;/div&gt;
-
-  &lt;div class="stats-grid"&gt;
-    &lt;div class="stat-tile"&gt;
-      &lt;h4 id="projCount"&gt;9 / 9&lt;/h4&gt;
-      &lt;span&gt;Topics Mastered&lt;/span&gt;
-    &lt;/div&gt;
-    &lt;div class="stat-tile"&gt;
-      &lt;h4 id="xpScore"&gt;1,250&lt;/h4&gt;
-      &lt;span&gt;Total XP Earned&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;button class="btn-action" onclick="boostXP()"&gt;Claim Graduation XP! 🎓&lt;/button&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-  let xp = 1250;
-  function boostXP() {
-    xp += 100;
-    document.getElementById('xpScore').innerText = xp.toLocaleString();
-    alert('Congratulations! +100 Graduation XP added to your profile! 🏆');
-  }
-&lt;/script&gt;</textarea>
-            <div class="output-label">Live Output Preview</div>
-            <iframe class="preview-iframe" id="preview-capstone-2"></iframe>
-          </div>
-          <div id="quiz-capstone-2"></div>`,
-        quiz: { question: 'Which combination of technologies powers modern web development from coding to cloud deployment?', options: ['VS Code (editor) + Git/GitHub (version control) + HTML/CSS/JS/TS (frontend) + Payload CMS (backend)','Word only','Excel only without internet','Notepad without a browser'], correct: 0, explanation: 'The complete professional web stack integrates VS Code, Git version control, HTML/CSS/JS/TS for interactive frontends, and a headless CMS like Payload for content management.' }
-      },
-      {
-        id: 'capstone-3',
-        title: 'Grand Master Certification Quiz',
-        xp: 100,
-        checklist: ['Review all 9 course topics', 'Take the comprehensive 5-question Grand Master Quiz', 'Graduate with full course completion!'],
-        content: `
-          <div class="lesson-section">
-            <h3>The Final Exam: Grand Master Certification 🎓</h3>
-            <p>This is the ultimate milestone of your entire learning journey! You will be tested on the core concepts across all 9 topics: Payload CMS, GitHub, HTML, CSS, JavaScript, TypeScript, Excel, Google Sheets, and VS Code.</p>
-          </div>
-          <div class="success-card">
-            <div class="suc-icon">👑</div>
-            <p><strong>Grand Challenge:</strong> Score 80% or higher to earn the <strong>Grand Master of Web Development Diploma</strong> and 100 XP!</p>
-          </div>
-          <div id="multi-quiz-capstone-3"></div>`,
-        quizzes: [
-          {
-            question: 'What is the role of Payload CMS in a web application?',
-            options: ['It styles button hover animations in CSS','It provides a TypeScript-configured headless backend, database schemas, authentication, and REST/GraphQL APIs','It acts as a code editor like VS Code','It replaces the operating system'],
-            correct: 1,
-            explanation: 'Payload CMS is a code-first, headless CMS that manages content schemas, auth, and database operations while exposing REST and GraphQL APIs.'
-          },
-          {
-            question: 'What is the essential difference between Git and GitHub?',
-            options: ['Git is local version control software; GitHub is a cloud platform for hosting and collaborating on Git repositories','GitHub is local; Git is in the cloud','They are identical names for the same website','Git only works on Mac; GitHub only works on Windows'],
-            correct: 0,
-            explanation: 'Git runs locally on your PC to record commits. GitHub hosts repositories online for backup and team collaboration.'
-          },
-          {
-            question: 'In CSS layout, what is the key difference between Flexbox and CSS Grid?',
-            options: ['Flexbox only works in dark mode','Flexbox is primarily 1-dimensional (rows OR columns); CSS Grid is 2-dimensional (rows AND columns simultaneously)','Grid is deprecated','Flexbox requires JavaScript'],
-            correct: 1,
-            explanation: 'Flexbox manages 1-dimensional layouts (a single row or column), while CSS Grid handles 2-dimensional grid layouts with simultaneous rows and columns.'
-          },
-          {
-            question: 'What makes TypeScript superior to plain JavaScript for large-scale production projects?',
-            options: ['TypeScript has zero learning curve','TypeScript introduces static type checking to catch errors, typos, and mismatches at compile time before runtime','TypeScript does not need a browser','TypeScript replaces HTML'],
-            correct: 1,
-            explanation: 'TypeScript enforces static type safety, catching bugs during development before users ever encounter them.'
-          },
-          {
-            question: 'In spreadsheet analysis (Excel & Google Sheets), what formula sums cells based on a specific matching condition?',
-            options: ['=COUNT()','=SUMIF()','=VLOOKUP()','=IFSUM()'],
-            correct: 1,
-            explanation: '<strong>=SUMIF(range, criteria, [sum_range])</strong> calculates the sum of cells that meet a specified condition.'
-          }
-        ]
-      }
-    ]
-  }
 ];

@@ -5,10 +5,10 @@
 // ===== MULTI-ACCOUNT & STATE MANAGEMENT =====
 const DEFAULT_ACCOUNT = {
   id: 'acc_guest',
-  name: 'Learner',
-  username: 'learner',
+  name: 'Employee',
+  username: 'employee',
   avatar: '👨‍💻',
-  role: 'student',
+  role: 'employee',
   currentTopicIdx: 0,
   currentLessonIdx: 0,
   xp: 0,
@@ -16,6 +16,8 @@ const DEFAULT_ACCOUNT = {
   level: 1,
   completedLessons: {},
   quizScores: {},
+  quizAnswers: {},
+  quizPassed: {},
   achievements: {},
   confidenceScores: {},
   studyHistory: [],
@@ -51,7 +53,6 @@ const TOPIC_COLORS = [
   { bg: '#15803d', light: '#dcfce7', text: '#14532d' }, // Excel
   { bg: '#059669', light: '#d1fae5', text: '#065f46' }, // Google Sheets
   { bg: '#0284c7', light: '#e0f2fe', text: '#0369a1' }, // VS Code
-  { bg: '#62C554', light: '#dcfce7', text: '#166534' }, // Grand Capstone
 ];
 
 // ===== 12 COMPREHENSIVE BADGES / ACHIEVEMENTS =====
@@ -67,7 +68,7 @@ const ACHIEVEMENTS_LIST = [
   { id: 'web_architect', name: 'Web Architect', icon: '🌐', desc: 'Completed both HTML and CSS foundations', xpBonus: 60 },
   { id: 'js_guru', name: 'JavaScript Ninja', icon: '💻', desc: 'Mastered Topic 5: JavaScript programming', xpBonus: 70 },
   { id: 'data_wizard', name: 'Data Wizard', icon: '📊', desc: 'Mastered Excel & Google Sheets workflows', xpBonus: 60 },
-  { id: 'kfl_master', name: 'KFL Grand Champion', icon: '👑', desc: 'Completed the entire 10-topic curriculum', xpBonus: 150 },
+  { id: 'kfl_master', name: 'KFL Grand Champion', icon: '👑', desc: 'Completed the entire 9-topic curriculum', xpBonus: 150 },
 ];
 
 // ===== TUTOR RESPONSES & ANALOGIES =====
@@ -133,15 +134,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function initApp() {
   updateProfileUI();
+  updateNavVisibility();
+
   buildTopicTree();
-  renderDashboard();
-  renderProgress();
-  renderTopicsView();
-  loadLesson();
-  updateSidebarProgress();
-  updateXPDisplay();
-  applyTopicTheme(state.currentTopicIdx);
-  updateRecommendation();
+  
+  const isGuest = !(typeof currentUser !== 'undefined' && currentUser);
+  
+  if (isGuest) {
+    // Guests see leaderboard only
+    renderLeaderboard();
+    showView('leaderboard');
+  } else {
+    // Logged-in users see full dashboard
+    renderDashboard();
+    renderProgress();
+    renderTopicsView();
+    loadLesson();
+    updateSidebarProgress();
+    updateXPDisplay();
+    applyTopicTheme(state.currentTopicIdx);
+    updateRecommendation();
+  }
 }
 
 function checkStreak() {
@@ -180,9 +193,32 @@ function loadState() {
   } catch (e) {
     console.warn('Error reading local state:', e);
   }
+
+  state.quizScores = state.quizScores || {};
+  state.quizAnswers = state.quizAnswers || {};
+  state.quizPassed = state.quizPassed || {};
+  Object.entries(state.quizScores).forEach(([lessonId, score]) => {
+    if (state.quizPassed[lessonId] === undefined && score >= 80) {
+      state.quizPassed[lessonId] = true;
+    }
+  });
+
+  const topicIndex = Number(state.currentTopicIdx);
+  if (!Number.isInteger(topicIndex) || topicIndex >= TOPICS.length || topicIndex < 0) {
+    state.currentTopicIdx = TOPICS.length - 1;
+    state.currentLessonIdx = 0;
+  } else {
+    state.currentTopicIdx = topicIndex;
+  }
+  const lessonIndex = Number(state.currentLessonIdx);
+  if (!Number.isInteger(lessonIndex) || lessonIndex >= TOPICS[state.currentTopicIdx].lessons.length || lessonIndex < 0) {
+    state.currentLessonIdx = 0;
+  } else {
+    state.currentLessonIdx = lessonIndex;
+  }
 }
 
-function saveState() {
+function saveState({ syncProfile = true } = {}) {
   // 1. Calculate Level
   const calculatedLevel = Math.max(1, Math.floor(state.xp / 100) + 1);
   state.level = calculatedLevel;
@@ -195,7 +231,7 @@ function saveState() {
   }
 
   // 3. Sync to Supabase Cloud if user is authenticated
-  if (typeof currentUser !== 'undefined' && currentUser && typeof cloudUpdateProfile === 'function') {
+  if (syncProfile && typeof currentUser !== 'undefined' && currentUser && typeof cloudUpdateProfile === 'function') {
     cloudUpdateProfile({
       name: state.name,
       avatar: state.avatar,
@@ -217,41 +253,96 @@ function applyCloudDataToState(cloudData) {
   state.username = cloudData.username || state.username;
   state.avatar = cloudData.avatar || state.avatar;
   state.role = cloudData.role || 'student';
-  state.xp = Math.max(state.xp, cloudData.xp || 0);
-  state.streak = Math.max(state.streak, cloudData.streak || 1);
-  state.level = Math.max(state.level, cloudData.level || 1);
+  state.xp = cloudData.xp !== undefined ? cloudData.xp : (state.xp || 0);
+
+  state.streak = cloudData.streak || state.streak || 1;
+
+  state.level = cloudData.level || state.level || 1;
+
   
   // Merge completed lessons & quizzes
   state.completedLessons = { ...state.completedLessons, ...(cloudData.completedLessons || {}) };
   state.quizScores = { ...state.quizScores, ...(cloudData.quizScores || {}) };
+  state.quizAnswers = { ...state.quizAnswers, ...(cloudData.quizAnswers || {}) };
+  state.quizPassed = { ...state.quizPassed, ...(cloudData.quizPassed || {}) };
   state.achievements = { ...state.achievements, ...(cloudData.achievements || {}) };
   state.confidenceScores = { ...state.confidenceScores, ...(cloudData.confidenceScores || {}) };
 
   saveState();
   updateProfileUI();
+  updateNavVisibility();
   renderDashboard();
   renderProgress();
   updateSidebarProgress();
   updateRecommendation();
   buildTopicTree();
+  loadLesson();
 }
 
 function resetAppStateToGuest() {
   state = { ...DEFAULT_ACCOUNT };
   saveState();
   updateProfileUI();
+  updateNavVisibility();
   renderDashboard();
   renderProgress();
   updateSidebarProgress();
   updateRecommendation();
   buildTopicTree();
+  renderLeaderboard();
+}
+
+// Show/hide nav items based on auth state and role
+function updateNavVisibility() {
+  const isLoggedIn = typeof currentUser !== 'undefined' && currentUser;
+  const isAdmin = isLoggedIn && state.role === 'admin';
+  const isGuest = !isLoggedIn; // Guest mode = not logged in
+
+  // Dashboard: hidden for guests
+  const navDashboard = document.querySelector('[data-view="dashboard"]');
+  if (navDashboard) navDashboard.style.display = isGuest ? 'none' : '';
+
+  // Current Lesson: hidden for guests
+  const navLesson = document.querySelector('[data-view="lesson"]');
+  if (navLesson) navLesson.style.display = isGuest ? 'none' : '';
+
+  // Progress: hidden for guests
+  const navProgress = document.getElementById('navProgress');
+  if (navProgress) navProgress.style.display = isGuest ? 'none' : '';
+
+  // Topics: hidden for guests
+  const navTopics = document.querySelector('[data-view="topics"]');
+  if (navTopics) navTopics.style.display = isGuest ? 'none' : '';
+
+  // Achievements: hidden for guests
+  const navAchievements = document.querySelector('[data-view="achievements"]');
+  if (navAchievements) navAchievements.style.display = isGuest ? 'none' : '';
+
+  // Profile: hidden for guests
+  const navProfile = document.querySelector('[data-view="profile"]');
+  if (navProfile) navProfile.style.display = isGuest ? 'none' : '';
+
+  // Leaderboard: visible for everyone
+  const navLeaderboard = document.querySelector('[data-view="leaderboard"]');
+  if (navLeaderboard) navLeaderboard.style.display = '';
+
+  // Guests can view the leaderboard but not the curriculum sidebar.
+  const sidebarProgress = document.querySelector('.sidebar-progress');
+  if (sidebarProgress) sidebarProgress.style.display = isGuest ? 'none' : '';
+  const topicTree = document.getElementById('topicTree');
+  if (topicTree) topicTree.style.display = isGuest ? 'none' : '';
+
+  // Admin Hub: only visible to admins
+  const navAdmin = document.getElementById('navAdmin');
+  if (navAdmin) navAdmin.style.display = isAdmin ? '' : 'none';
 }
 
 // ===== UI & PROFILE UPDATERS =====
 function updateProfileUI() {
-  const name = state.name || 'Learner';
-  const avatar = state.avatar || '👨‍💻';
-  const username = state.username ? `@${state.username}` : '@learner';
+  const isLoggedIn = typeof currentUser !== 'undefined' && Boolean(currentUser);
+  const name = isLoggedIn ? (state.name || currentUser.user_metadata?.name || 'Learner') : 'Guest';
+  const avatar = isLoggedIn ? (state.avatar || '👨‍💻') : '👤';
+  const username = isLoggedIn && state.username ? `@${state.username}` : '@guest';
 
   setText('sidebarProfileName', name);
   setText('topbarUserName', name);
@@ -265,14 +356,25 @@ function updateProfileUI() {
   const pLarge = document.getElementById('profileLargeAvatar');
   if (pLarge) pLarge.textContent = avatar;
 
-  let levelTitle = `Level ${state.level || 1} Explorer`;
-  if (state.xp >= 1000) levelTitle = `Level ${state.level} Grand Master 🎓`;
-  else if (state.xp >= 600) levelTitle = `Level ${state.level} Tech Scholar 🌟`;
-  else if (state.xp >= 300) levelTitle = `Level ${state.level} Code Specialist ⚡`;
-  else if (state.xp >= 100) levelTitle = `Level ${state.level} Apprentice 🚀`;
-
-  setText('sidebarProfileLevel', levelTitle);
-  setText('profileRoleBadge', (state.role || 'student').toUpperCase());
+  const level = Math.max(1, Number(state.level) || 1);
+  const ranks = [
+    'Junior Technician',
+    'Technician',
+    'Senior Technician',
+    'IT Specialist',
+    'Senior Specialist',
+    'IT Engineer',
+    'Senior Engineer',
+    'Lead Engineer',
+    'Principal Engineer',
+    'IT Architect',
+    'Senior Architect',
+    'IT Director'
+  ];
+  const rank = ranks[Math.min(Math.floor((level - 1) / 3), ranks.length - 1)];
+  setText('profileRoleBadge', rank);
+  setText('profileLevelBadge', `Level ${level}`);
+  setText('sidebarProfileLevel', `Level ${level} · ${rank}`);
 }
 
 function setText(id, val) {
@@ -284,6 +386,15 @@ function setText(id, val) {
 function showView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+  const isGuest = !(typeof currentUser !== 'undefined' && currentUser);
+  const restrictedViews = ['dashboard', 'lesson', 'progress', 'topics', 'achievements', 'profile'];
+
+  // Prevent guests from accessing restricted views
+  if (isGuest && restrictedViews.includes(v)) {
+    showFeedback(false, 'Sign In Required', 'Guests can only view the Leaderboard. Please sign in or create an account to access all features.', null);
+    v = 'leaderboard'; // Force redirect to leaderboard
+  }
 
   const viewEl = document.getElementById('view-' + v);
   if (viewEl) viewEl.classList.add('active');
@@ -298,7 +409,7 @@ function showView(v) {
     topics: '📚 All Curriculum Topics',
     leaderboard: '🏆 Community Leaderboard',
     achievements: '🎖️ Badges & Milestones',
-    profile: '👤 Student Profile',
+    profile: '👤 Employee Profile',
     admin: '🛡️ Admin Hub'
   };
 
@@ -497,11 +608,11 @@ function getRecommendation() {
   return {
     topicIdx: 0,
     lessonIdx: 0,
-    type: 'capstone',
+    type: 'complete',
     badge: 'Curriculum Mastered',
     reason: 'Congratulations! You have finished every lesson in KFL Learning Hub!',
-    title: 'Review Capstone Project',
-    desc: 'You are ready to build real-world web applications and headless CMS solutions.',
+    title: 'Curriculum Complete!',
+    desc: 'You completed all 9 topics. Review any lesson to keep your skills sharp.',
     icon: '👑'
   };
 }
@@ -514,6 +625,12 @@ function updateRecommendation() {
   setText('recommendedTitle', rec.title);
   setText('recommendedDesc', rec.desc);
   setText('recommendedIcon', rec.icon);
+  const action = document.getElementById('btnRecommendedAction');
+  if (action) {
+    action.innerHTML = rec.type === 'complete'
+      ? 'Review Lessons <i class="fas fa-arrow-right"></i>'
+      : 'Continue <i class="fas fa-arrow-right"></i>';
+  }
 }
 
 function takeRecommendedAction() {
@@ -525,44 +642,6 @@ function takeRecommendedAction() {
   saveState();
   loadLesson();
   showView('lesson');
-}
-
-// ===== CONFIDENCE RATING =====
-function rateConfidence(level) {
-  const topic = TOPICS[state.currentTopicIdx];
-  const lesson = topic?.lessons[state.currentLessonIdx];
-  if (!lesson) return;
-
-  // Save confidence
-  state.confidenceScores[lesson.id] = level;
-  saveState();
-
-  // Highlight selected button
-  document.querySelectorAll('#lessonConfidenceWidget .conf-btn').forEach(btn => {
-    btn.classList.toggle('selected', btn.getAttribute('onclick')?.includes(level));
-  });
-
-  const fb = document.getElementById('confidenceFeedback');
-  const responses = {
-    dont_understand: "Thank you for being honest! 🦉 I've noted this. Ask me <em>\"I don't understand\"</em> in the chat right now for a super simple breakdown and analogy!",
-    little: "Great start! Reviewing the example and trying the code editor will make it fully click! 💡",
-    understand: "Awesome! You've got the core concept down solid! ⭐",
-    can_explain: "Incredible! Being able to explain it is the gold standard of real understanding! 😎",
-    can_build: "You're a rockstar! 🚀 You are ready to build real projects with this skill!"
-  };
-
-  if (fb) {
-    fb.innerHTML = responses[level] || "Confidence saved!";
-    fb.className = 'confidence-feedback-msg show';
-  }
-
-  // Award 5 XP for self-reflection
-  addXP(5);
-  addTutorMessage(responses[level] || "I've noted your confidence rating! Let's keep moving forward!");
-  updateRecommendation();
-
-  // Record history
-  recordActivity('rated_confidence', topic.id, lesson.id, `Confidence: ${level}`);
 }
 
 // ===== DASHBOARD RENDERING =====
@@ -626,66 +705,6 @@ function totalInTopic(idx) {
   return t.lessons.filter(l => state.completedLessons[t.id + '-' + l.id]).length;
 }
 
-// ===== LESSON LOADER =====
-function loadLesson() {
-  const topic = TOPICS[state.currentTopicIdx];
-  const lesson = topic?.lessons[state.currentLessonIdx];
-  if (!topic || !lesson) return;
-
-  applyTopicTheme(state.currentTopicIdx);
-
-  setText('lessonTopicTag', topic.name);
-  const tag = document.getElementById('lessonTopicTag');
-  if (tag) tag.style.background = topic.gradient;
-
-  setText('lessonNum', `Lesson ${state.currentLessonIdx + 1} of ${topic.lessons.length}`);
-  setText('lessonTitle', lesson.title);
-  setText('lessonXPReward', lesson.xp);
-
-  const body = document.getElementById('lessonBody');
-  if (body) {
-    body.innerHTML = lesson.content;
-    body.style.opacity = '0';
-    body.style.transform = 'translateY(12px)';
-    requestAnimationFrame(() => {
-      body.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-      body.style.opacity = '1';
-      body.style.transform = 'translateY(0)';
-    });
-  }
-
-  // Build Quiz
-  if (lesson.quiz) buildInlineQuiz(lesson);
-  if (lesson.quizzes) buildMultiQuiz(lesson);
-
-  // Restore Confidence Button highlight if already rated
-  const savedConf = state.confidenceScores[lesson.id];
-  document.querySelectorAll('#lessonConfidenceWidget .conf-btn').forEach(btn => {
-    btn.classList.toggle('selected', savedConf && btn.getAttribute('onclick')?.includes(savedConf));
-  });
-  const fb = document.getElementById('confidenceFeedback');
-  if (fb) fb.className = 'confidence-feedback-msg';
-
-  buildChecklist(lesson);
-  buildTopicTree();
-  updateLessonSidebarProgress();
-
-  const prev = document.getElementById('btnPrevLesson');
-  if (prev) prev.disabled = (state.currentLessonIdx === 0 && state.currentTopicIdx === 0);
-
-  // Auto-run Code Editors
-  setTimeout(() => {
-    document.querySelectorAll('[id^="editor-"]').forEach(ed => {
-      const pid = ed.id.replace('editor-', 'preview-');
-      if (document.getElementById(pid)) runEditorCode(ed.id, pid);
-    });
-  }, 250);
-}
-
-function updateLessonSidebarProgress() {
-  updateSidebarProgress();
-}
-
 function updateSidebarProgress() {
   const total = TOPICS.reduce((s, t) => s + t.lessons.length, 0);
   const done = Object.keys(state.completedLessons).length;
@@ -721,8 +740,10 @@ function buildTopicTree() {
     node.innerHTML = `
       <div class="topic-tree-title" onclick="toggleTreeNode(this, ${tIdx})">
         <span class="tt-icon">${t.emoji}</span>
-        <span class="tt-name">${t.name}</span>
-        <span class="tt-count">${doneCount}/${t.lessons.length}</span>
+        <span class="tt-name" style="color:rgba(255,255,255,0.9)">${t.name}</span>
+
+        <span class="tt-count" style="color:rgba(255,255,255,0.45)">${doneCount}/${t.lessons.length}</span>
+
         <i class="fas fa-chevron-down tt-chevron"></i>
       </div>
       <div class="topic-tree-lessons">
@@ -732,7 +753,7 @@ function buildTopicTree() {
           return `
             <div class="tt-lesson ${isCur ? 'active' : ''} ${isDone ? 'done' : ''}" onclick="jumpToLesson(${tIdx}, ${lIdx})">
               <span class="tt-dot">${isDone ? '✓' : (lIdx + 1)}</span>
-              <span class="tt-lesson-title">${l.title}</span>
+              <span class="tt-lesson-title" style="color:rgba(255,255,255,0.75)">${l.title}</span>
             </div>
           `;
         }).join('')}
@@ -763,382 +784,43 @@ function jumpToLesson(tIdx, lIdx) {
   showView('lesson');
 }
 
-// ===== INLINE KNOWLEDGE CHECK (Single Question) =====
-const selectedInlineOptions = {};
-
-function buildInlineQuiz(lesson) {
-  const cid = `quiz-${lesson.id}`;
-  const container = document.getElementById(cid);
-  if (!container) return;
-  const { quiz } = lesson;
-  const letters = ['A','B','C','D','E'];
-
-  container.innerHTML = `
-    <div class="quiz-inline-box">
-      <div class="quiz-inline-header">
-        <span class="quiz-brain">🧠</span>
-        <div>
-          <div class="quiz-inline-title">Knowledge Check (Target: 80%+)</div>
-          <div class="quiz-inline-sub">Verify your understanding before completing this lesson</div>
-        </div>
-        <div class="quiz-xp-pill">+10 XP</div>
-      </div>
-      <p class="quiz-question">${quiz.question}</p>
-      <div class="quiz-options" id="inline-quiz-options-${lesson.id}">
-        ${quiz.options.map((opt, i) => `
-          <div class="quiz-option" onclick="selectInlineOption('${lesson.id}', ${i})" id="inline-opt-${lesson.id}-${i}">
-            <span class="option-letter">${letters[i]}</span>
-            <span class="option-text">${opt}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div id="inline-quiz-result-${lesson.id}" class="quiz-result-banner"></div>
-      <button class="btn-check" onclick="submitInlineQuiz('${lesson.id}', ${quiz.correct})">
-        <i class="fas fa-check-circle"></i> Submit Answer
-      </button>
-    </div>
-  `;
-}
-
-function selectInlineOption(lid, idx) {
-  selectedInlineOptions[lid] = idx;
-  document.querySelectorAll(`[id^="inline-opt-${lid}-"]`).forEach(el => el.classList.remove('selected'));
-  document.getElementById(`inline-opt-${lid}-${idx}`)?.classList.add('selected');
-}
-
-function submitInlineQuiz(lid, correct) {
-  const sel = selectedInlineOptions[lid];
-  if (sel === undefined) {
-    addTutorMessage('Pick an option first! I\'m ready to evaluate your answer! 😊');
-    return;
-  }
-
-  const isCorrect = sel === correct;
-  const opts = document.querySelectorAll(`[id^="inline-opt-${lid}-"]`);
-  opts.forEach((opt, i) => {
-    if (i === correct) {
-      opt.classList.add('correct');
-      opt.classList.remove('selected');
-    } else if (i === sel && !isCorrect) {
-      opt.classList.add('wrong');
-      opt.classList.add('shake');
-      setTimeout(() => opt.classList.remove('shake'), 600);
-    }
-  });
-
-  const resultEl = document.getElementById(`inline-quiz-result-${lid}`);
-  const lesson = TOPICS.flatMap(t => t.lessons).find(l => l.id === lid);
-  const topic = TOPICS.find(t => t.lessons.some(l => l.id === lid));
-
-  resultEl.className = `quiz-result-banner show ${isCorrect ? 'correct' : 'incorrect'}`;
-  resultEl.innerHTML = isCorrect
-    ? `✅ <strong>Passed (100%)!</strong> ${lesson?.quiz?.explanation || 'Great job!'}`
-    : `❌ <strong>Need another attempt:</strong> ${lesson?.quiz?.explanation || ''} <br><br>💡 <em>Hint: Re-read the analogy box and try again!</em>`;
-
-  if (isCorrect) {
-    state.quizScores[lid] = 100;
-    addXP(10);
-    addTutorMessage(getTutorMsg('correct'));
-    unlockAchievement('quiz_whiz');
-    checkMasteryBadges();
-    saveState();
-    launchMiniConfetti();
-
-    // Sync to Supabase
-    if (typeof cloudSaveQuizResult === 'function' && topic) {
-      cloudSaveQuizResult(topic.id, lid, 100, 1, true);
-    }
-  } else {
-    state.quizScores[lid] = 0;
-    saveState();
-    addTutorMessage("Don't worry about missing it! Read the explanation above, re-read the analogy, and select the correct option! 💪");
-    if (typeof cloudSaveQuizResult === 'function' && topic) {
-      cloudSaveQuizResult(topic.id, lid, 0, 1, false);
-    }
-  }
-}
-
-// ===== MULTI-QUESTION QUIZ (MILESTONE EXAMS) =====
-const multiQuizState = {};
-const mqSelected = {};
-
-function buildMultiQuiz(lesson) {
-  const cid = `multi-quiz-${lesson.id}`;
-  const container = document.getElementById(cid);
-  if (!container || !lesson.quizzes) return;
-
-  multiQuizState[lesson.id] = { current: 0, score: 0, answers: {} };
-  renderMultiQuestion(lesson, 0, container);
-}
-
-function renderMultiQuestion(lesson, qIdx, container) {
-  const qs = lesson.quizzes;
-  const q = qs[qIdx];
-  const letters = ['A','B','C','D'];
-  const progress = Math.round(((qIdx) / qs.length) * 100);
-
-  container.innerHTML = `
-    <div class="multi-quiz-box">
-      <div class="multi-quiz-header">
-        <span>Question ${qIdx + 1} of ${qs.length}</span>
-        <div class="quiz-progress-bar-wrap">
-          <div class="quiz-progress-bar-fill" style="width:${progress}%"></div>
-        </div>
-        <span class="quiz-score-badge">Score: ${multiQuizState[lesson.id].score}/${qIdx}</span>
-      </div>
-      <p class="quiz-question" style="margin:16px 0;">${q.question}</p>
-      <div class="quiz-options" id="mq-opts-${lesson.id}-${qIdx}">
-        ${q.options.map((opt, i) => `
-          <div class="quiz-option" onclick="selectMQOption('${lesson.id}', ${qIdx}, ${i})" id="mq-opt-${lesson.id}-${qIdx}-${i}">
-            <span class="option-letter">${letters[i]}</span>
-            <span class="option-text">${opt}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div id="mq-result-${lesson.id}-${qIdx}" class="quiz-result-banner"></div>
-      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
-        <button class="btn-check" onclick="submitMQAnswer('${lesson.id}', ${qIdx}, ${q.correct})">
-          <i class="fas fa-check-circle"></i> Submit Answer
-        </button>
-        ${qIdx > 0 ? `<button class="btn-secondary" onclick="buildMultiQuiz(TOPICS.flatMap(t=>t.lessons).find(l=>l.id==='${lesson.id}'))">🔄 Restart Exam</button>` : ''}
-      </div>
-    </div>
-  `;
-}
-
-function selectMQOption(lid, qIdx, optIdx) {
-  mqSelected[`${lid}-${qIdx}`] = optIdx;
-  document.querySelectorAll(`[id^="mq-opt-${lid}-${qIdx}-"]`).forEach(el => el.classList.remove('selected'));
-  document.getElementById(`mq-opt-${lid}-${qIdx}-${optIdx}`)?.classList.add('selected');
-}
-
-function submitMQAnswer(lid, qIdx, correct) {
-  const sel = mqSelected[`${lid}-${qIdx}`];
-  if (sel === undefined) {
-    addTutorMessage('Please choose an answer before submitting! 😊');
-    return;
-  }
-
-  const lesson = TOPICS.flatMap(t => t.lessons).find(l => l.id === lid);
-  const topic = TOPICS.find(t => t.lessons.some(l => l.id === lid));
-  const qs = lesson.quizzes;
-  const q = qs[qIdx];
-  const isCorrect = sel === correct;
-
-  document.querySelectorAll(`[id^="mq-opt-${lid}-${qIdx}-"]`).forEach((opt, i) => {
-    if (i === correct) opt.classList.add('correct');
-    else if (i === sel && !isCorrect) {
-      opt.classList.add('wrong');
-      opt.classList.add('shake');
-      setTimeout(() => opt.classList.remove('shake'), 600);
-    }
-  });
-
-  if (isCorrect) multiQuizState[lid].score++;
-
-  const res = document.getElementById(`mq-result-${lid}-${qIdx}`);
-  res.className = `quiz-result-banner show ${isCorrect ? 'correct' : 'incorrect'}`;
-  res.innerHTML = isCorrect
-    ? `✅ <strong>Correct!</strong> ${q.explanation || ''}`
-    : `❌ <strong>Not quite:</strong> ${q.explanation || ''} (Correct answer was ${['A','B','C','D'][correct]})`;
-
-  // Advance to next question or final score after short delay
-  setTimeout(() => {
-    const container = document.getElementById(`multi-quiz-${lid}`);
-    if (!container) return;
-
-    if (qIdx + 1 < qs.length) {
-      renderMultiQuestion(lesson, qIdx + 1, container);
-    } else {
-      const finalScore = multiQuizState[lid].score;
-      const total = qs.length;
-      const pct = Math.round((finalScore / total) * 100);
-      const passed = pct >= 80; // 80% passing standard
-
-      state.quizScores[lid] = pct;
-      saveState();
-
-      if (passed) {
-        addXP(Math.round(pct / 10) * 3);
-        launchConfetti();
-        if (pct === 100) unlockAchievement('quiz_whiz');
-        checkMasteryBadges();
-      }
-
-      if (typeof cloudSaveQuizResult === 'function' && topic) {
-        cloudSaveQuizResult(topic.id, lid, pct, total, passed);
-      }
-
-      container.innerHTML = `
-        <div class="quiz-final-result ${passed ? 'pass' : 'fail'}">
-          <div class="quiz-final-icon">${pct === 100 ? '🏆' : passed ? '🎉' : '📚'}</div>
-          <h3>${pct === 100 ? 'Perfect Score!' : passed ? 'Quiz Passed! (Mastery Demonstrated)' : 'Score: ' + pct + '% (Need 80% to Pass)'}</h3>
-          <p>You scored <strong>${finalScore} out of ${total}</strong> (${pct}%)</p>
-          <p style="color:var(--text-muted);font-size:0.9rem;margin-top:8px;">
-            ${passed
-              ? 'Excellent work! You satisfied the 80% mastery requirement for this module.'
-              : 'Don\'t worry! Review the lesson sections above and re-take the exam. Practice makes permanent!'}
-          </p>
-          <div style="display:flex;gap:12px;justify-content:center;margin-top:18px;">
-            <button class="btn-primary" onclick="buildMultiQuiz(TOPICS.flatMap(t=>t.lessons).find(l=>l.id==='${lid}'))">
-              🔄 Try Again
-            </button>
-            ${passed ? `<button class="btn-secondary" onclick="nextLesson()">Next Lesson ➡️</button>` : ''}
-          </div>
-        </div>
-      `;
-
-      addTutorMessage(passed
-        ? `🏆 Fantastic result! ${pct}% demonstrates real competency!`
-        : `📚 You scored ${pct}%. Review the core concepts and retry — you're close to passing!`);
-    }
-  }, isCorrect ? 700 : 1300);
-}
-
-// ===== LESSON ADVANCEMENT =====
-function nextLesson() {
-  const topic = TOPICS[state.currentTopicIdx];
-  const lesson = topic.lessons[state.currentLessonIdx];
-  const key = topic.id + '-' + lesson.id;
-
-  // Enforce passing check if quiz exists
-  const qScore = state.quizScores[lesson.id];
-  if ((lesson.quiz || lesson.quizzes) && qScore !== undefined && qScore < 80) {
-    addTutorMessage("⚠️ Hold on! To ensure you truly master this topic, please review and achieve at least 80% on the quiz first! You've got this! 🦉");
-    showFeedback(false, 'Passing Score Required', `You scored ${qScore}%. Please review the lesson and retry the quiz to achieve 80%+ before advancing.`, null);
-    return;
-  }
-
-  // Mark completed
-  if (!state.completedLessons[key]) {
-    state.completedLessons[key] = true;
-    const xpGain = lesson.xp || 10;
-    addXP(xpGain);
-    recordActivity('completed_lesson', topic.id, lesson.id, `Completed: ${lesson.title}`);
-    showFeedback(true, 'Lesson Complete! 🎉', `You finished "${lesson.title}"! Keep building your momentum!`, xpGain);
-    
-    // Check first step badge
-    unlockAchievement('first_step');
-    if (Object.keys(state.completedLessons).length >= 5) unlockAchievement('speed_learner');
-    checkMasteryBadges();
-
-    // Sync to Supabase
-    if (typeof cloudSaveLessonProgress === 'function') {
-      cloudSaveLessonProgress(topic.id, lesson.id, true, 90, state.confidenceScores[lesson.id]);
-    }
-  }
-
-  // Advance index
-  if (state.currentLessonIdx < topic.lessons.length - 1) {
-    state.currentLessonIdx++;
-  } else if (state.currentTopicIdx < TOPICS.length - 1) {
-    showFeedback(true, `Topic Mastered! 🏆`, `Incredible! You completed all lessons in "${topic.name}"!`, 50);
-    state.currentTopicIdx++;
-    state.currentLessonIdx = 0;
-  } else {
-    showFeedback(true, '🎓 Grand Curriculum Complete!', 'You finished every single topic in KFL Learning Hub! You are truly exceptional!', 500);
-    unlockAchievement('kfl_master');
-    return;
-  }
-
-  saveState();
-  loadLesson();
-  renderDashboard();
-  updateSidebarProgress();
-  updateRecommendation();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function prevLesson() {
-  if (state.currentLessonIdx > 0) {
-    state.currentLessonIdx--;
-  } else if (state.currentTopicIdx > 0) {
-    state.currentTopicIdx--;
-    state.currentLessonIdx = TOPICS[state.currentTopicIdx].lessons.length - 1;
-  }
-  saveState();
-  loadLesson();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ===== CHECKLIST & PRACTICE =====
-function buildChecklist(lesson) {
-  const container = document.getElementById('checklistItems');
-  if (!container) return;
-  container.innerHTML = '';
-  const key = TOPICS[state.currentTopicIdx].id + '-' + lesson.id;
-  const isDone = state.completedLessons[key];
-
-  lesson.checklist.forEach((item) => {
-    const el = document.createElement('div');
-    el.className = `checklist-item ${isDone ? 'done' : ''}`;
-    el.innerHTML = `<div class="chk"><i class="fas fa-check"></i></div><span>${item}</span>`;
-    el.onclick = () => el.classList.toggle('done');
-    container.appendChild(el);
-  });
-}
-
-function runEditorCode(editorId, previewId) {
-  const code = document.getElementById(editorId)?.value || '';
-  const iframe = document.getElementById(previewId);
-  if (!iframe) return;
-  const doc = iframe.contentDocument || iframe.contentWindow.document;
-  doc.open();
-  doc.write(code);
-  doc.close();
-}
-
-function checkPractice(lessonId, category) {
-  const inputEl = document.getElementById(`practice-${lessonId}`);
-  const feedbackEl = document.getElementById(`feedback-${lessonId}`);
-  if (!inputEl || !feedbackEl) return;
-
-  const answer = inputEl.value.trim().toLowerCase();
-  if (answer.length < 8) {
-    feedbackEl.className = 'answer-feedback show incorrect';
-    feedbackEl.innerHTML = '⚠️ Write a bit more — even 1–2 complete sentences is perfect! I\'m here waiting! 😊';
-    return;
-  }
-
-  const config = PRACTICE_HINTS[category];
-  if (!config) {
-    feedbackEl.className = 'answer-feedback show correct';
-    feedbackEl.innerHTML = '✅ Good effort! Keep practicing and moving forward!';
-    addXP(8);
-    return;
-  }
-
-  const hit = config.keywords.some(kw => answer.includes(kw)) || answer.length > 60;
-  if (hit) {
-    feedbackEl.className = 'answer-feedback show correct';
-    feedbackEl.innerHTML = `✅ ${config.success}`;
-    addXP(10);
-    addTutorMessage(getTutorMsg('encourage'));
-    markChecklistItem(2);
-    saveState();
-  } else {
-    feedbackEl.className = 'answer-feedback show incorrect';
-    feedbackEl.innerHTML = `🤔 Almost! ${config.tip} Give it another shot — you're right on track!`;
-    addTutorMessage(`${config.hint} Try again! 💪`);
-  }
-}
-
-function markChecklistItem(idx) {
-  const items = document.querySelectorAll('.checklist-item');
-  if (items[idx]) items[idx].classList.add('done');
-}
-
 // ===== XP & LEVEL SYSTEM =====
 function addXP(amount) {
   state.xp = (state.xp || 0) + amount;
   updateXPDisplay();
-  saveState();
+  saveState({ syncProfile: false });
   showXPPopup(amount);
+  if (typeof currentUser !== 'undefined' && currentUser && typeof cloudUpdateProfile === 'function') {
+    return cloudUpdateProfile({ xp: state.xp, level: state.level }).then(synced => {
+      if (!synced) {
+        showFeedback(false, 'XP sync failed', 'Your XP is saved on this device, but could not be synced to your account. Please try again later.', null);
+      }
+      return synced;
+    });
+  }
+  return Promise.resolve(false);
 }
 
 function updateXPDisplay() {
-  setText('xpDisplay', `${(state.xp || 0).toLocaleString()} XP`);
-  setText('statXP', (state.xp || 0).toLocaleString());
+  const xp = state.xp || 0;
+  const xpPerLevel = 100;
+  const xpIntoLevel = xp % xpPerLevel;
+  const xpToNext = xpPerLevel - xpIntoLevel;
+  const levelTitles = ['Explorer', 'Apprentice 🚀', 'Code Specialist ⚡', 'Tech Scholar 🌟', 'Grand Master 🎓'];
+  const titleIdx = Math.min(Math.floor(xp / 300), levelTitles.length - 1);
+
+  setText('xpDisplay', `${xp.toLocaleString()} XP`);
+  setText('statXP', xp.toLocaleString());
+  setText('profileXPAmount', `${xp.toLocaleString()} XP`);
+  setText('profileXPLevel', `Level ${state.level || 1} ${levelTitles[titleIdx]}`);
+  setText('profileXPToNext', `${xpToNext} XP`);
+  setText('profileXPBarLabel', `${xpIntoLevel} XP this level`);
+  setText('profileXPBarMax', `${xpPerLevel} XP to next`);
+  setText('pStatXP', `${xp.toLocaleString()} XP`);
+
+  const xpBar = document.getElementById('profileXPBar');
+  if (xpBar) xpBar.style.width = `${Math.round((xpIntoLevel / xpPerLevel) * 100)}%`;
+  updateProfileUI();
 }
 
 function showXPPopup(amount) {
@@ -1323,71 +1005,29 @@ function renderAchievements() {
   });
 }
 
-// ===== LEADERBOARD VIEW =====
-async function renderLeaderboard(filter = 'all') {
-  const listEl = document.getElementById('leaderboardList');
-  if (!listEl) return;
-
-  listEl.innerHTML = '<div class="loading-spinner" style="padding:24px;text-align:center;">Fetching live community scores from Supabase...</div>';
-
-  let learners = [];
-  if (typeof cloudFetchLeaderboard === 'function') {
-    learners = await cloudFetchLeaderboard(25);
-  }
-
-  // Fallback if offline or empty
-  if (!learners || !learners.length) {
-    learners = [
-      { id: state.id, name: state.name || 'Learner', username: state.username || 'learner', avatar: state.avatar || '👨‍💻', xp: state.xp || 0, streak: state.streak || 1, level: state.level || 1 },
-      { id: 'u2', name: 'Alex Rivera', username: 'alex_code', avatar: '👩‍💻', xp: 480, streak: 5, level: 5 },
-      { id: 'u3', name: 'Carlos Mendoza', username: 'carlos_m', avatar: '🦉', xp: 350, streak: 3, level: 4 },
-      { id: 'u4', name: 'Jasmine Lee', username: 'jas_dev', avatar: '🌟', xp: 220, streak: 2, level: 3 }
-    ];
-  }
-
-  // Sort
-  if (filter === 'streak') {
-    learners.sort((a, b) => (b.streak || 0) - (a.streak || 0));
-  } else {
-    learners.sort((a, b) => (b.xp || 0) - (a.xp || 0));
-  }
-
-  listEl.innerHTML = '';
-  learners.forEach((l, index) => {
-    const rank = index + 1;
-    const isCur = (currentUser && l.id === currentUser.id) || l.id === state.id || l.name === state.name;
-
-    const row = document.createElement('div');
-    row.className = `leaderboard-row ${isCur ? 'is-current-user' : ''}`;
-    row.innerHTML = `
-      <div class="col-rank">
-        <span class="rank-badge ${rank <= 3 ? 'rank-' + rank : ''}">${rank === 1 ? '🥇 1' : rank === 2 ? '🥈 2' : rank === 3 ? '🥉 3' : '#' + rank}</span>
-      </div>
-      <div class="col-student student-cell">
-        <span class="s-avatar">${l.avatar || '👨‍💻'}</span>
-        <div>
-          <div class="s-name">${l.name || 'Anonymous Learner'} ${isCur ? '<small>(You)</small>' : ''}</div>
-          <div class="s-user">@${l.username || 'learner'}</div>
-        </div>
-      </div>
-      <div class="col-level">Level ${l.level || 1}</div>
-      <div class="col-streak">🔥 ${l.streak || 1} d</div>
-      <div class="col-xp"><strong>${(l.xp || 0).toLocaleString()}</strong> XP</div>
-    `;
-    listEl.appendChild(row);
-  });
-}
-
-function filterLeaderboard(f) {
-  document.querySelectorAll('.leaderboard-tabs button').forEach(b => {
-    b.classList.toggle('active', b.getAttribute('onclick')?.includes(f));
-  });
-  renderLeaderboard(f);
-}
-
 // ===== STUDENT PROFILE VIEW =====
 function renderProfile() {
   updateProfileUI();
+
+  // XP Banner
+  const xp = state.xp || 0;
+  const xpPerLevel = 100;
+  const level = Math.max(1, Math.floor(xp / xpPerLevel) + 1);
+  const xpIntoLevel = xp % xpPerLevel;
+  const xpToNext = xpPerLevel - xpIntoLevel;
+  const pct = Math.round((xpIntoLevel / xpPerLevel) * 100);
+
+  const levelTitles = ['Explorer','Apprentice 🚀','Code Specialist ⚡','Tech Scholar 🌟','Grand Master 🎓'];
+  const titleIdx = Math.min(Math.floor(xp / 300), levelTitles.length - 1);
+  const levelLabel = `Level ${level} ${levelTitles[titleIdx]}`;
+
+  setText('profileXPAmount', `${xp.toLocaleString()} XP`);
+  setText('profileXPLevel', levelLabel);
+  setText('profileXPToNext', `${xpToNext} XP`);
+  setText('profileXPBarLabel', `${xpIntoLevel} XP this level`);
+  setText('profileXPBarMax', `${xpPerLevel} XP to next`);
+  const bar = document.getElementById('profileXPBar');
+  if (bar) bar.style.width = pct + '%';
 
   setText('pStatXP', `${(state.xp || 0).toLocaleString()} XP`);
   setText('pStatLevel', `Level ${state.level || 1}`);
@@ -1406,6 +1046,7 @@ function renderProfile() {
 
   const badgesCount = Object.keys(state.achievements || {}).length;
   setText('pStatBadges', `${badgesCount} / ${ACHIEVEMENTS_LIST.length}`);
+  renderProfileBadges();
 
   // Activity Timeline
   const timeline = document.getElementById('profileActivityTimeline');
@@ -1432,6 +1073,38 @@ function renderProfile() {
   });
 }
 
+function renderProfileBadges() {
+  const grid = document.getElementById('profileBadgesGrid');
+  if (!grid) return;
+
+  const unlocked = ACHIEVEMENTS_LIST.filter(badge => state.achievements?.[badge.id]);
+  grid.replaceChildren();
+  if (!unlocked.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state profile-badges-empty';
+    empty.textContent = 'No badges unlocked yet. Complete lessons and quizzes to earn your first badge.';
+    grid.appendChild(empty);
+    return;
+  }
+
+  unlocked.forEach(badge => {
+    const card = document.createElement('div');
+    card.className = 'badge-card unlocked';
+    const icon = document.createElement('div');
+    icon.className = 'badge-icon-box';
+    icon.textContent = badge.icon;
+    const title = document.createElement('h3');
+    title.textContent = badge.name;
+    const description = document.createElement('p');
+    description.textContent = badge.desc;
+    const status = document.createElement('span');
+    status.className = 'badge-status-pill';
+    status.textContent = '✓ UNLOCKED';
+    card.append(icon, title, description, status);
+    grid.appendChild(card);
+  });
+}
+
 function recordActivity(action, topicId = null, lessonId = null, details = null) {
   if (!state.studyHistory) state.studyHistory = [];
   state.studyHistory.push({
@@ -1447,17 +1120,12 @@ function recordActivity(action, topicId = null, lessonId = null, details = null)
 
 // ===== ADMIN DASHBOARD VIEW =====
 function verifyAdminPasscode() {
-  const input = document.getElementById('adminPasscodeInput');
-  const code = (input?.value || '').trim();
-
-  // Accept admin code or admin role
-  if (code === 'kfladmin2026' || state.role === 'admin') {
+  // Kept for backward compatibility — now role-based only
+  if (state.role === 'admin') {
     isAdminAuthenticated = true;
     document.getElementById('adminAuthLock')?.classList.add('hidden');
     document.getElementById('adminContent')?.classList.remove('hidden');
     refreshAdminData();
-  } else {
-    alert('Incorrect passcode. Please enter the valid KFL Admin passcode.');
   }
 }
 
@@ -1492,17 +1160,11 @@ async function refreshAdminData() {
 }
 
 function renderAdminDashboard() {
-  if (state.role === 'admin') {
-    isAdminAuthenticated = true;
-  }
-  if (isAdminAuthenticated) {
-    document.getElementById('adminAuthLock')?.classList.add('hidden');
-    document.getElementById('adminContent')?.classList.remove('hidden');
-    refreshAdminData();
-  } else {
-    document.getElementById('adminAuthLock')?.classList.remove('hidden');
-    document.getElementById('adminContent')?.classList.add('hidden');
-  }
+  const isAdmin = state.role === 'admin';
+  if (isAdmin) isAdminAuthenticated = true;
+  document.getElementById('adminAuthLock')?.classList.toggle('hidden', isAdmin);
+  document.getElementById('adminContent')?.classList.toggle('hidden', !isAdmin);
+  if (isAdmin) refreshAdminData();
 }
 
 // ===== PROGRESS & TOPICS VIEW =====
@@ -1612,27 +1274,78 @@ function renderTopicsView() {
 
 // ===== AUTH UI MODAL HANDLERS =====
 function openAuthModal() {
+  if (typeof currentUser !== 'undefined' && currentUser) {
+    const accountName = currentProfile?.name || currentUser.user_metadata?.name || state.name || 'Account';
+    setText('signedInAccountName', accountName);
+    setText('signedInAccountEmail', currentUser.email || '');
+    document.getElementById('authTabs')?.classList.add('hidden');
+    document.getElementById('signedInAccount')?.classList.remove('hidden');
+    document.getElementById('signedInAccount')?.removeAttribute('hidden');
+    ['signInForm', 'signUpForm', 'forgotForm'].forEach(id => {
+      const form = document.getElementById(id);
+      if (form) {
+        form.hidden = true;
+        form.classList.add('hidden');
+      }
+    });
+    setText('authModalTitle', 'Your Account');
+    setText('authModalSub', 'Manage your signed-in account');
+    openModal('authModal');
+    return;
+  }
+
+  document.getElementById('authTabs')?.classList.remove('hidden');
+  document.getElementById('signedInAccount')?.classList.add('hidden');
+  document.getElementById('signedInAccount')?.setAttribute('hidden', '');
+  switchAuthTab('signin');
   openModal('authModal');
 }
 
 function switchAuthTab(tab) {
-  document.querySelectorAll('.auth-tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('signInForm')?.classList.add('hidden');
-  document.getElementById('signUpForm')?.classList.add('hidden');
-  document.getElementById('forgotForm')?.classList.add('hidden');
+  if (typeof currentUser !== 'undefined' && currentUser) {
+    openAuthModal();
+    return;
+  }
+
+  document.getElementById('authTabs')?.classList.remove('hidden');
+  document.getElementById('signedInAccount')?.classList.add('hidden');
+  document.getElementById('signedInAccount')?.setAttribute('hidden', '');
+
+  const formTabs = {
+    signin: 'signInForm',
+    signup: 'signUpForm',
+    forgot: 'forgotForm'
+  };
+
+  Object.entries(formTabs).forEach(([formTab, formId]) => {
+    const form = document.getElementById(formId);
+    const isActive = formTab === tab;
+    if (form) {
+      form.hidden = !isActive;
+      form.classList.toggle('hidden', !isActive);
+      form.setAttribute('aria-hidden', String(!isActive));
+    }
+  });
+
+  const signInTab = document.getElementById('tabSignIn');
+  const signUpTab = document.getElementById('tabSignUp');
+  [[signInTab, 'signin'], [signUpTab, 'signup']].forEach(([button, buttonTab]) => {
+    if (!button) return;
+    const isActive = buttonTab === tab;
+    button.style.setProperty('color', isActive ? 'var(--primary)' : 'var(--text-muted)');
+    button.style.setProperty('border-bottom-color', isActive ? 'var(--primary)' : 'transparent');
+    button.setAttribute('aria-selected', String(isActive));
+  });
 
   if (tab === 'signin') {
-    document.getElementById('tabBtnSignIn')?.classList.add('active');
-    document.getElementById('signInForm')?.classList.remove('hidden');
-    setText('authModalTitle', 'Sign In to KFL');
+    setText('authModalTitle', 'Welcome back 👋');
+    setText('authModalSub', 'Sign in to sync your progress and XP');
   } else if (tab === 'signup') {
-    document.getElementById('tabBtnSignUp')?.classList.add('active');
-    document.getElementById('signUpForm')?.classList.remove('hidden');
-    setText('authModalTitle', 'Create KFL Cloud Account');
+    setText('authModalTitle', 'Create Your KFL Account');
+    setText('authModalSub', 'Sign up to save your XP and progress to the cloud');
   } else if (tab === 'forgot') {
-    document.getElementById('tabBtnForgot')?.classList.add('active');
-    document.getElementById('forgotForm')?.classList.remove('hidden');
     setText('authModalTitle', 'Reset Password');
+    setText('authModalSub', "We'll send a secure reset link to your email");
   }
 }
 
@@ -1648,7 +1361,33 @@ async function handleSignInSubmit() {
     if (typeof authSignIn === 'function') {
       await authSignIn(email, password);
       closeModal('authModal');
-      showFeedback(true, 'Signed In!', 'Welcome back! Your cloud progress has synced.', 10);
+      if (typeof currentProfile !== 'undefined' && currentProfile) {
+
+        state.name   = currentProfile.name   || state.name;
+
+        state.avatar = currentProfile.avatar || state.avatar;
+
+        state.role   = currentProfile.role   || state.role;
+
+        state.xp     = currentProfile.xp !== undefined ? currentProfile.xp : state.xp;
+
+        updateProfileUI();
+
+        updateNavVisibility();
+
+        renderDashboard();
+
+        updateXPDisplay();
+
+      }
+
+      const _wn = (typeof currentProfile !== 'undefined' && currentProfile && currentProfile.name) ? currentProfile.name : 'Learner';
+
+      const xpSynced = await addXP(10);
+      if (xpSynced) {
+        showFeedback(true, 'Welcome back, ' + _wn + '! 👋', 'You earned 10 XP for signing in. Your cloud progress has synced.', null);
+      }
+
     }
   } catch (err) {
     if (errEl) {
@@ -1672,7 +1411,24 @@ async function handleSignUpSubmit() {
     if (typeof authSignUp === 'function') {
       await authSignUp(email, password, name, username, selectedSignUpAvatar);
       closeModal('authModal');
-      showFeedback(true, 'Account Created! 🌟', 'Your cloud account is ready. Check your email for verification if needed!', 25);
+      state.name   = name;
+
+      state.avatar = selectedSignUpAvatar;
+
+      state.role   = 'student';
+
+      state.xp     = 0;
+
+      updateProfileUI();
+
+      updateNavVisibility();
+
+      renderDashboard();
+
+      updateXPDisplay();
+
+      showFeedback(true, 'Welcome, ' + name + '! 🌟', 'Your account is ready. Start your first lesson!', 25);
+
     }
   } catch (err) {
     if (errEl) {
@@ -1703,13 +1459,49 @@ async function handleForgotSubmit() {
   }
 }
 
-async function handleLogoutClick() {
-  if (confirm('Are you sure you want to sign out? Your cloud data remains safely saved.')) {
-    if (typeof authSignOut === 'function') {
-      await authSignOut();
+function handleLogoutClick() {
+  setText('logoutConfirmName', currentProfile?.name || state.name || 'Your account');
+  setText('logoutConfirmEmail', currentUser?.email || '');
+  setText('logoutConfirmAvatar', state.avatar || currentProfile?.avatar || '👨‍💻');
+  const errorEl = document.getElementById('logoutConfirmError');
+  if (errorEl) {
+    errorEl.textContent = '';
+    errorEl.classList.add('hidden');
+  }
+  closeModal('authModal');
+  openModal('logoutConfirmModal');
+  document.getElementById('cancelLogoutButton')?.focus();
+}
+
+async function confirmLogout() {
+  const button = document.getElementById('confirmLogoutButton');
+  if (button?.disabled) return;
+
+  if (button) {
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging out...';
+  }
+
+  try {
+    if (typeof authSignOut !== 'function') {
+      throw new Error('Sign out is unavailable. Please refresh and try again.');
     }
+    await authSignOut();
+    closeModal('logoutConfirmModal');
     showFeedback(true, 'Signed Out', 'You are now browsing in local guest mode.', null);
     showView('dashboard');
+  } catch (err) {
+    console.error('Sign out failed:', err);
+    const errorEl = document.getElementById('logoutConfirmError');
+    if (errorEl) {
+      errorEl.textContent = err.message || 'Could not sign out. Please try again.';
+      errorEl.classList.remove('hidden');
+    }
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.innerHTML = '<i class="fas fa-sign-out-alt"></i> Log out';
+    }
   }
 }
 

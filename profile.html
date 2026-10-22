@@ -1,0 +1,186 @@
+<!-- ===== ENHANCED EMPLOYEE PROFILE VIEW ===== -->
+<section class="view" id="view-profile">
+  <!-- Profile Header with Hero Background -->
+  <div class="profile-hero-bg"></div>
+  
+  <div class="profile-container">
+    <!-- Profile Header Card -->
+    <div class="profile-header-card">
+      <div class="profile-avatar-section">
+        <div class="profile-avatar-large" id="profileLargeAvatar">👨💼</div>
+        <div class="profile-avatar-badge" id="profileAvatarBadge">
+          <span class="rank-icon">⭐</span>
+        </div>
+      </div>
+
+      <div class="profile-main-meta">
+        <div class="profile-name-row">
+          <div class="profile-name-col">
+            <h1 id="profileFullName">Employee</h1>
+            <p class="profile-subtitle" id="profileSubtitle">IT Professional</p>
+          </div>
+          <span class="rank-badge" id="profileRoleBadge">Novice</span>
+        </div>
+        <div class="profile-meta-row">
+          <span class="profile-level-badge" id="profileLevelBadge">Level 1</span>
+          <span class="profile-divider">•</span>
+          <span class="profile-join-date"><i class="far fa-calendar-alt"></i> Member since October 2026</span>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn-secondary" onclick="openEditNameModal()">
+          <i class="fas fa-edit"></i> Edit Profile
+        </button>
+        <button class="btn-danger-outline" onclick="handleLogoutClick()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </div>
+
+    <!-- XP Progress Banner with Enhanced Design -->
+    <div class="profile-xp-banner">
+      <div class="xp-banner-content">
+        <div class="xp-banner-left">
+          <div class="xp-icon">⭐</div>
+          <div class="xp-info">
+            <div class="xp-amount" id="profileXPAmount">0 XP</div>
+            <div class="xp-label">Total Experience Points</div>
+          </div>
+        </div>
+        <div class="xp-banner-right">
+          <div class="xp-next-info">
+            <div class="xp-next-label">Next Level</div>
+            <div class="xp-next-amount" id="profileXPToNext">100 XP</div>
+          </div>
+        </div>
+      </div>
+      <div class="xp-progress-container">
+        <div class="xp-progress-bar">
+          <div class="xp-progress-fill" id="profileXPBar" style="width:0%"></div>
+        </div>
+        <div class="xp-progress-labels">
+          <span id="profileXPBarLabel">0 XP this level</span>
+          <span id="profileXPBarMax">100 XP to next</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="profile-stats-grid">
+      <!-- Performance Card -->
+      <div class="profile-card">
+        <div class="card-header">
+          <i class="fas fa-chart-line"></i>
+          <h3>Learning Performance</h3>
+        </div>
+        <div class="card-body">
+          <div class="stat-item">
+            <span class="stat-label">Total XP</span>
+            <span class="stat-value" id="pStatXP">0 XP</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Current Level</span>
+            <span class="stat-value" id="pStatLevel">Level 1 - Novice</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Active Streak</span>
+            <span class="stat-value streak-value" id="pStatStreak">
+              <i class="fas fa-fire"></i> 1 Day
+            </span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Lessons Completed</span>
+            <span class="stat-value" id="pStatLessons">0 / 88</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Quizzes Passed</span>
+            <span class="stat-value" id="pStatQuizzes">0 Passed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Average Quiz Score</span>
+            <span class="stat-value" id="pStatAvgScore">0%</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Badges Unlocked</span>
+            <span class="stat-value" id="pStatBadges">0 / 12</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rank Progress Card -->
+      <div class="profile-card">
+        <div class="card-header">
+          <i class="fas fa-crown"></i>
+          <h3>Rank Progression</h3>
+        </div>
+        <div class="card-body rank-progression">
+          <div class="rank-item">
+            <span class="rank-name">Junior Technician</span>
+            <span class="rank-level">Levels 1-3</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">Technician</span>
+            <span class="rank-level">Levels 4-6</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">Senior Technician</span>
+            <span class="rank-level">Levels 7-9</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">IT Specialist</span>
+            <span class="rank-level">Levels 10-12</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">Senior Specialist</span>
+            <span class="rank-level">Levels 13-15</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">IT Engineer</span>
+            <span class="rank-level">Levels 16-18</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">Senior Engineer</span>
+            <span class="rank-level">Levels 19-21</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">Lead Engineer</span>
+            <span class="rank-level">Levels 22-24</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">Principal Engineer</span>
+            <span class="rank-level">Levels 25-27</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">IT Architect</span>
+            <span class="rank-level">Levels 28-30</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">Senior Architect</span>
+            <span class="rank-level">Levels 31-33</span>
+          </div>
+          <div class="rank-item">
+            <span class="rank-name">IT Director</span>
+            <span class="rank-level">Levels 34+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Timeline Card -->
+      <div class="profile-card full-width">
+        <div class="card-header">
+          <i class="fas fa-history"></i>
+          <h3>Recent Study Activity</h3>
+        </div>
+        <div class="card-body">
+          <div class="activity-timeline" id="profileActivityTimeline">
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <p>No recent activity recorded yet. Start a lesson to build your history!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
