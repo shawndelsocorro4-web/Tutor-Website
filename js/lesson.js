@@ -59,6 +59,9 @@ function loadLesson() {
   const body = document.getElementById('lessonBody');
   if (body) {
     body.innerHTML = lesson.content;
+    if (typeof mountSpreadsheetPractice === 'function') {
+      mountSpreadsheetPractice(lesson.id, body);
+    }
     body.style.opacity = '0';
     body.style.transform = 'translateY(12px)';
     requestAnimationFrame(() => {
@@ -245,6 +248,10 @@ function buildMultiQuiz(lesson) {
   const cid = `multi-quiz-${lesson.id}`;
   const container = document.getElementById(cid);
   if (!container || !lesson.quizzes) return;
+
+  if (lesson.requiresPracticeCompletion) {
+    container.classList.toggle('hidden', !isSpreadsheetPracticeComplete(lesson.id));
+  }
 
   const answers = { ...(state.quizAnswers?.[lesson.id] || {}) };
   const correctCount = Object.entries(answers).reduce((count, [index, selected]) => (
@@ -437,6 +444,17 @@ function nextLesson() {
   const topic = TOPICS[state.currentTopicIdx];
   const lesson = topic.lessons[state.currentLessonIdx];
   const key = topic.id + '-' + lesson.id;
+
+  if (typeof isSpreadsheetPracticeComplete === 'function' &&
+      SPREADSHEET_PRACTICE[lesson.id]?.mode === 'capstone' &&
+      !isSpreadsheetPracticeComplete(lesson.id)) {
+    const exercise = document.getElementById(`spreadsheet-practice-${lesson.id}`);
+    const message = 'Complete every hands-on challenge correctly before moving to the next lesson. Incorrect answers are saved as attempts, and you can retry each challenge.';
+    addTutorMessage(`🧪 ${message}`);
+    showFeedback(false, 'Hands-On Practice Required', message, null);
+    exercise?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
 
   // Enforce passing check if quiz exists
   const qScore = state.quizScores[lesson.id] || 0;

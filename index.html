@@ -9,6 +9,7 @@
   <link rel="apple-touch-icon" href="favicon.png"/>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="profile-enhanced.css"/>
+  <link rel="stylesheet" href="spreadsheet-practice.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -554,6 +555,33 @@
             </table>
           </div>
         </div>
+
+        <div class="admin-roster-section">
+          <div class="roster-header">
+            <div>
+              <h3>Hands-On Spreadsheet Attempts</h3>
+              <p>Recent Excel and Google Sheets practice submissions, including incorrect answers.</p>
+            </div>
+            <button class="btn-secondary" onclick="refreshAdminData()"><i class="fas fa-sync-alt"></i> Refresh Attempts</button>
+          </div>
+          <div class="roster-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Student</th>
+                  <th>App</th>
+                  <th>Lesson / Exercise</th>
+                  <th>Submitted Answer</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody id="adminPracticeAttempts">
+                <tr><td colspan="6" style="text-align:center;">Loading practice attempts...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -854,6 +882,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
 <script src="data.js"></script>
+<script src="js/spreadsheet-practice.js"></script>
 <script src="js/lesson.js"></script>
 <script src="js/leaderboard.js"></script>
 <script src="app.js"></script>

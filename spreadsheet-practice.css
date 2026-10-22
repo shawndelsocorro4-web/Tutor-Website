@@ -1,0 +1,200 @@
+.spreadsheet-practice {
+  margin: 28px 0;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface, #fff);
+  box-shadow: var(--shadow);
+}
+
+.spreadsheet-practice-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.spreadsheet-practice h3 {
+  margin: 0 0 6px;
+}
+
+.spreadsheet-practice p {
+  margin: 0 0 12px;
+}
+
+.spreadsheet-practice-note,
+.spreadsheet-practice-status {
+  color: var(--text-muted, #64748b);
+  font-size: 0.88rem;
+}
+
+.spreadsheet-practice-note {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--surface2, #f1f5f9);
+}
+
+.spreadsheet-practice-grid-wrap {
+  overflow-x: auto;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.spreadsheet-practice-grid {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.spreadsheet-practice-grid th,
+.spreadsheet-practice-grid td {
+  min-width: 100px;
+  padding: 0;
+  border: 1px solid var(--border);
+}
+
+.spreadsheet-practice-grid th {
+  padding: 8px;
+  background: var(--surface2, #f1f5f9);
+  text-align: center;
+}
+
+.spreadsheet-practice-grid .row-heading {
+  min-width: 42px;
+}
+
+.spreadsheet-practice-cell {
+  width: 100%;
+  min-width: 100px;
+  padding: 9px;
+  border: 0;
+  outline-offset: -2px;
+  background: transparent;
+  color: var(--text, #0f172a);
+  font: inherit;
+}
+
+.spreadsheet-practice-cell:focus,
+.spreadsheet-practice-cell.selected {
+  outline: 2px solid #2563eb;
+  background: #eff6ff;
+}
+
+.spreadsheet-practice-cell.readonly {
+  background: var(--surface2, #f8fafc);
+  font-weight: 700;
+}
+
+.spreadsheet-practice-cell.highlighted {
+  background: #fef08a;
+}
+
+.spreadsheet-practice-toolbar,
+.spreadsheet-practice-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.spreadsheet-practice-controls label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.spreadsheet-practice select,
+.spreadsheet-practice input[type="text"],
+.spreadsheet-practice input[type="number"] {
+  max-width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface, #fff);
+  color: var(--text, #0f172a);
+  font: inherit;
+}
+
+.spreadsheet-practice .practice-formula {
+  flex: 1 1 240px;
+}
+
+.spreadsheet-practice .practice-button,
+.lesson-practice-link .practice-button {
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--primary, #2563eb);
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.spreadsheet-practice .practice-button:hover {
+  filter: brightness(0.94);
+}
+
+.spreadsheet-practice-status {
+  min-height: 1.4em;
+  margin-top: 12px;
+}
+
+.spreadsheet-practice-status.success {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.spreadsheet-practice-status.error {
+  color: #b91c1c;
+}
+
+.practice-result-correct {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.practice-result-incorrect {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.spreadsheet-practice-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 130px;
+  margin: 14px 0;
+  padding: 12px;
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.spreadsheet-practice-chart-bar {
+  flex: 1;
+  min-width: 24px;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(180deg, #60a5fa, #2563eb);
+  position: relative;
+}
+
+.spreadsheet-practice-chart-bar span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: max-content;
+  padding-top: 4px;
+  color: var(--text-muted, #64748b);
+  font-size: 0.75rem;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 600px) {
+  .spreadsheet-practice {
+    padding: 16px;
+  }
+}
