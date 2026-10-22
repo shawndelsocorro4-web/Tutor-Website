@@ -3700,27 +3700,76 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
       },
       {
         id: "excel-9",
-        title: "Milestone Project & Multi-Quiz: Spreadsheet Pro",
+        title: "Excel Reporting: Tables & Charts",
         xp: 45,
         checklist: [
           "Review workbook structure and formatting",
-          "Review formulas, IF conditions, lookups, and tables",
-          "Pass the 4-question Excel Milestone Quiz",
+          "Organize data with Excel Tables",
+          "Choose charts that communicate data clearly",
         ],
         content: `
           <div class="lesson-section">
-            <h3>Topic 7 Capstone: The Complete Excel Mastery 🏆</h3>
-            <p>You now command Excel fundamentals: cell references, AutoFill, core formulas (SUM, AVERAGE, COUNT), logical IF conditions, VLOOKUP, official Tables (Ctrl+T), and data visualization!</p>
+            <h3>Turn Spreadsheet Data into Clear Reports 📊</h3>
+            <p>Use Excel Tables to keep lists organized and filterable. Then choose a chart that makes the pattern in your data easy to understand.</p>
+            <ul>
+              <li><strong>Tables:</strong> Select a data range and press <code>Ctrl+T</code> to add headers, filters, and automatic table expansion.</li>
+              <li><strong>Column or bar charts:</strong> Compare categories such as sales by department.</li>
+              <li><strong>Line charts:</strong> Show how a value changes over time.</li>
+              <li><strong>Pie charts:</strong> Show a small number of parts that make up one whole.</li>
+            </ul>
           </div>
+          `,
+      },
+      {
+        id: "excel-10",
+        title: "Hands-On Capstone: Excel Sales Report",
+        xp: 40,
+        checklist: [
+          "Use IF to compare sales against monthly targets",
+          "Use SUM to calculate total sales",
+          "Submit both formula challenges in the practice worksheet",
+        ],
+        content: `
+          <div class="lesson-section">
+            <h3>Build a Sales Report from Real Spreadsheet Skills 📊</h3>
+            <p>Bring together the Excel skills from this topic. In the hands-on worksheet, you'll compare each month's sales to its target with <code>IF</code>, then calculate total sales with <code>SUM</code>.</p>
+            <p>Choose each challenge, enter your formula, and press <strong>Calculate</strong>. Your correct and incorrect attempts are saved when you are signed in.</p>
+          </div>
+          <div id="quiz-excel-10"></div>
+          <div id="spreadsheet-practice-excel-10"></div>`,
+        quiz: {
+          question: "Which Excel function can compare a month's sales with its target and return different text for each outcome?",
+          options: ["SUM", "IF", "COUNT", "MAX"],
+          correct: 1,
+          explanation: "The IF function checks a condition and returns one value when it is true and another when it is false.",
+        },
+      },
+      {
+        id: "excel-11",
+        title: "Hands-On VLOOKUP: Find an Employee Department",
+        xp: 35,
+        checklist: [
+          "Choose an employee ID to look up",
+          "Use VLOOKUP with the employee table",
+          "Return an exact-match department result",
+        ],
+        content: `
+          <div class="lesson-section">
+            <h3>Find Matching Data with VLOOKUP 🔎</h3>
+            <p><strong>VLOOKUP</strong> searches vertically down the first column of a table, then returns a value from another column on the matching row.</p>
+            <p>The formula pattern is <code>=VLOOKUP(lookup_value, table_range, column_number, FALSE)</code>. Use <code>FALSE</code> to require an exact match. The lookup value must be in the first column of the selected table range.</p>
+            <p>In the worksheet below, enter a VLOOKUP formula to find the department for employee ID <strong>104</strong>. Submit an answer before moving to the next topic; an incorrect answer counts as an attempt and you can retry.</p>
+          </div>
+          <div id="spreadsheet-practice-excel-11"></div>
           <div class="success-card">
-            <div class="suc-icon">📊</div>
-            <p><strong>Milestone Challenge:</strong> Complete this 4-question quiz to claim your Microsoft Excel Specialist Badge!</p>
+            <div class="suc-icon">🏆</div>
+            <p><strong>Excel Specialist Final Quiz:</strong> After completing the VLOOKUP hands-on task, answer the final topic review below.</p>
           </div>
-          <div id="multi-quiz-excel-9"></div>`,
+          <div id="multi-quiz-excel-11" class="hidden"></div>`,
+        requiresPracticeCompletion: true,
         quizzes: [
           {
-            question:
-              "What does the dollar sign ($) in a cell reference like $B$5 accomplish?",
+            question: "What does the dollar sign ($) in a cell reference like $B$5 accomplish?",
             options: [
               "Formats the cell as US Dollars",
               "Locks the column and row so the reference remains fixed when copying or dragging formulas",
@@ -3728,42 +3777,36 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
               "Hides the cell from viewers",
             ],
             correct: 1,
-            explanation:
-              "The <code>$</code> character locks the column and row coordinates, creating an <strong>absolute reference</strong> that never shifts when copied.",
+            explanation: "The $ character locks the column and row coordinates, creating an absolute reference that does not shift when copied.",
           },
           {
-            question:
-              "Which formula calculates the total sum of all values in the range B2 to B15?",
+            question: "Which formula calculates the total sum of all values in the range B2 to B15?",
+            options: ["=ADD(B2:B15)", "=SUM(B2:B15)", "=TOTAL(B2..B15)", "=B2+B15"],
+            correct: 1,
+            explanation: "=SUM(B2:B15) adds all numeric values within the specified range.",
+          },
+          {
+            question: "What does FALSE specify in =VLOOKUP(A2,D2:E4,2,FALSE)?",
             options: [
-              "=ADD(B2:B15)",
-              "=SUM(B2:B15)",
-              "=TOTAL(B2..B15)",
-              "=B2+B15",
+              "Return the first row whether or not it matches",
+              "Find an exact match for the lookup value",
+              "Search the table from right to left",
+              "Return the second matching row",
             ],
             correct: 1,
-            explanation:
-              "<strong>=SUM(B2:B15)</strong> adds all numeric values within the specified range.",
+            explanation: "FALSE requests an exact match, helping prevent a result from a different employee ID.",
           },
           {
-            question:
-              "What function searches for a value in the first column of a table and returns a value in the same row from a specified column?",
-            options: ["SEARCH()", "VLOOKUP()", "FINDROW()", "FETCH()"],
+            question: "What feature automatically colors cells based on a rule, such as highlighting values below zero?",
+            options: ["AutoFormat", "Conditional Formatting", "Color Theme Wizard", "Cell Styles Palette"],
             correct: 1,
-            explanation:
-              "<strong>VLOOKUP</strong> (Vertical Lookup) searches down the leftmost column of a table to retrieve data from corresponding columns.",
+            explanation: "Conditional Formatting changes cell appearance dynamically when values meet specified rules.",
           },
           {
-            question:
-              "What feature visually colors cells automatically based on specific mathematical rules (like red for negative numbers)?",
-            options: [
-              "AutoFormat",
-              "Conditional Formatting",
-              "Color Theme Wizard",
-              "Cell Styles Palette",
-            ],
+            question: "Which chart is best for showing how sales change over 12 months?",
+            options: ["Pie chart", "Line chart", "Radar chart", "Scatter plot"],
             correct: 1,
-            explanation:
-              "<strong>Conditional Formatting</strong> dynamically alters font, fill color, or borders based on the cell value or custom formulas.",
+            explanation: "A line chart is well suited to showing changes and trends over time.",
           },
         ],
       },
@@ -4109,6 +4152,30 @@ console.log(<span class="string">'Total: $'</span> + cart.calculateTotal().toFix
               "<strong>=UNIQUE(range)</strong> extracts an array of distinct items from the given range.",
           },
         ],
+      },
+      {
+        id: "sheets-9",
+        title: "Hands-On Capstone: Google Sheets Budget Analysis",
+        xp: 40,
+        checklist: [
+          "Use SUMIF to total expenses in a chosen category",
+          "Use COUNTIF to count expenses with a matching status",
+          "Submit both formula challenges in the practice worksheet",
+        ],
+        content: `
+          <div class="lesson-section">
+            <h3>Analyze a Shared Expense Sheet ☁️</h3>
+            <p>Use the Google Sheets formulas from this topic to summarize a sample expense list. First total the <strong>Supplies</strong> category with <code>SUMIF</code>, then count <strong>Paid</strong> expenses with <code>COUNTIF</code>.</p>
+            <p>Choose each challenge, enter your formula, and press <strong>Calculate</strong>. Your correct and incorrect attempts are saved when you are signed in.</p>
+          </div>
+          <div id="quiz-sheets-9"></div>
+          <div id="spreadsheet-practice-sheets-9"></div>`,
+        quiz: {
+          question: "Which Google Sheets function totals values only for rows matching a category?",
+          options: ["COUNTIF", "UNIQUE", "SUMIF", "IMPORTRANGE"],
+          correct: 2,
+          explanation: "SUMIF checks a criteria range and adds the matching values from the sum range.",
+        },
       },
     ],
   },

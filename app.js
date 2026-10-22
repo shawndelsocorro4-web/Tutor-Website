@@ -1132,6 +1132,17 @@ function verifyAdminPasscode() {
 async function refreshAdminData() {
   if (typeof cloudFetchAdminStats !== 'function') return;
 
+  const attemptsBody = document.getElementById('adminPracticeAttempts');
+  if (attemptsBody) {
+    attemptsBody.replaceChildren();
+    const loadingRow = document.createElement('tr');
+    const loadingCell = document.createElement('td');
+    loadingCell.colSpan = 6;
+    loadingCell.textContent = 'Loading practice attempts...';
+    loadingRow.appendChild(loadingCell);
+    attemptsBody.appendChild(loadingRow);
+  }
+
   const stats = await cloudFetchAdminStats();
   if (stats) {
     setText('adminTotalStudents', stats.totalStudents || 1);
@@ -1155,6 +1166,51 @@ async function refreshAdminData() {
         `;
         rosterTbody.appendChild(tr);
       });
+    }
+  }
+
+  if (attemptsBody && typeof cloudFetchAdminPracticeAttempts === 'function') {
+    try {
+      const attempts = await cloudFetchAdminPracticeAttempts();
+      attemptsBody.replaceChildren();
+      if (!attempts.length) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 6;
+        cell.textContent = 'No hands-on attempts have been submitted yet.';
+        row.appendChild(cell);
+        attemptsBody.appendChild(row);
+        return;
+      }
+
+      attempts.forEach(attempt => {
+        const row = document.createElement('tr');
+        const submittedAt = attempt.created_at ? new Date(attempt.created_at).toLocaleString() : 'Unknown';
+        const values = [
+          submittedAt,
+          `${attempt.learner_name || 'Learner'}${attempt.learner_username ? ` (@${attempt.learner_username})` : ''}`,
+          attempt.app === 'excel' ? 'Excel' : 'Google Sheets',
+          `${attempt.lesson_id}: ${attempt.exercise_title}`,
+          attempt.submitted_answer,
+          attempt.is_correct ? 'Correct' : 'Incorrect'
+        ];
+        values.forEach((value, index) => {
+          const cell = document.createElement('td');
+          cell.textContent = String(value ?? '');
+          if (index === 5) cell.className = attempt.is_correct ? 'practice-result-correct' : 'practice-result-incorrect';
+          row.appendChild(cell);
+        });
+        attemptsBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error('Unable to load hands-on practice attempts:', error);
+      attemptsBody.replaceChildren();
+      const row = document.createElement('tr');
+      const cell = document.createElement('td');
+      cell.colSpan = 6;
+      cell.textContent = `Unable to load attempts: ${error.message}. Verify the hands-on practice SQL setup has been run in Supabase.`;
+      row.appendChild(cell);
+      attemptsBody.appendChild(row);
     }
   }
 }

@@ -400,6 +400,13 @@ async function cloudFetchAdminStats() {
   }
 }
 
+async function cloudFetchAdminPracticeAttempts() {
+  if (!sbClient || !currentUser) throw new Error('Sign in with an administrator account to view practice attempts.');
+  const { data, error } = await sbClient.rpc('admin_fetch_hands_on_attempts');
+  if (error) throw error;
+  return data || [];
+}
+
 // Load all user data and sync with local state
 async function loadFullUserData(userId) {
   if (!sbClient || !userId) return;
@@ -501,6 +508,9 @@ async function loadFullUserData(userId) {
     }
 
     updateCloudSyncStatus('online', 'Cloud Connected');
+    if (typeof restoreCurrentSpreadsheetPracticeProgress === 'function') {
+      await restoreCurrentSpreadsheetPracticeProgress();
+    }
   } catch (err) {
     console.error('loadFullUserData error:', err);
     updateCloudSyncStatus('online', 'Cloud Ready');
